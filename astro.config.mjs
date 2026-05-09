@@ -5,6 +5,8 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   output: 'static',
   compressHTML: true,
+  site: 'https://albinodesign.de',
+  outDir: './dist',
   vite: {
     build: {
       minify: true,
