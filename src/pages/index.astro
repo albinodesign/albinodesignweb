@@ -2,14 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Button from '../components/Button.astro';
 import Card from '../components/Card.astro';
-import { Image } from 'astro:assets';
-import portrait from '../assets/portrait.jpeg';
-import ubermich from '../assets/ubermich.jpeg';
-import mockup1 from '../assets/mockup1.png';
-import mockup2 from '../assets/mockup2.png';
-import mockup3 from '../assets/mockup3.png';
-import review1 from '../assets/review1.jpg';
-import review2 from '../assets/review2.jpg';
+
 ---
 
 <Layout>
@@ -65,15 +58,14 @@ import review2 from '../assets/review2.jpg';
       <!-- Trust Element -->
       <div class="fade-in fade-in-delay-3 flex items-center gap-4 mb-8">
         <div class="shrink-0">
-          <Image 
-            src={portrait} 
+          <img 
+            src="/images/portrait.webp" 
             alt="Albin Salihu - Webdesigner aus Krefeld" 
-            width={160} 
-            height={160} 
+            width="160" 
+            height="160" 
             class="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-accent"
             loading="eager"
             fetchpriority="high"
-            quality={85}
           />
         </div>
         <div>
@@ -149,12 +141,11 @@ import review2 from '../assets/review2.jpg';
           <div class="relative w-full max-w-[280px]">
             <div class="bg-dark rounded-[2.5rem] p-2 shadow-2xl border-4 border-slate-700">
               <div class="bg-dark rounded-[2rem] overflow-hidden">
-                <Image 
-                  src={mockup1} 
+                <img 
+                  src="/images/mockup1.webp" 
                   alt="Website Mockup für einen Handwerkerbetrieb" 
-                  width={600} 
-                  height={1662}
-                  quality={85}
+                  width="600" 
+                  height="1662"
                   class="w-full h-auto"
                   loading="lazy"
                 />
@@ -168,12 +159,11 @@ import review2 from '../assets/review2.jpg';
           <div class="relative w-full max-w-[280px]">
             <div class="bg-dark rounded-[2.5rem] p-2 shadow-2xl border-4 border-slate-700">
               <div class="bg-dark rounded-[2rem] overflow-hidden">
-                <Image 
-                  src={mockup2} 
+                <img 
+                  src="/images/mockup2.webp" 
                   alt="Website Mockup für einen Bauunternehmen" 
-                  width={600} 
-                  height={1694}
-                  quality={85}
+                  width="600" 
+                  height="1694"
                   class="w-full h-auto"
                   loading="lazy"
                 />
@@ -187,12 +177,11 @@ import review2 from '../assets/review2.jpg';
           <div class="relative w-full max-w-[280px]">
             <div class="bg-dark rounded-[2.5rem] p-2 shadow-2xl border-4 border-slate-700">
               <div class="bg-dark rounded-[2rem] overflow-hidden">
-                <Image 
-                  src={mockup3} 
+                <img 
+                  src="/images/mockup3.webp" 
                   alt="Website Mockup für einen Elektrobetrieb" 
-                  width={600} 
-                  height={1694}
-                  quality={85}
+                  width="600" 
+                  height="1694"
                   class="w-full h-auto"
                   loading="lazy"
                 />
@@ -212,13 +201,12 @@ import review2 from '../assets/review2.jpg';
             "Alles in allem sehr zufrieden. Website sieht klasse aus und war schnell online. Ein kleiner Text musste nochmal geändert werden aber Albin hat das direkt erledigt. Für den Preis bekommt man echt was Ordentliches. Werde ich weiterempfehlen."
           </p>
           <div class="flex items-center gap-3 mt-auto">
-            <Image 
-              src={review1} 
+            <img 
+              src="/images/review1.webp" 
               alt="Steffen, Dachdecker aus Krefeld" 
-              width={96} 
-              height={96} 
+              width="96" 
+              height="96" 
               class="w-12 h-12 rounded-full object-cover"
-              quality={85}
               loading="lazy"
             />
             <div class="text-left">
@@ -236,13 +224,12 @@ import review2 from '../assets/review2.jpg';
             "Albin hat unsere alte Website komplett erneuert. Von der ersten Anfrage bis zur Fertigstellung alles top. Er nimmt sich Zeit und erklärt auch mal was wenn man fragt. Preis-Leistung passt. Gerne wieder!"
           </p>
           <div class="flex items-center gap-3 mt-auto">
-            <Image 
-              src={review2} 
+            <img 
+              src="/images/review2.webp" 
               alt="Gronowski, Elektromeister aus Mönchengladbach" 
-              width={96} 
-              height={96} 
+              width="96" 
+              height="96" 
               class="w-12 h-12 rounded-full object-cover"
-              quality={85}
               loading="lazy"
             />
             <div class="text-left">
@@ -261,12 +248,11 @@ import review2 from '../assets/review2.jpg';
       <div class="bg-gradient-to-br from-light to-white rounded-3xl p-6 sm:p-10 shadow-lg border border-slate-100">
         <div class="flex flex-col md:flex-row gap-8 items-center">
           <div class="shrink-0">
-            <Image 
-              src={ubermich} 
+            <img 
+              src="/images/ubermich.webp" 
               alt="Albin Salihu - Gründer von AlbinoDesign" 
-              width={600} 
-              height={800}
-              quality={85}
+              width="600" 
+              height="800"
               class="w-64 sm:w-80 rounded-2xl shadow-xl h-auto"
               loading="lazy"
             />
