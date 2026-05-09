@@ -1,0 +1,11 @@
+{
+  "name": "AlbinoDesign",
+  "short_name": "AlbinoDesign",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0f172a",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any" }
+  ]
+}

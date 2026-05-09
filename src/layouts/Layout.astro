@@ -1,0 +1,120 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  robots?: string;
+}
+
+const { 
+  title = "AlbinoDesign | Premium Handwerker-Websites in 3 Tagen",
+  description = "Gewinnen Sie mehr lukrative Aufträge und qualifizierte Azubis mit einer professionellen Website. Schlüsselfertig für einmalig 999 €. Albin Salihu aus Krefeld.",
+  ogImage = "https://albinodesign.de/og-image.jpg",
+  robots = "index, follow"
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
+---
+
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="AlbinoDesign" />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#0f172a" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="AlbinoDesign – Premium Handwerker-Websites in 3 Tagen" />
+    <meta property="og:locale" content="de_DE" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <title>{title}</title>
+    
+    <link rel="preload" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    
+    <link rel="preconnect" href="https://api.web3forms.com" crossorigin />
+    
+    <style is:inline>
+      /* Critical CSS for above-the-fold */
+      .fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+        opacity: 0;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .fade-in-delay-1 { animation-delay: 0.15s; }
+      .fade-in-delay-2 { animation-delay: 0.3s; }
+      .fade-in-delay-3 { animation-delay: 0.45s; }
+      .fade-in-delay-4 { animation-delay: 0.6s; }
+      @media (prefers-reduced-motion: reduce) {
+        .fade-in {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+    
+    <slot name="head" />
+  </head>
+  <body class="bg-light text-primary antialiased">
+    <slot />
+    
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie Einwilligung" class="fixed bottom-0 left-0 right-0 z-50 bg-dark text-light p-4 shadow-2xl transform translate-y-full transition-transform duration-300" style="display: none;">
+      <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div class="flex-1 text-sm">
+          <p class="mb-1">
+            <strong>Datenschutz ist uns wichtig.</strong>
+          </p>
+          <p class="text-muted">
+            Wir nutzen keine Cookies zu Tracking-Zwecken. Diese Seite funktioniert auch ohne Ihre Zustimmung vollständig. Möchten Sie uns dennoch erlauben, anonyme Nutzungsdaten zu erheben?
+          </p>
+        </div>
+        <div class="flex gap-3 shrink-0 w-full sm:w-auto">
+          <button 
+            id="cookie-decline" 
+            type="button"
+            class="flex-1 sm:flex-none px-4 py-3 text-sm font-medium text-light bg-secondary hover:bg-primary rounded-lg transition-colors active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+          >
+            Ablehnen
+          </button>
+          <button 
+            id="cookie-accept" 
+            type="button"
+            class="flex-1 sm:flex-none px-4 py-3 text-sm font-bold text-primary bg-accent hover:bg-accent-hover rounded-lg transition-colors active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+          >
+            Akzeptieren
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <script src="../scripts/cookie-consent.js"></script>
+  </body>
+</html>

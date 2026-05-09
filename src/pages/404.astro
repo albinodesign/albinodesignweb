@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="404 - Seite nicht gefunden | AlbinoDesign" 
+  description="Die angeforderte Seite konnte nicht gefunden werden."
+  robots="noindex, follow"
+>
+  <main class="min-h-screen bg-light flex items-center justify-center px-5">
+    <div class="text-center max-w-lg">
+      <h1 class="text-6xl font-bold text-primary mb-4">404</h1>
+      <p class="text-xl text-muted mb-8">Diese Seite existiert leider nicht.</p>
+      <a href="/" class="inline-flex items-center justify-center px-8 py-4 bg-accent text-white font-semibold rounded-xl hover:bg-accent-hover transition-colors min-h-[56px] active:scale-[0.98]">
+        Zurück zur Startseite
+      </a>
+    </div>
+  </main>
+</Layout>

@@ -1,17 +1,670 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+import Card from '../components/Card.astro';
+import { Image } from 'astro:assets';
+import portrait from '../assets/portrait.jpeg';
+import ubermich from '../assets/ubermich.jpeg';
+import mockup1 from '../assets/mockup1.png';
+import mockup2 from '../assets/mockup2.png';
+import mockup3 from '../assets/mockup3.png';
+import review1 from '../assets/review1.jpg';
+import review2 from '../assets/review2.jpg';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <Fragment slot="head">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://albinodesign.de/#business",
+      "name": "AlbinoDesign",
+      "description": "Premium Handwerker-Websites in 3 Tagen. Webdesign aus Krefeld.",
+      "url": "https://albinodesign.de/",
+      "image": "https://albinodesign.de/og-image.jpg",
+      "telephone": "+4915679755137",
+      "email": "info@albinodesign.de",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "De-Greiff-Straße 229",
+        "addressLocality": "Krefeld",
+        "postalCode": "47803",
+        "addressCountry": "DE"
+      },
+      "priceRange": "€",
+      "founder": {
+        "@type": "Person",
+        "name": "Albin Salihu"
+      }
+    }
+    </script>
+  </Fragment>
+
+<main>
+  <!-- 1. HERO SECTION -->
+  <section class="relative min-h-[90vh] min-h-[90dvh] flex flex-col justify-center bg-gradient-to-br from-dark via-primary to-secondary text-white overflow-hidden" aria-label="Hero">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--color-accent)_0%,_transparent_60%)]"></div>
+    
+    <div class="relative z-10 w-full max-w-5xl mx-auto px-5 py-12 sm:py-20">
+      <!-- Logo -->
+      <div class="fade-in mb-8">
+        <span class="text-2xl font-bold tracking-tight text-white">AlbinoDesign.</span>
+      </div>
+      
+      <!-- Headline -->
+      <h1 class="fade-in fade-in-delay-1 text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-balance">
+        Ich baue Ihre Premium Handwerker-Website in 3 Tagen.
+      </h1>
+      
+      <!-- Sub-Headline -->
+      <p class="fade-in fade-in-delay-2 text-lg sm:text-xl text-slate-300 mb-8 max-w-2xl text-balance">
+        Gewinnen Sie mehr lukrative Aufträge <span class="text-accent font-semibold">UND</span> qualifizierte Azubis. Komplett stressfrei. Schlüsselfertig für einmalig <span class="text-accent font-bold">999 €</span>.
+      </p>
+      
+      <!-- Trust Element -->
+      <div class="fade-in fade-in-delay-3 flex items-center gap-4 mb-8">
+        <div class="shrink-0">
+          <Image 
+            src={portrait} 
+            alt="Albin Salihu - Webdesigner aus Krefeld" 
+            width={160} 
+            height={160} 
+            class="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-accent"
+            loading="eager"
+            fetchpriority="high"
+            quality={85}
+          />
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-white">Albin Salihu</p>
+          <p class="text-sm text-slate-400">Webdesign aus Krefeld</p>
+          <div class="flex items-center gap-1 mt-1">
+            <span class="text-accent text-xs">★★★★★</span>
+            <span class="text-xs text-slate-400">5.0 Bewertung</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Leitsatz -->
+      <p class="fade-in fade-in-delay-3 text-lg sm:text-xl italic text-slate-200 mb-10 max-w-xl border-l-4 border-accent pl-4">
+        "Ich erstelle Websites, die genauso hart arbeiten, wie Sie."
+      </p>
+      
+      <!-- CTA -->
+      <div class="fade-in fade-in-delay-4">
+        <Button href="#formular" size="large" class="w-full sm:w-auto min-h-[56px] touch-manipulation">
+          Jetzt kostenlosen Erstentwurf anfragen
+          <svg class="w-5 h-5 ml-2" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </Button>
+        <p class="mt-3 text-sm text-slate-400">Keine Verpflichtung. Antwort innerhalb von 24 Stunden.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PROBLEM-AGITATION SECTION -->
+  <section class="bg-dark text-white py-16 sm:py-24" aria-labelledby="problem-heading">
+    <div class="max-w-4xl mx-auto px-5">
+      <h2 id="problem-heading" class="text-2xl sm:text-3xl font-bold mb-10 text-center text-balance">
+        Warum Sie aktuell lukrative Aufträge & gute Azubis an die Konkurrenz verlieren
+      </h2>
+      
+      <div class="space-y-6">
+        <div class="flex items-start gap-4 bg-secondary/50 rounded-xl p-5 border border-slate-700">
+          <span class="text-2xl shrink-0" aria-hidden="true">❌</span>
+          <p class="text-slate-200 leading-relaxed">
+            Ihre aktuelle Website sieht veraltet aus und strahlt nicht Ihre handwerkliche Qualität aus.
+          </p>
+        </div>
+        
+        <div class="flex items-start gap-4 bg-secondary/50 rounded-xl p-5 border border-slate-700">
+          <span class="text-2xl shrink-0" aria-hidden="true">❌</span>
+          <p class="text-slate-200 leading-relaxed">
+            Junge Fachkräfte und Azubis finden Ihren Betrieb nicht auf dem Handy.
+          </p>
+        </div>
+        
+        <div class="flex items-start gap-4 bg-secondary/50 rounded-xl p-5 border border-slate-700">
+          <span class="text-2xl shrink-0" aria-hidden="true">❌</span>
+          <p class="text-slate-200 leading-relaxed">
+            Premium-Kunden gehen zur Konkurrenz, weil dort der erste Eindruck professioneller wirkt.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. PORTFOLIO & SOCIAL PROOF SECTION -->
+  <section class="bg-light py-16 sm:py-24" aria-labelledby="portfolio-heading">
+    <div class="max-w-6xl mx-auto px-5">
+      <h2 id="portfolio-heading" class="text-2xl sm:text-3xl font-bold mb-4 text-center text-balance">
+        So modern könnte Ihr Betrieb nächste Woche aussehen
+      </h2>
+      <p class="text-muted text-center mb-12 max-w-2xl mx-auto">Professionelle Websites, die auf jedem Gerät perfekt aussehen.</p>
+      
+      <!-- Portfolio Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <!-- Mockup 1 -->
+        <div class="flex flex-col items-center">
+          <div class="relative w-full max-w-[280px]">
+            <div class="bg-dark rounded-[2.5rem] p-2 shadow-2xl border-4 border-slate-700">
+              <div class="bg-dark rounded-[2rem] overflow-hidden">
+                <Image 
+                  src={mockup1} 
+                  alt="Website Mockup für einen Handwerkerbetrieb" 
+                  width={600} 
+                  height={1662}
+                  quality={85}
+                  class="w-full h-auto"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mockup 2 -->
+        <div class="flex flex-col items-center">
+          <div class="relative w-full max-w-[280px]">
+            <div class="bg-dark rounded-[2.5rem] p-2 shadow-2xl border-4 border-slate-700">
+              <div class="bg-dark rounded-[2rem] overflow-hidden">
+                <Image 
+                  src={mockup2} 
+                  alt="Website Mockup für einen Bauunternehmen" 
+                  width={600} 
+                  height={1694}
+                  quality={85}
+                  class="w-full h-auto"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mockup 3 -->
+        <div class="flex flex-col items-center">
+          <div class="relative w-full max-w-[280px]">
+            <div class="bg-dark rounded-[2.5rem] p-2 shadow-2xl border-4 border-slate-700">
+              <div class="bg-dark rounded-[2rem] overflow-hidden">
+                <Image 
+                  src={mockup3} 
+                  alt="Website Mockup für einen Elektrobetrieb" 
+                  width={600} 
+                  height={1694}
+                  quality={85}
+                  class="w-full h-auto"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Testimonials -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <Card class="flex flex-col items-center text-center">
+          <div class="flex gap-1 mb-3 text-accent text-lg" aria-label="5 von 5 Sternen">
+            ★★★★★
+          </div>
+          <p class="text-primary mb-6 leading-relaxed italic">
+            "Alles in allem sehr zufrieden. Website sieht klasse aus und war schnell online. Ein kleiner Text musste nochmal geändert werden aber Albin hat das direkt erledigt. Für den Preis bekommt man echt was Ordentliches. Werde ich weiterempfehlen."
+          </p>
+          <div class="flex items-center gap-3 mt-auto">
+            <Image 
+              src={review1} 
+              alt="Steffen, Dachdecker aus Krefeld" 
+              width={96} 
+              height={96} 
+              class="w-12 h-12 rounded-full object-cover"
+              quality={85}
+              loading="lazy"
+            />
+            <div class="text-left">
+              <p class="font-semibold text-primary text-sm">Steffen</p>
+              <p class="text-muted text-xs">Dachdecker, Krefeld</p>
+            </div>
+          </div>
+        </Card>
+        
+        <Card class="flex flex-col items-center text-center">
+          <div class="flex gap-1 mb-3 text-accent text-lg" aria-label="5 von 5 Sternen">
+            ★★★★★
+          </div>
+          <p class="text-primary mb-6 leading-relaxed italic">
+            "Albin hat unsere alte Website komplett erneuert. Von der ersten Anfrage bis zur Fertigstellung alles top. Er nimmt sich Zeit und erklärt auch mal was wenn man fragt. Preis-Leistung passt. Gerne wieder!"
+          </p>
+          <div class="flex items-center gap-3 mt-auto">
+            <Image 
+              src={review2} 
+              alt="Gronowski, Elektromeister aus Mönchengladbach" 
+              width={96} 
+              height={96} 
+              class="w-12 h-12 rounded-full object-cover"
+              quality={85}
+              loading="lazy"
+            />
+            <div class="text-left">
+              <p class="font-semibold text-primary text-sm">Gronowski</p>
+              <p class="text-muted text-xs">Elektromeister, Mönchengladbach</p>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. ÜBER MICH SECTION -->
+  <section class="bg-white py-16 sm:py-24" aria-labelledby="about-heading">
+    <div class="max-w-4xl mx-auto px-5">
+      <div class="bg-gradient-to-br from-light to-white rounded-3xl p-6 sm:p-10 shadow-lg border border-slate-100">
+        <div class="flex flex-col md:flex-row gap-8 items-center">
+          <div class="shrink-0">
+            <Image 
+              src={ubermich} 
+              alt="Albin Salihu - Gründer von AlbinoDesign" 
+              width={600} 
+              height={800}
+              quality={85}
+              class="w-64 sm:w-80 rounded-2xl shadow-xl h-auto"
+              loading="lazy"
+            />
+          </div>
+          
+          <div class="flex-1 text-center md:text-left">
+            <h2 id="about-heading" class="text-2xl sm:text-3xl font-bold mb-4 text-balance">
+              Ihr direkter Partner aus Krefeld
+            </h2>
+            <div class="w-16 h-1 bg-accent rounded-full mb-6 mx-auto md:mx-0"></div>
+            <p class="text-primary leading-relaxed mb-4">
+              Hi, ich bin Albin von AlbinoDesign. Ich arbeite bewusst ohne großes Team und teures Büro. Dadurch bekommen Sie bei mir die Qualität einer teuren Agentur, aber ohne den irrsinnigen Preis.
+            </p>
+            <p class="text-primary leading-relaxed">
+              Ich nehme Ihnen den kompletten digitalen Stress ab – von der ersten Idee bis zur fertigen Website.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 3-SCHRITTE-PROZESS SECTION -->
+  <section class="bg-light py-16 sm:py-24" aria-labelledby="process-heading">
+    <div class="max-w-4xl mx-auto px-5">
+      <h2 id="process-heading" class="text-2xl sm:text-3xl font-bold mb-12 text-center text-balance">
+        In 3 simplen Schritten zur neuen Website
+      </h2>
+      
+      <div class="space-y-6">
+        <Card hover class="flex items-start gap-5">
+          <div class="shrink-0 w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center text-2xl" aria-hidden="true">
+            📞
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">1. Kurzes Telefonat</h3>
+            <p class="text-muted leading-relaxed">Wir besprechen Ihre Ziele, Ihr Gewerk und was Ihre Website leisten soll.</p>
+          </div>
+        </Card>
+        
+        <Card hover class="flex items-start gap-5">
+          <div class="shrink-0 w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center text-2xl" aria-hidden="true">
+            💻
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">2. Ich designe & baue</h3>
+            <p class="text-muted leading-relaxed">Inklusive Texte, Bilder und Technik – in nur 3 Tagen erhalten Sie Ihren Entwurf.</p>
+          </div>
+        </Card>
+        
+        <Card hover class="flex items-start gap-5">
+          <div class="shrink-0 w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center text-2xl" aria-hidden="true">
+            🚀
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">3. Sie gehen live</h3>
+            <p class="text-muted leading-relaxed">Nach Ihrer Freigabe schalte ich Ihre Website frei – und Sie erhalten sofort mehr Anfragen.</p>
+          </div>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. MULTI-STEP FORMULAR (CRO HERZSTÜCK) -->
+  <section id="formular" class="bg-gradient-to-b from-secondary to-dark py-16 sm:py-24" aria-labelledby="form-heading">
+    <div class="max-w-2xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 id="form-heading" class="text-2xl sm:text-3xl font-bold text-white mb-3 text-balance">
+          Starten Sie jetzt Ihren kostenlosen Website-Entwurf
+        </h2>
+        <p class="text-slate-300">In 30 Sekunden ausgefüllt. Keine Verpflichtung.</p>
+      </div>
+      
+      <div class="bg-white rounded-3xl shadow-2xl p-6 sm:p-10">
+        <!-- Success Message -->
+        <div id="form-success" class="hidden text-center py-10" role="status" aria-live="polite">
+          <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-green-600" width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <h3 class="text-2xl font-bold text-primary mb-3">Vielen Dank!</h3>
+          <p class="text-muted mb-2">Ihre Anfrage wurde erfolgreich versendet.</p>
+          <p class="text-muted">Ich melde mich innerhalb von 24 Stunden bei Ihnen.</p>
+        </div>
+        
+        <!-- Form Error Message -->
+        <div id="form-error" class="hidden text-center py-6 mb-4 bg-red-50 border border-red-200 rounded-2xl" role="alert">
+          <p class="text-red-600 font-medium">Es ist ein Fehler aufgetreten.</p>
+          <p class="text-red-500 text-sm mt-1">Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt unter <a href="tel:+4915679755137" class="underline">+49 15679 755137</a>.</p>
+        </div>
+        
+        <!-- No-JS Fallback -->
+        <noscript>
+          <style>
+            #multi-step-form .form-step.hidden { display: block !important; }
+            #multi-step-form .step-next,
+            #multi-step-form .step-prev { display: none !important; }
+            #form-progress { display: none !important; }
+          </style>
+          <p class="text-sm text-muted mb-4 bg-amber-50 border border-amber-200 rounded-xl p-3">
+            JavaScript ist deaktiviert. Sie können das Formular als einseitiges Formular ausfüllen und absenden.
+          </p>
+        </noscript>
+        
+        <!-- Form -->
+        <form id="multi-step-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-8" novalidate>
+          <!-- Honeypot -->
+          <input type="checkbox" name="botcheck" class="hidden" style="display: none;" tabindex="-1" autocomplete="off" />
+          
+          <!-- Web3Forms Access Key -->
+          <input type="hidden" name="access_key" value={import.meta.env.PUBLIC_WEB3FORMS_KEY} />
+          
+          <!-- GCLID Tracking -->
+          <input type="hidden" name="gclid" id="gclid_field" value="" />
+          
+          <!-- Subject -->
+          <input type="hidden" name="subject" value="Neue Website-Anfrage von AlbinoDesign Landingpage" />
+          <input type="hidden" name="from_name" value="AlbinoDesign Landingpage" />
+          
+          <!-- Step 1: Gewerk -->
+          <div id="step-1" class="form-step" data-step="1">
+            <fieldset class="space-y-3">
+              <legend class="text-lg font-semibold mb-4">Welches Gewerk üben Sie aus?</legend>
+              <div class="space-y-3">
+                <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-accent transition-colors has-[:checked]:border-accent has-[:checked]:bg-accent/5">
+                  <input type="radio" name="gewerk" value="Sanitär & Heizung" class="w-5 h-5 text-accent accent-accent" required />
+                  <span class="font-medium">Sanitär & Heizung</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-accent transition-colors has-[:checked]:border-accent has-[:checked]:bg-accent/5">
+                  <input type="radio" name="gewerk" value="Elektro" class="w-5 h-5 text-accent accent-accent" />
+                  <span class="font-medium">Elektro</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-accent transition-colors has-[:checked]:border-accent has-[:checked]:bg-accent/5">
+                  <input type="radio" name="gewerk" value="Dachdecker" class="w-5 h-5 text-accent accent-accent" />
+                  <span class="font-medium">Dachdecker</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-accent transition-colors has-[:checked]:border-accent has-[:checked]:bg-accent/5">
+                  <input type="radio" name="gewerk" value="Maler" class="w-5 h-5 text-accent accent-accent" />
+                  <span class="font-medium">Maler</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-accent transition-colors has-[:checked]:border-accent has-[:checked]:bg-accent/5">
+                  <input type="radio" name="gewerk" value="Sonstiges" class="w-5 h-5 text-accent accent-accent" />
+                  <span class="font-medium">Sonstiges</span>
+                </label>
+              </div>
+            </fieldset>
+            <p class="text-red-500 text-sm mt-2 hidden" id="error-step-1" role="alert">Bitte wählen Sie ein Gewerk aus.</p>
+            <div class="mt-6">
+              <button type="button" class="step-next w-full bg-accent text-white font-semibold py-4 px-6 rounded-xl hover:bg-accent-hover transition-colors min-h-[56px] touch-manipulation active:scale-[0.98]" data-next="2">
+                Weiter
+              </button>
+            </div>
+          </div>
+          
+          <!-- Step 2: Hauptziel -->
+          <div id="step-2" class="form-step hidden" data-step="2">
+            <fieldset class="space-y-3">
+              <legend class="text-lg font-semibold mb-4">Was ist Ihr Hauptziel?</legend>
+              <div class="space-y-3">
+                <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-accent transition-colors has-[:checked]:border-accent has-[:checked]:bg-accent/5">
+                  <input type="radio" name="ziel" value="Neue Premium-Kunden" class="w-5 h-5 text-accent accent-accent" required />
+                  <span class="font-medium">Neue Premium-Kunden gewinnen</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-accent transition-colors has-[:checked]:border-accent has-[:checked]:bg-accent/5">
+                  <input type="radio" name="ziel" value="Fachkräfte & Azubis finden" class="w-5 h-5 text-accent accent-accent" />
+                  <span class="font-medium">Fachkräfte & Azubis finden</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-accent transition-colors has-[:checked]:border-accent has-[:checked]:bg-accent/5">
+                  <input type="radio" name="ziel" value="Professioneller Internet-Auftritt" class="w-5 h-5 text-accent accent-accent" />
+                  <span class="font-medium">Professioneller Internet-Auftritt</span>
+                </label>
+              </div>
+            </fieldset>
+            <p class="text-red-500 text-sm mt-2 hidden" id="error-step-2" role="alert">Bitte wählen Sie ein Ziel aus.</p>
+            <div class="mt-6 flex gap-3">
+              <button type="button" class="step-prev flex-1 bg-secondary text-white font-semibold py-4 px-6 rounded-xl hover:bg-primary transition-colors min-h-[56px] touch-manipulation active:scale-[0.98]" data-prev="1">
+                Zurück
+              </button>
+              <button type="button" class="step-next flex-1 bg-accent text-white font-semibold py-4 px-6 rounded-xl hover:bg-accent-hover transition-colors min-h-[56px] touch-manipulation active:scale-[0.98]" data-next="3">
+                Weiter
+              </button>
+            </div>
+          </div>
+          
+          <!-- Step 3: Bestehende Website -->
+          <div id="step-3" class="form-step hidden" data-step="3">
+            <fieldset class="space-y-3">
+              <legend class="text-lg font-semibold mb-4">Haben Sie bereits eine Website?</legend>
+              <div class="space-y-3">
+                <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-accent transition-colors has-[:checked]:border-accent has-[:checked]:bg-accent/5">
+                  <input type="radio" name="website_vorhanden" value="Ja" class="w-5 h-5 text-accent accent-accent" required />
+                  <span class="font-medium">Ja</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-accent transition-colors has-[:checked]:border-accent has-[:checked]:bg-accent/5">
+                  <input type="radio" name="website_vorhanden" value="Nein" class="w-5 h-5 text-accent accent-accent" />
+                  <span class="font-medium">Nein</span>
+                </label>
+              </div>
+            </fieldset>
+            <p class="text-red-500 text-sm mt-2 hidden" id="error-step-3" role="alert">Bitte treffen Sie eine Auswahl.</p>
+            <div class="mt-6 flex gap-3">
+              <button type="button" class="step-prev flex-1 bg-secondary text-white font-semibold py-4 px-6 rounded-xl hover:bg-primary transition-colors min-h-[56px] touch-manipulation active:scale-[0.98]" data-prev="2">
+                Zurück
+              </button>
+              <button type="button" class="step-next flex-1 bg-accent text-white font-semibold py-4 px-6 rounded-xl hover:bg-accent-hover transition-colors min-h-[56px] touch-manipulation active:scale-[0.98]" data-next="4">
+                Weiter
+              </button>
+            </div>
+          </div>
+          
+          <!-- Step 4: Kontaktdaten -->
+          <div id="step-4" class="form-step hidden" data-step="4">
+            <h3 class="text-lg font-semibold mb-4">Wohin darf ich Ihren kostenlosen Website-Entwurf senden?</h3>
+            <div class="space-y-4">
+              <div>
+                <label for="name" class="block text-sm font-medium mb-1.5">Ihr Name</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  required 
+                  autocomplete="name"
+                  aria-required="true"
+                  aria-describedby="error-name"
+                  aria-invalid="false"
+                  class="w-full px-4 py-3.5 border-2 border-slate-200 rounded-xl focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition-colors min-h-[56px]"
+                  placeholder="Max Mustermann"
+                />
+                <p class="text-red-500 text-sm mt-1 hidden" id="error-name" role="alert">Bitte geben Sie Ihren Namen ein.</p>
+              </div>
+              
+              <div>
+                <label for="email" class="block text-sm font-medium mb-1.5">E-Mail-Adresse</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  required 
+                  autocomplete="email"
+                  aria-required="true"
+                  aria-describedby="error-email"
+                  aria-invalid="false"
+                  class="w-full px-4 py-3.5 border-2 border-slate-200 rounded-xl focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition-colors min-h-[56px]"
+                  placeholder="max@beispiel.de"
+                />
+                <p class="text-red-500 text-sm mt-1 hidden" id="error-email" role="alert">Bitte geben Sie eine gültige E-Mail-Adresse ein.</p>
+              </div>
+              
+              <div>
+                <label for="telefon" class="block text-sm font-medium mb-1.5">Handynummer</label>
+                <input 
+                  type="tel" 
+                  id="telefon" 
+                  name="telefon" 
+                  required 
+                  autocomplete="tel"
+                  inputmode="tel"
+                  aria-required="true"
+                  aria-describedby="error-telefon"
+                  aria-invalid="false"
+                  class="w-full px-4 py-3.5 border-2 border-slate-200 rounded-xl focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition-colors min-h-[56px]"
+                  placeholder="+49 176 12345678"
+                />
+                <p class="text-red-500 text-sm mt-1 hidden" id="error-telefon" role="alert">Bitte geben Sie Ihre Handynummer ein.</p>
+              </div>
+            </div>
+            
+            <div class="mt-4 p-4 bg-slate-50 rounded-xl text-sm text-muted">
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  name="datenschutz" 
+                  id="datenschutz" 
+                  required 
+                  class="mt-0.5 w-5 h-5 text-accent accent-accent shrink-0"
+                  aria-required="true"
+                  aria-describedby="error-datenschutz"
+                  aria-invalid="false"
+                />
+                <span>
+                  Ich stimme der Verarbeitung meiner Daten gemäß der <a href="/datenschutz" class="text-accent underline hover:no-underline">Datenschutzerklärung</a> zu.
+                </span>
+              </label>
+              <p class="text-red-500 text-sm mt-1 hidden" id="error-datenschutz" role="alert">Bitte akzeptieren Sie die Datenschutzerklärung.</p>
+            </div>
+            
+            <div class="mt-6 flex gap-3">
+              <button type="button" class="step-prev flex-1 bg-secondary text-white font-semibold py-4 px-6 rounded-xl hover:bg-primary transition-colors min-h-[56px] touch-manipulation active:scale-[0.98]" data-prev="3">
+                Zurück
+              </button>
+              <button type="submit" class="flex-1 bg-accent text-white font-bold py-4 px-6 rounded-xl hover:bg-accent-hover transition-colors min-h-[56px] touch-manipulation shadow-lg shadow-accent/25 active:scale-[0.98]">
+                Jetzt anfordern
+              </button>
+            </div>
+          </div>
+          
+          <!-- Progress Indicator -->
+          <div class="flex justify-center gap-2 pt-4" id="form-progress" aria-hidden="true">
+            <span class="w-8 h-2 rounded-full bg-accent transition-colors" data-indicator="1"></span>
+            <span class="w-8 h-2 rounded-full bg-slate-200 transition-colors" data-indicator="2"></span>
+            <span class="w-8 h-2 rounded-full bg-slate-200 transition-colors" data-indicator="3"></span>
+            <span class="w-8 h-2 rounded-full bg-slate-200 transition-colors" data-indicator="4"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. FAQ SECTION -->
+  <section class="bg-light py-16 sm:py-24" aria-labelledby="faq-heading">
+    <div class="max-w-3xl mx-auto px-5">
+      <h2 id="faq-heading" class="text-2xl sm:text-3xl font-bold mb-10 text-center">
+        Häufig gestellte Fragen
+      </h2>
+      
+      <div class="space-y-4">
+        <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-primary hover:bg-slate-50 transition-colors min-h-[56px] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:bg-slate-50 rounded-2xl">
+            <span>Warum sind Sie günstiger als eine klassische Webdesign-Agentur?</span>
+            <span class="ml-4 shrink-0 text-accent transition-transform group-open:rotate-180" aria-hidden="true">
+              <svg class="w-5 h-5" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </summary>
+          <div class="px-5 pt-4 pb-5 text-muted leading-relaxed">
+            Ich arbeite bewusst ohne großes Team und ohne teures Büro. Die dadurch gesparten Verwaltungskosten gebe ich direkt an Sie weiter – bei gleicher Qualität wie eine Agentur.
+          </div>
+        </details>
+        
+        <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-primary hover:bg-slate-50 transition-colors min-h-[56px] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:bg-slate-50 rounded-2xl">
+            <span>Gehört die Website nach der Fertigstellung zu 100% mir?</span>
+            <span class="ml-4 shrink-0 text-accent transition-transform group-open:rotate-180" aria-hidden="true">
+              <svg class="w-5 h-5" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </summary>
+          <div class="px-5 pt-4 pb-5 text-muted leading-relaxed">
+            Ja, absolut. Alle Zugänge, Dateien und Inhalte liegen bei Ihnen.
+          </div>
+        </details>
+        
+        <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-primary hover:bg-slate-50 transition-colors min-h-[56px] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:bg-slate-50 rounded-2xl">
+            <span>Kann ich Texte und Bilder später selbst ändern?</span>
+            <span class="ml-4 shrink-0 text-accent transition-transform group-open:rotate-180" aria-hidden="true">
+              <svg class="w-5 h-5" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </summary>
+          <div class="px-5 pt-4 pb-5 text-muted leading-relaxed">
+            Teils teils. Ich nutze ein CMS, also können Sie viele Inhalte wie Texte und Bilder problemlos selbst anpassen. Bei komplexeren Änderungen unterstütze ich Sie gerne.
+          </div>
+        </details>
+        
+        <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-primary hover:bg-slate-50 transition-colors min-h-[56px] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:bg-slate-50 rounded-2xl">
+            <span>Was brauche ich, bevor wir starten?</span>
+            <span class="ml-4 shrink-0 text-accent transition-transform group-open:rotate-180" aria-hidden="true">
+              <svg class="w-5 h-5" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </summary>
+          <div class="px-5 pt-4 pb-5 text-muted leading-relaxed">
+            Keine fertigen Texte nötig. Zum Start schicke ich Ihnen einen kurzen Fragebogen. Daraus entwickle ich die Texte. Bei Bildern nutze ich Ihre, ansonsten greife ich auf hochwertige KI-Bilder zurück.
+          </div>
+        </details>
+        
+        <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-primary hover:bg-slate-50 transition-colors min-h-[56px] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:bg-slate-50 rounded-2xl">
+            <span>Was, wenn ich nicht zufrieden bin?</span>
+            <span class="ml-4 shrink-0 text-accent transition-transform group-open:rotate-180" aria-hidden="true">
+              <svg class="w-5 h-5" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </summary>
+          <div class="px-5 pt-4 pb-5 text-muted leading-relaxed">
+            Dann ändern wir so lange ab, bis Sie zu 100% zufrieden sind! Sie bekommen vorab einen Entwurf, bevor eine einzige Zeile Code geschrieben wird.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+  <!-- 8. FOOTER -->
+  <footer class="bg-dark text-slate-400 py-10" role="contentinfo">
+    <div class="max-w-4xl mx-auto px-5 text-center">
+      <p class="text-sm mb-4">
+        © 2026 AlbinoDesign. Alle Rechte vorbehalten.
+      </p>
+      <div class="flex items-center justify-center gap-4 text-sm">
+        <a href="/impressum" class="hover:text-white transition-colors underline underline-offset-2">Impressum</a>
+        <span aria-hidden="true">|</span>
+        <a href="/datenschutz" class="hover:text-white transition-colors underline underline-offset-2">Datenschutz</a>
+      </div>
+      
+      <div class="mt-6 pt-6 border-t border-slate-800 text-xs text-slate-400 space-y-1">
+        <p>AlbinoDesign · Albin Salihu</p>
+        <p>De-Greiff-Straße 229, 47803 Krefeld</p>
+        <p>Tel: <a href="tel:+4915679755137" class="hover:text-slate-400 transition-colors">+49 15679 755137</a> · E-Mail: <a href="mailto:info@albinodesign.de" class="hover:text-slate-400 transition-colors">info@albinodesign.de</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../scripts/form.js"></script>
+</Layout>
