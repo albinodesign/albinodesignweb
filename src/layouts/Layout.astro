@@ -21,6 +21,16 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
 <!DOCTYPE html>
 <html lang="de" dir="ltr">
   <head>
+    <!-- Google Tag Manager — DSGVO-konform, erst nach Cookie-Consent aktiv -->
+    <script type="text/plain" data-cookiecategory="analytics">
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-MDB35QMG');
+    </script>
+    <!-- End Google Tag Manager -->
+    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
@@ -83,6 +93,13 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
     <slot name="head" />
   </head>
   <body class="bg-light text-primary antialiased">
+    <!-- Google Tag Manager (noscript) — DSGVO-konform -->
+    <noscript data-cookiecategory="analytics">
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MDB35QMG"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
     <slot />
     
     <!-- Cookie Banner -->
@@ -93,7 +110,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
             <strong>Datenschutz ist uns wichtig.</strong>
           </p>
           <p class="text-muted">
-            Wir nutzen keine Cookies zu Tracking-Zwecken. Diese Seite funktioniert auch ohne Ihre Zustimmung vollständig. Möchten Sie uns dennoch erlauben, anonyme Nutzungsdaten zu erheben?
+            Wir nutzen Cookies für die Basisfunktionen der Website. Optional können Sie der Erhebung anonymer Nutzungsdaten via Google Tag Manager zustimmen, um uns bei der Verbesserung der Website zu helfen.
           </p>
         </div>
         <div class="flex gap-3 shrink-0 w-full sm:w-auto">
