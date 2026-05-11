@@ -24,8 +24,8 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 | Laufzeit | Node.js ≥ 22.12.0 (definiert in `package.json` unter `engines`) |
 | Bildoptimierung | Sharp (via `astro:assets`, konfiguriert in `astro.config.mjs`) |
 | Formular-Backend | [Web3Forms](https://web3forms.com/) |
-| Hosting | Cloudflare Pages (via Wrangler) |
-| Deployment | `wrangler deploy` (siehe `package.json` scripts) |
+| Hosting | Netlify |
+| Deployment | `npm run deploy` (Netlify CLI, siehe `package.json` scripts) |
 
 ---
 
@@ -40,13 +40,17 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 │   ├── robots.txt             # Erlaubt alle Crawler, verweist auf Sitemap
 │   ├── sitemap.xml            # Manuelle Sitemap für Google
 │   ├── og-image.jpg           # Open-Graph-Vorschaubild
-│   ├── _headers               # Cloudflare Pages Security-Headers (CSP, X-Frame-Options, etc.)
-│   ├── .assetsignore          # Ignoriert bestimmte Assets beim Build
+│   ├── scripts/               # Client-seitige JavaScript-Dateien
+│   │   ├── cookie-consent.js  # Cookie-Banner + Google Consent Mode v2 + GTM-Aktivierung
+│   │   └── form.js            # Multi-Step-Formular + GCLID-Tracking + AJAX-Submit
 │   ├── images/                # Optimierte WebP-Bilder (für direkte Nutzung)
 │   │   ├── portrait.webp
 │   │   ├── ubermich.webp
-│   │   ├── mockup1-3.webp
-│   │   └── review1-2.webp
+│   │   ├── mockup1.webp
+│   │   ├── mockup2.webp
+│   │   ├── mockup3.webp
+│   │   ├── review1.webp
+│   │   └── review2.webp
 │   └── fonts/                 # Inter Schriftarten (WOFF2, selbst-gehostet)
 │       ├── Inter-Regular.woff2
 │       ├── Inter-Medium.woff2
@@ -63,18 +67,8 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 │   ├── components/
 │   │   ├── Button.astro       # Wiederverwendbarer CTA-Button (href/type/variant/size)
 │   │   └── Card.astro         # Container-Komponente mit optionalem Hover-Effekt
-│   ├── scripts/
-│   │   ├── cookie-consent.js  # Cookie-Banner + Google Consent Mode v2 + GTM-Aktivierung
-│   │   └── form.js            # Multi-Step-Formular + GCLID-Tracking + AJAX-Submit
-│   ├── styles/
-│   │   └── global.css         # Tailwind-Direktiven, CSS-Variablen, @font-face, text-balance
-│   └── assets/                # Quell-Bilder (via astro:assets / <Image /> optimierbar)
-│       ├── portrait.jpeg
-│       ├── ubermich.jpeg
-│       ├── mockup1-3.png
-│       └── review1-2.jpg
-├── scripts/
-│   └── generate-placeholders.mjs  # Node.js-Script mit Sharp zur Erstellung von Platzhalter-Bildern
+│   └── styles/
+│       └── global.css         # Tailwind-Direktiven, CSS-Variablen, @font-face, text-balance
 ├── .vscode/
 │   ├── extensions.json        # Empfiehlt "astro-build.astro-vscode"
 │   └── launch.json            # Debug-Konfiguration für "astro dev"
@@ -83,6 +77,7 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 ├── astro.config.mjs
 ├── tailwind.config.mjs
 ├── postcss.config.js
+├── netlify.toml               # Netlify Build-Konfiguration + Security-Headers
 ├── tsconfig.json
 └── package.json
 ```
@@ -98,16 +93,13 @@ npm run dev
 # Produktions-Build (statisch nach ./dist/)
 npm run build
 
-# Build lokal mit Wrangler previewen
+# Build lokal previewen (via serve)
 npm run preview
 
 # Astro CLI-Befehle
 npm run astro -- [command]
 
-# Wrangler Types generieren (für Cloudflare-Types)
-npm run generate-types
-
-# Deploy zu Cloudflare Pages
+# Deploy zu Netlify (Production)
 npm run deploy
 ```
 
@@ -139,19 +131,17 @@ npm run deploy
 - Moderne CSS-Features werden verwendet, z. B. `has-[:checked]` für Radio-Button-Styles.
 
 ### Bilder
-- Alle Bilder werden über `astro:assets` und die `<Image />`-Komponente eingebunden (wo möglich).
+- Alle Bilder werden aktuell über **direkte `<img>`-Tags** mit Pfaden aus `public/images/` eingebunden (WebP-Formate).
 - `loading="eager"` und `fetchpriority="high"` werden nur für Above-the-Fold-Bilder (Portrait im Hero) verwendet.
-- Quell-Assets liegen unter `src/assets/` und werden von Astro automatisch optimiert (via Sharp-Service, konfiguriert in `astro.config.mjs`).
-- Optimierte WebP-Varianten liegen unter `public/images/` für direkte Nutzung.
-- Niedrig-aufgelöste Platzhalter können bei Bedarf mit `scripts/generate-placeholders.mjs` (Sharp + SVG) generiert werden. Das Script ist nicht in `package.json` eingebunden und muss bei Bedarf manuell ausgeführt werden.
+- Es gibt kein `src/assets/`-Verzeichnis; alle Bilder liegen unter `public/images/` und `public/`.
 
 ### Client-seitige Logik
 - Astro verwendet `<script src="...">` für externe JavaScript-Dateien, die direkt im HTML eingebunden werden.
-- Es gibt **kein Frontend-Framework** wie React oder Vue – alles ist Vanilla JS innerhalb von `src/scripts/`.
+- Es gibt **kein Frontend-Framework** wie React oder Vue – alles ist Vanilla JS innerhalb von `public/scripts/`.
 - Wichtige Skripte im Projekt:
-  1. **Cookie-Consent-Banner** (`src/scripts/cookie-consent.js`) – speichert Zustimmung in `localStorage` unter `albino_cookie_consent`, implementiert Google Consent Mode v2, aktiviert GTM erst nach Einwilligung.
-  2. **GCLID-Tracking** (`src/scripts/form.js`) – liest `?gclid=` aus der URL, speichert es in einem Hidden-Formularfeld sowie in `localStorage` unter `albino_gclid`.
-  3. **Multi-Step-Formular** (`src/scripts/form.js`) – 4 Schritte mit client-seitiger Validierung und AJAX-Submit an Web3Forms.
+  1. **Cookie-Consent-Banner** (`public/scripts/cookie-consent.js`) – speichert Zustimmung in `localStorage` unter `albino_cookie_consent`, implementiert Google Consent Mode v2, aktiviert GTM erst nach Einwilligung.
+  2. **GCLID-Tracking** (`public/scripts/form.js`) – liest `?gclid=` aus der URL, speichert es in einem Hidden-Formularfeld sowie in `localStorage` unter `albino_gclid`.
+  3. **Multi-Step-Formular** (`public/scripts/form.js`) – 4 Schritte mit client-seitiger Validierung und AJAX-Submit an Web3Forms.
 
 ---
 
@@ -201,31 +191,30 @@ Bei erfolgreicher Übermittlung wird das Formular ausgeblendet und eine Erfolgsm
 - Semantisches HTML (`<section>`, `<header>`, `<footer>`, `<main>`).
 - ARIA-Attribute werden konsequent verwendet (`aria-label`, `aria-labelledby`, `role`, `aria-live`, `aria-invalid`, `aria-describedby`).
 - Touch-Optimierung: `min-h-[56px]` und `touch-manipulation` auf interaktiven Elementen.
-- Inter-Font wird mit `preload` für Regular und Bold im `<head>` vorgeladen.
+- Inter-Font wird mit `preload` für Regular, Medium, SemiBold und Bold im `<head>` vorgeladen.
 - `scroll-behavior: smooth` für Anker-Navigation.
 - `prefers-reduced-motion` wird für Fade-In-Animationen berücksichtigt.
 
 ---
 
-## Security-Headers (Cloudflare Pages)
+## Security-Headers (Netlify)
 
-Die Datei `public/_headers` definiert folgende HTTP-Security-Header für alle Routen:
+Die Datei `netlify.toml` definiert folgende HTTP-Security-Header für alle Routen:
 
 | Header | Wert |
 |--------|------|
 | `X-Frame-Options` | `DENY` |
 | `X-Content-Type-Options` | `nosniff` |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` |
-| `Permissions-Policy` | Deaktiviert Sensoren (Accelerometer, Kamera, Geolocation, etc.) |
-| `Content-Security-Policy` | Einschränkung auf `self`, erlaubt `unsafe-inline` für Scripts/Styles, erlaubt Verbindungen zu `https://api.web3forms.com`, erlaubt Form-Action zu Web3Forms, erlaubt Google-Domains für GTM |
+| `Permissions-Policy` | Deaktiviert Sensoren (Accelerometer, Kamera, Geolocation, Gyroscope, Magnetometer, Mikrofon, Payment, USB) |
 
-> **Achtung:** Bei Änderungen an externen Diensten (z. B. neues Formular-Backend, Tracking-Scripts) muss die CSP in `public/_headers` entsprechend angepasst werden, sonst blockiert der Browser die Ressourcen.
+> **Wichtig:** Bei Änderungen an externen Diensten (z. B. neues Formular-Backend, Tracking-Scripts) sollten entsprechende Security-Header in `netlify.toml` ergänzt werden. Aktuell ist **kein Content-Security-Policy (CSP)** definiert – wenn eine CSP hinzugefügt wird, muss sie Verbindungen zu `https://api.web3forms.com`, Google-Domains für GTM und Inline-Scripts/Styles berücksichtigen.
 
 ---
 
 ## Rechtliche Seiten (DSGVO / TMG)
 
-- **`/datenschutz`** – Vollständige Datenschutzerklärung mit Angaben zu Web3Forms, Google Ads/GCLID, Server-Log-Dateien, Google Tag Manager und Cookie-Hinweis.
+- **`/datenschutz`** – Vollständige Datenschutzerklärung mit Angaben zu Web3Forms, Google Ads/GCLID, Server-Log-Dateien, Google Tag Manager, Cookie-Hinweis und Netlify als Hosting-Provider.
 - **`/impressum`** – Impressum mit Kontaktdaten (AlbinoDesign, Albin Salihu, De-Greiff-Straße 229, 47803 Krefeld), USt-ID (DE357374586) und Haftungsausschluss.
 - **`/404`** – Fehlerseite mit "Zurück zur Startseite"-Link, `robots="noindex, follow"`.
 
@@ -254,18 +243,17 @@ Das Projekt verfügt aktuell **über kein automatisiertes Test-Setup** (kein Jes
 - Keine Tracking-Cookies ohne explizite Zustimmung (Cookie-Banner mit Google Consent Mode v2).
 - Das Honeypot-Feld im Formular darf nicht entfernt werden.
 - `botcheck` ist eine per CSS versteckte Checkbox – Spam-Bots füllen sie oft aus, was zur Blockierung führt.
-- Die CSP in `public/_headers` schränkt externe Ressourcen stark ein – bei neuen Drittanbieter-Services muss sie erweitert werden.
-- GTM lädt erst nach aktiver Cookie-Einwilligung. Der GTM-Code ist in `Layout.astro` mit `type="text/plain"` blockiert und wird erst durch `src/scripts/cookie-consent.js` aktiviert.
+- GTM lädt erst nach aktiver Cookie-Einwilligung. Der GTM-Code ist in `Layout.astro` mit `type="text/plain"` blockiert und wird erst durch `public/scripts/cookie-consent.js` aktiviert.
 
 ---
 
 ## Deployment
 
 - Ausgabeordner: `./dist/` (reiner Static-Site-Export).
-- Hosting erfolgt über **Cloudflare Pages** (Wrangler-Deployment).
-- In der Datenschutzerklärung wird explizit **Cloudflare Pages** als Hosting-Provider erwähnt.
+- Hosting erfolgt über **Netlify**.
+- In der Datenschutzerklärung wird explizit **Netlify** als Hosting-Provider erwähnt.
 - Der Build-Prozess optimiert Bilder automatisch über Sharp.
-- `public/_headers` wird von Cloudflare Pages als Quelle für HTTP-Header verwendet.
+- `netlify.toml` wird von Netlify als Quelle für HTTP-Header verwendet.
 - `public/sitemap.xml` und `public/robots.txt` sind manuell gepflegt und müssen bei neuen Seiten aktualisiert werden.
 
 ---
@@ -274,3 +262,11 @@ Das Projekt verfügt aktuell **über kein automatisiertes Test-Setup** (kein Jes
 
 - Empfohlene Erweiterung: `astro-build.astro-vscode` (siehe `.vscode/extensions.json`).
 - Debug-Konfiguration für den Entwicklungsserver ist in `.vscode/launch.json` hinterlegt.
+
+---
+
+## Feature-Pläne
+
+Implementierungspläne für zukünftige Features liegen im Verzeichnis `.kimi/plans/`:
+- `gtm-dsgvo-integration.md` – Plan für die DSGVO-konforme GTM-Integration (bereits umgesetzt)
+- `ga4-gtag-integration.md` – Plan für GA4-Integration (empfohlen: Konfiguration über GTM-Dashboard statt direkter Code-Integration)

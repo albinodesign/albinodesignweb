@@ -8,20 +8,18 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "npm run build && wrangler dev",
+    "preview": "npm run build && npx serve dist",
     "astro": "astro",
-    "generate-types": "wrangler types",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && netlify deploy --prod --dir=dist"
   },
   "dependencies": {
     "astro": "^6.3.1"
   },
   "devDependencies": {
-    "autoprefixer": "^10.5.0",
+    "autoprefixer": "^10.4.21",
     "cssnano": "^7.1.9",
     "postcss": "^8.5.14",
-    "tailwindcss": "^3.4.19",
-    "wrangler": "^4.90.0"
+    "tailwindcss": "^3.4.19"
   },
   "overrides": {
     "vite": "^7"

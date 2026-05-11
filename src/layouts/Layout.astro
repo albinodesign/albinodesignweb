@@ -63,9 +63,13 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
     <title>{title}</title>
     
     <link rel="preload" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Inter-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin />
     
     <link rel="preconnect" href="https://api.web3forms.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
     
     <style is:inline>
       /* Critical CSS for above-the-fold */
@@ -93,6 +97,9 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
     <slot name="head" />
   </head>
   <body class="bg-light text-primary antialiased">
+    <a href="#main" class="absolute -top-10 left-4 z-50 bg-accent text-white px-4 py-2 rounded-lg font-semibold transition-all focus:top-4 focus:ring-2 focus:ring-accent focus:ring-offset-2">
+      Zum Inhalt springen
+    </a>
     <!-- Google Tag Manager (noscript) — DSGVO-konform -->
     <noscript data-cookiecategory="analytics">
       <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MDB35QMG"
@@ -103,9 +110,9 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
     <slot />
     
     <!-- Cookie Banner -->
-    <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie Einwilligung" class="fixed bottom-0 left-0 right-0 z-50 bg-dark text-light p-4 shadow-2xl transform translate-y-full transition-transform duration-300" style="display: none;">
+    <div id="cookie-banner" role="dialog" aria-modal="true" aria-live="polite" aria-label="Cookie Einwilligung" aria-describedby="cookie-banner-text" class="fixed bottom-0 left-0 right-0 z-50 bg-dark text-light p-4 shadow-2xl transform translate-y-full transition-transform duration-300" style="display: none;">
       <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div class="flex-1 text-sm">
+        <div id="cookie-banner-text" class="flex-1 text-sm">
           <p class="mb-1">
             <strong>Datenschutz ist uns wichtig.</strong>
           </p>
@@ -132,6 +139,6 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
       </div>
     </div>
     
-    <script src="../scripts/cookie-consent.js"></script>
+    <script src="/scripts/cookie-consent.js" is:inline defer></script>
   </body>
 </html>

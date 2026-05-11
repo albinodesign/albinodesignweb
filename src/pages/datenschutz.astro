@@ -1,18 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout 
   title="Datenschutzerklärung | AlbinoDesign"
   description="Datenschutzerklärung von AlbinoDesign. Informationen zur Verarbeitung Ihrer personenbezogenen Daten."
 >
-  <main class="min-h-screen bg-light">
-    <!-- Simple Header -->
-    <header class="bg-dark text-white py-6">
-      <div class="max-w-4xl mx-auto px-5">
-        <a href="/" class="text-xl font-bold tracking-tight hover:text-accent transition-colors">AlbinoDesign</a>
-      </div>
-    </header>
+  <main id="main" class="min-h-screen bg-light">
+    <Header />
     
     <div class="max-w-3xl mx-auto px-5 py-12 sm:py-16">
       <h1 class="text-3xl sm:text-4xl font-bold mb-10">Datenschutzerklärung</h1>
@@ -121,7 +118,7 @@ import Layout from '../layouts/Layout.astro';
         <section>
           <h2 class="text-xl font-semibold mb-3">8. Drittlandtransfer</h2>
           <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-            <p>Eine Übermittlung Ihrer Daten an Dritte findet nur statt, wenn dies zur Erfüllung unserer Dienstleistungen notwendig ist (z.B. Webhosting über Cloudflare Pages) oder wir gesetzlich dazu verpflichtet sind.</p>
+            <p>Eine Übermittlung Ihrer Daten an Dritte findet nur statt, wenn dies zur Erfüllung unserer Dienstleistungen notwendig ist (z.B. Webhosting über Netlify) oder wir gesetzlich dazu verpflichtet sind.</p>
           </div>
         </section>
         
@@ -134,16 +131,6 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
     
-    <!-- Footer -->
-    <footer class="bg-dark text-slate-400 py-10" role="contentinfo">
-      <div class="max-w-4xl mx-auto px-5 text-center">
-        <p class="text-sm mb-4">© 2026 AlbinoDesign. Alle Rechte vorbehalten.</p>
-        <div class="flex items-center justify-center gap-4 text-sm">
-          <a href="/" class="hover:text-white transition-colors underline underline-offset-2">Zurück zur Startseite</a>
-          <span aria-hidden="true">|</span>
-          <a href="/impressum" class="hover:text-white transition-colors underline underline-offset-2">Impressum</a>
-        </div>
-      </div>
-    </footer>
+    <Footer />
   </main>
 </Layout>

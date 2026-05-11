@@ -1,18 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout 
   title="Impressum | AlbinoDesign"
   description="Impressum von AlbinoDesign. Albin Salihu, Webdesign aus Krefeld."
 >
-  <main class="min-h-screen bg-light">
-    <!-- Simple Header -->
-    <header class="bg-dark text-white py-6">
-      <div class="max-w-4xl mx-auto px-5">
-        <a href="/" class="text-xl font-bold tracking-tight hover:text-accent transition-colors">AlbinoDesign</a>
-      </div>
-    </header>
+  <main id="main" class="min-h-screen bg-light">
+    <Header />
     
     <div class="max-w-3xl mx-auto px-5 py-12 sm:py-16">
       <h1 class="text-3xl sm:text-4xl font-bold mb-10">Impressum</h1>
@@ -70,16 +67,6 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
     
-    <!-- Footer -->
-    <footer class="bg-dark text-slate-400 py-10" role="contentinfo">
-      <div class="max-w-4xl mx-auto px-5 text-center">
-        <p class="text-sm mb-4">© 2026 AlbinoDesign. Alle Rechte vorbehalten.</p>
-        <div class="flex items-center justify-center gap-4 text-sm">
-          <a href="/" class="hover:text-white transition-colors underline underline-offset-2">Zurück zur Startseite</a>
-          <span aria-hidden="true">|</span>
-          <a href="/datenschutz" class="hover:text-white transition-colors underline underline-offset-2">Datenschutz</a>
-        </div>
-      </div>
-    </footer>
+    <Footer />
   </main>
 </Layout>

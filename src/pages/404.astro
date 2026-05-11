@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout 
@@ -7,7 +9,8 @@ import Layout from '../layouts/Layout.astro';
   description="Die angeforderte Seite konnte nicht gefunden werden."
   robots="noindex, follow"
 >
-  <main class="min-h-screen bg-light flex items-center justify-center px-5">
+  <Header />
+  <main id="main" class="min-h-screen bg-light flex items-center justify-center px-5">
     <div class="text-center max-w-lg">
       <h1 class="text-6xl font-bold text-primary mb-4">404</h1>
       <p class="text-xl text-muted mb-8">Diese Seite existiert leider nicht.</p>
@@ -16,4 +19,5 @@ import Layout from '../layouts/Layout.astro';
       </a>
     </div>
   </main>
+  <Footer />
 </Layout>

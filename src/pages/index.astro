@@ -2,7 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import Button from '../components/Button.astro';
 import Card from '../components/Card.astro';
+import Footer from '../components/Footer.astro';
 
+const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
+if (!web3formsKey) {
+  throw new Error('PUBLIC_WEB3FORMS_KEY ist nicht definiert. Bitte in .env setzen.');
+}
 ---
 
 <Layout>
@@ -35,7 +40,7 @@ import Card from '../components/Card.astro';
     </script>
   </Fragment>
 
-<main>
+<main id="main">
   <!-- 1. HERO SECTION -->
   <section class="relative min-h-[90vh] min-h-[90dvh] flex flex-col justify-center bg-gradient-to-br from-dark via-primary to-secondary text-white overflow-hidden" aria-label="Hero">
     <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--color-accent)_0%,_transparent_60%)]"></div>
@@ -61,12 +66,15 @@ import Card from '../components/Card.astro';
         <div class="shrink-0">
           <img 
             src="/images/portrait.webp" 
+            srcset="/images/portrait.webp 160w"
+            sizes="(max-width: 640px) 64px, 80px"
             alt="Albin Salihu - Webdesigner aus Krefeld" 
             width="160" 
             height="160" 
             class="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-accent"
             loading="eager"
             fetchpriority="high"
+            decoding="async"
           />
         </div>
         <div>
@@ -144,11 +152,14 @@ import Card from '../components/Card.astro';
               <div class="bg-dark rounded-[2rem] overflow-hidden">
                 <img 
                   src="/images/mockup1.webp" 
+                  srcset="/images/mockup1.webp 600w"
+                  sizes="(max-width: 768px) 90vw, 280px"
                   alt="Website Mockup für einen Handwerkerbetrieb" 
                   width="600" 
                   height="1662"
                   class="w-full h-auto"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -162,11 +173,14 @@ import Card from '../components/Card.astro';
               <div class="bg-dark rounded-[2rem] overflow-hidden">
                 <img 
                   src="/images/mockup2.webp" 
+                  srcset="/images/mockup2.webp 600w"
+                  sizes="(max-width: 768px) 90vw, 280px"
                   alt="Website Mockup für einen Bauunternehmen" 
                   width="600" 
                   height="1694"
                   class="w-full h-auto"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -180,11 +194,14 @@ import Card from '../components/Card.astro';
               <div class="bg-dark rounded-[2rem] overflow-hidden">
                 <img 
                   src="/images/mockup3.webp" 
+                  srcset="/images/mockup3.webp 600w"
+                  sizes="(max-width: 768px) 90vw, 280px"
                   alt="Website Mockup für einen Elektrobetrieb" 
                   width="600" 
                   height="1694"
                   class="w-full h-auto"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -204,11 +221,14 @@ import Card from '../components/Card.astro';
           <div class="flex items-center gap-3 mt-auto">
             <img 
               src="/images/review1.webp" 
+              srcset="/images/review1.webp 96w"
+              sizes="48px"
               alt="Steffen, Dachdecker aus Krefeld" 
               width="96" 
               height="96" 
               class="w-12 h-12 rounded-full object-cover"
               loading="lazy"
+              decoding="async"
             />
             <div class="text-left">
               <p class="font-semibold text-primary text-sm">Steffen</p>
@@ -227,11 +247,14 @@ import Card from '../components/Card.astro';
           <div class="flex items-center gap-3 mt-auto">
             <img 
               src="/images/review2.webp" 
+              srcset="/images/review2.webp 96w"
+              sizes="48px"
               alt="Gronowski, Elektromeister aus Mönchengladbach" 
               width="96" 
               height="96" 
               class="w-12 h-12 rounded-full object-cover"
               loading="lazy"
+              decoding="async"
             />
             <div class="text-left">
               <p class="font-semibold text-primary text-sm">Gronowski</p>
@@ -251,11 +274,14 @@ import Card from '../components/Card.astro';
           <div class="shrink-0">
             <img 
               src="/images/ubermich.webp" 
+              srcset="/images/ubermich.webp 600w"
+              sizes="(max-width: 640px) 256px, 320px"
               alt="Albin Salihu - Gründer von AlbinoDesign" 
               width="600" 
               height="800"
               class="w-64 sm:w-80 rounded-2xl shadow-xl h-auto"
               loading="lazy"
+              decoding="async"
             />
           </div>
           
@@ -363,7 +389,7 @@ import Card from '../components/Card.astro';
           <input type="checkbox" name="botcheck" class="hidden" style="display: none;" tabindex="-1" autocomplete="off" />
           
           <!-- Web3Forms Access Key -->
-          <input type="hidden" name="access_key" value={import.meta.env.PUBLIC_WEB3FORMS_KEY} />
+          <input type="hidden" name="access_key" value={web3formsKey} />
           
           <!-- GCLID Tracking -->
           <input type="hidden" name="gclid" id="gclid_field" value="" />
@@ -530,7 +556,6 @@ import Card from '../components/Card.astro';
                   class="mt-0.5 w-5 h-5 text-accent accent-accent shrink-0"
                   aria-required="true"
                   aria-describedby="error-datenschutz"
-                  aria-invalid="false"
                 />
                 <span>
                   Ich stimme der Verarbeitung meiner Daten gemäß der <a href="/datenschutz" class="text-accent underline hover:no-underline">Datenschutzerklärung</a> zu.
@@ -633,25 +658,7 @@ import Card from '../components/Card.astro';
   </section>
 </main>
 
-  <!-- 8. FOOTER -->
-  <footer class="bg-dark text-slate-400 py-10" role="contentinfo">
-    <div class="max-w-4xl mx-auto px-5 text-center">
-      <p class="text-sm mb-4">
-        © 2026 AlbinoDesign. Alle Rechte vorbehalten.
-      </p>
-      <div class="flex items-center justify-center gap-4 text-sm">
-        <a href="/impressum" class="hover:text-white transition-colors underline underline-offset-2">Impressum</a>
-        <span aria-hidden="true">|</span>
-        <a href="/datenschutz" class="hover:text-white transition-colors underline underline-offset-2">Datenschutz</a>
-      </div>
-      
-      <div class="mt-6 pt-6 border-t border-slate-800 text-xs text-slate-400 space-y-1">
-        <p>AlbinoDesign · Albin Salihu</p>
-        <p>De-Greiff-Straße 229, 47803 Krefeld</p>
-        <p>Tel: <a href="tel:+4915679755137" class="hover:text-slate-400 transition-colors">+49 15679 755137</a> · E-Mail: <a href="mailto:info@albinodesign.de" class="hover:text-slate-400 transition-colors">info@albinodesign.de</a></p>
-      </div>
-    </div>
-  </footer>
+  <Footer />
 
-  <script src="../scripts/form.js"></script>
+  <script src="/scripts/form.js" is:inline defer></script>
 </Layout>

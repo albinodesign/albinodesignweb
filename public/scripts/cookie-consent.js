@@ -60,6 +60,8 @@ window.hasCookieConsent = function () {
   return c && c.analytics === true;
 };
 
+window.showCookieBanner = showBanner;
+
 // ── GTM Aktivierung ──
 
 function activateGTM() {
@@ -70,7 +72,7 @@ function activateGTM() {
   scripts.forEach(function (script) {
     const newScript = document.createElement('script');
     newScript.type = 'text/javascript';
-    newScript.text = script.textContent;
+    newScript.textContent = script.textContent;
     script.parentNode.insertBefore(newScript, script);
     script.remove();
   });
