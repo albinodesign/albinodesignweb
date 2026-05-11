@@ -19,12 +19,13 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 | Framework | [Astro](https://astro.build/) v6.3.1 |
 | Ausgabe-Modus | Statisch (`output: 'static'`) |
 | Styling | [Tailwind CSS](https://tailwindcss.com/) v3.4.19 |
-| Post-Processing | PostCSS + Autoprefixer |
+| Post-Processing | PostCSS + Autoprefixer + cssnano |
 | Sprache | TypeScript (strict, erweitert `astro/tsconfigs/strict`) |
 | Laufzeit | Node.js ≥ 22.12.0 (definiert in `package.json` unter `engines`) |
 | Bildoptimierung | Sharp (via `astro:assets`, konfiguriert in `astro.config.mjs`) |
 | Formular-Backend | [Web3Forms](https://web3forms.com/) |
-| Hosting | Cloudflare Pages (explizit in Datenschutzerklärung genannt) |
+| Hosting | Cloudflare Pages (via Wrangler) |
+| Deployment | `wrangler deploy` (siehe `package.json` scripts) |
 
 ---
 
@@ -40,6 +41,12 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 │   ├── sitemap.xml            # Manuelle Sitemap für Google
 │   ├── og-image.jpg           # Open-Graph-Vorschaubild
 │   ├── _headers               # Cloudflare Pages Security-Headers (CSP, X-Frame-Options, etc.)
+│   ├── .assetsignore          # Ignoriert bestimmte Assets beim Build
+│   ├── images/                # Optimierte WebP-Bilder (für direkte Nutzung)
+│   │   ├── portrait.webp
+│   │   ├── ubermich.webp
+│   │   ├── mockup1-3.webp
+│   │   └── review1-2.webp
 │   └── fonts/                 # Inter Schriftarten (WOFF2, selbst-gehostet)
 │       ├── Inter-Regular.woff2
 │       ├── Inter-Medium.woff2
@@ -56,18 +63,23 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 │   ├── components/
 │   │   ├── Button.astro       # Wiederverwendbarer CTA-Button (href/type/variant/size)
 │   │   └── Card.astro         # Container-Komponente mit optionalem Hover-Effekt
+│   ├── scripts/
+│   │   ├── cookie-consent.js  # Cookie-Banner + Google Consent Mode v2 + GTM-Aktivierung
+│   │   └── form.js            # Multi-Step-Formular + GCLID-Tracking + AJAX-Submit
 │   ├── styles/
 │   │   └── global.css         # Tailwind-Direktiven, CSS-Variablen, @font-face, text-balance
-│   └── assets/                # Optimierte Bilder (via astro:assets / <Image />)
-│       ├── portrait.jpeg      # Hero-Portrait (Albin Salihu)
-│       ├── ubermich.jpeg      # Über-mich-Bereich
-│       ├── mockup1-3.png      # Portfolio-Mockups (Handy-Rahmen)
-│       └── review1-2.jpg      # Kundenbewertungs-Avatare
+│   └── assets/                # Quell-Bilder (via astro:assets / <Image /> optimierbar)
+│       ├── portrait.jpeg
+│       ├── ubermich.jpeg
+│       ├── mockup1-3.png
+│       └── review1-2.jpg
 ├── scripts/
 │   └── generate-placeholders.mjs  # Node.js-Script mit Sharp zur Erstellung von Platzhalter-Bildern
 ├── .vscode/
 │   ├── extensions.json        # Empfiehlt "astro-build.astro-vscode"
 │   └── launch.json            # Debug-Konfiguration für "astro dev"
+├── .kimi/
+│   └── plans/                 # Implementierungspläne für zukünftige Features
 ├── astro.config.mjs
 ├── tailwind.config.mjs
 ├── postcss.config.js
@@ -86,11 +98,17 @@ npm run dev
 # Produktions-Build (statisch nach ./dist/)
 npm run build
 
-# Build lokal previewen
+# Build lokal mit Wrangler previewen
 npm run preview
 
 # Astro CLI-Befehle
 npm run astro -- [command]
+
+# Wrangler Types generieren (für Cloudflare-Types)
+npm run generate-types
+
+# Deploy zu Cloudflare Pages
+npm run deploy
 ```
 
 **Wichtig:** Vor jedem Deploy muss ein lokaler Build und Preview durchgeführt werden (`npm run build && npm run preview`), um sicherzustellen, dass die statische Ausgabe fehlerfrei ist.
@@ -113,7 +131,7 @@ npm run astro -- [command]
   - `--color-accent-hover: #ea580c`
   - `--color-dark: #020617`
   - `--color-light: #f8fafc`
-  - `--color-muted: #64748b`
+  - `--color-muted: #475569`
 - Die `tailwind.config.mjs` erweitert das Theme um diese Farben als `primary`, `secondary`, `accent`, `dark`, `light`, `muted`.
 - Schriftart: **Inter** (selbst-gehostet aus `public/fonts/`, geladen mit `font-display: swap`).
 - Wichtige Utility-Klasse: `text-balance` (für bessere Typografie bei Überschriften, via `@layer utilities` in `global.css`).
@@ -121,18 +139,19 @@ npm run astro -- [command]
 - Moderne CSS-Features werden verwendet, z. B. `has-[:checked]` für Radio-Button-Styles.
 
 ### Bilder
-- Alle Bilder werden über `astro:assets` und die `<Image />`-Komponente eingebunden.
+- Alle Bilder werden über `astro:assets` und die `<Image />`-Komponente eingebunden (wo möglich).
 - `loading="eager"` und `fetchpriority="high"` werden nur für Above-the-Fold-Bilder (Portrait im Hero) verwendet.
-- Assets liegen unter `src/assets/` und werden von Astro automatisch optimiert (via Sharp-Service, konfiguriert in `astro.config.mjs`).
+- Quell-Assets liegen unter `src/assets/` und werden von Astro automatisch optimiert (via Sharp-Service, konfiguriert in `astro.config.mjs`).
+- Optimierte WebP-Varianten liegen unter `public/images/` für direkte Nutzung.
 - Niedrig-aufgelöste Platzhalter können bei Bedarf mit `scripts/generate-placeholders.mjs` (Sharp + SVG) generiert werden. Das Script ist nicht in `package.json` eingebunden und muss bei Bedarf manuell ausgeführt werden.
 
 ### Client-seitige Logik
-- Astro verwendet `script is:inline` für Inline-JavaScript, das direkt im HTML ausgeführt wird.
-- Es gibt **kein Frontend-Framework** wie React oder Vue – alles ist Vanilla JS innerhalb von `<script is:inline>`.
+- Astro verwendet `<script src="...">` für externe JavaScript-Dateien, die direkt im HTML eingebunden werden.
+- Es gibt **kein Frontend-Framework** wie React oder Vue – alles ist Vanilla JS innerhalb von `src/scripts/`.
 - Wichtige Skripte im Projekt:
-  1. **Cookie-Consent-Banner** (`Layout.astro`) – speichert Zustimmung in `localStorage` unter `albino_cookie_consent`.
-  2. **GCLID-Tracking** (`index.astro`) – liest `?gclid=` aus der URL, speichert es in einem Hidden-Formularfeld sowie in `localStorage` unter `albino_gclid`.
-  3. **Multi-Step-Formular** (`index.astro`) – 4 Schritte mit client-seitiger Validierung und AJAX-Submit an Web3Forms.
+  1. **Cookie-Consent-Banner** (`src/scripts/cookie-consent.js`) – speichert Zustimmung in `localStorage` unter `albino_cookie_consent`, implementiert Google Consent Mode v2, aktiviert GTM erst nach Einwilligung.
+  2. **GCLID-Tracking** (`src/scripts/form.js`) – liest `?gclid=` aus der URL, speichert es in einem Hidden-Formularfeld sowie in `localStorage` unter `albino_gclid`.
+  3. **Multi-Step-Formular** (`src/scripts/form.js`) – 4 Schritte mit client-seitiger Validierung und AJAX-Submit an Web3Forms.
 
 ---
 
@@ -182,7 +201,7 @@ Bei erfolgreicher Übermittlung wird das Formular ausgeblendet und eine Erfolgsm
 - Semantisches HTML (`<section>`, `<header>`, `<footer>`, `<main>`).
 - ARIA-Attribute werden konsequent verwendet (`aria-label`, `aria-labelledby`, `role`, `aria-live`, `aria-invalid`, `aria-describedby`).
 - Touch-Optimierung: `min-h-[56px]` und `touch-manipulation` auf interaktiven Elementen.
-- Inter-Font wird mit `preload` für Regular, SemiBold, Bold und Medium im `<head>` vorgeladen.
+- Inter-Font wird mit `preload` für Regular und Bold im `<head>` vorgeladen.
 - `scroll-behavior: smooth` für Anker-Navigation.
 - `prefers-reduced-motion` wird für Fade-In-Animationen berücksichtigt.
 
@@ -198,7 +217,7 @@ Die Datei `public/_headers` definiert folgende HTTP-Security-Header für alle Ro
 | `X-Content-Type-Options` | `nosniff` |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` |
 | `Permissions-Policy` | Deaktiviert Sensoren (Accelerometer, Kamera, Geolocation, etc.) |
-| `Content-Security-Policy` | Einschränkung auf `self`, erlaubt `unsafe-inline` für Scripts/Styles, erlaubt Verbindungen zu `https://api.web3forms.com`, erlaubt Form-Action zu Web3Forms |
+| `Content-Security-Policy` | Einschränkung auf `self`, erlaubt `unsafe-inline` für Scripts/Styles, erlaubt Verbindungen zu `https://api.web3forms.com`, erlaubt Form-Action zu Web3Forms, erlaubt Google-Domains für GTM |
 
 > **Achtung:** Bei Änderungen an externen Diensten (z. B. neues Formular-Backend, Tracking-Scripts) muss die CSP in `public/_headers` entsprechend angepasst werden, sonst blockiert der Browser die Ressourcen.
 
@@ -206,7 +225,7 @@ Die Datei `public/_headers` definiert folgende HTTP-Security-Header für alle Ro
 
 ## Rechtliche Seiten (DSGVO / TMG)
 
-- **`/datenschutz`** – Vollständige Datenschutzerklärung mit Angaben zu Web3Forms, Google Ads/GCLID, Server-Log-Dateien und Cookie-Hinweis.
+- **`/datenschutz`** – Vollständige Datenschutzerklärung mit Angaben zu Web3Forms, Google Ads/GCLID, Server-Log-Dateien, Google Tag Manager und Cookie-Hinweis.
 - **`/impressum`** – Impressum mit Kontaktdaten (AlbinoDesign, Albin Salihu, De-Greiff-Straße 229, 47803 Krefeld), USt-ID (DE357374586) und Haftungsausschluss.
 - **`/404`** – Fehlerseite mit "Zurück zur Startseite"-Link, `robots="noindex, follow"`.
 
@@ -232,17 +251,18 @@ Das Projekt verfügt aktuell **über kein automatisiertes Test-Setup** (kein Jes
 ## Sicherheitshinweise
 
 - Die `.env`-Datei enthält den Web3Forms-API-Key und darf **niemals committet** werden.
-- Keine Tracking-Cookies ohne explizite Zustimmung (Cookie-Banner).
+- Keine Tracking-Cookies ohne explizite Zustimmung (Cookie-Banner mit Google Consent Mode v2).
 - Das Honeypot-Feld im Formular darf nicht entfernt werden.
 - `botcheck` ist eine per CSS versteckte Checkbox – Spam-Bots füllen sie oft aus, was zur Blockierung führt.
 - Die CSP in `public/_headers` schränkt externe Ressourcen stark ein – bei neuen Drittanbieter-Services muss sie erweitert werden.
+- GTM lädt erst nach aktiver Cookie-Einwilligung. Der GTM-Code ist in `Layout.astro` mit `type="text/plain"` blockiert und wird erst durch `src/scripts/cookie-consent.js` aktiviert.
 
 ---
 
 ## Deployment
 
 - Ausgabeordner: `./dist/` (reiner Static-Site-Export).
-- Geeignet für jede Static-Hosting-Plattform (Cloudflare Pages, Netlify, Vercel, GitHub Pages).
+- Hosting erfolgt über **Cloudflare Pages** (Wrangler-Deployment).
 - In der Datenschutzerklärung wird explizit **Cloudflare Pages** als Hosting-Provider erwähnt.
 - Der Build-Prozess optimiert Bilder automatisch über Sharp.
 - `public/_headers` wird von Cloudflare Pages als Quelle für HTTP-Header verwendet.
