@@ -143,7 +143,8 @@ if (form) {
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email.value.trim() || !emailRegex.test(email.value.trim())) {
+      const emailValue = email.value.trim();
+      if (emailValue && !emailRegex.test(emailValue)) {
         valid = false;
         if (errorEmail) errorEmail.classList.remove('hidden');
         email.setAttribute('aria-invalid', 'true');

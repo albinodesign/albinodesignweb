@@ -1,4 +1,4 @@
-# AlbinoDesign Website – Agenten-Handbuch
+<!-- AlbinoDesign Website – Agenten-Handbuch -->
 
 Dieses Dokument enthält alle relevanten Informationen, die ein KI-Coding-Agent benötigt, um im AlbinoDesign-Projekt effektiv arbeiten zu können.
 
@@ -66,7 +66,9 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 │   │   └── Layout.astro       # Basis-Layout mit SEO, Cookie-Banner, Fonts, Critical CSS, JSON-LD
 │   ├── components/
 │   │   ├── Button.astro       # Wiederverwendbarer CTA-Button (href/type/variant/size)
-│   │   └── Card.astro         # Container-Komponente mit optionalem Hover-Effekt
+│   │   ├── Card.astro         # Container-Komponente mit optionalem Hover-Effekt
+│   │   ├── Footer.astro       # Seitenfuß mit rechtlichen Links und Cookie-Einstellungen
+│   │   └── Header.astro       # Kopfzeile mit Logo-Link (nur auf Unterseiten)
 │   └── styles/
 │       └── global.css         # Tailwind-Direktiven, CSS-Variablen, @font-face, text-balance
 ├── .vscode/
@@ -140,7 +142,7 @@ npm run deploy
 - Es gibt **kein Frontend-Framework** wie React oder Vue – alles ist Vanilla JS innerhalb von `public/scripts/`.
 - Wichtige Skripte im Projekt:
   1. **Cookie-Consent-Banner** (`public/scripts/cookie-consent.js`) – speichert Zustimmung in `localStorage` unter `albino_cookie_consent`, implementiert Google Consent Mode v2, aktiviert GTM erst nach Einwilligung.
-  2. **GCLID-Tracking** (`public/scripts/form.js`) – liest `?gclid=` aus der URL, speichert es in einem Hidden-Formularfeld sowie in `localStorage` unter `albino_gclid`.
+  2. **GCLID-Tracking** (`public/scripts/form.js`) – liest `?gclid=` aus der URL, speichert es in einem Hidden-Formularfeld sowie in `localStorage` unter `albino_gclid` (max. 90 Tage).
   3. **Multi-Step-Formular** (`public/scripts/form.js`) – 4 Schritte mit client-seitiger Validierung und AJAX-Submit an Web3Forms.
 
 ---
@@ -170,15 +172,15 @@ Das Kontaktformular auf der Startseite ist ein **4-stufiges Multi-Step-Formular*
 - Honeypot-Feld (`botcheck`, versteckte Checkbox) zur Spam-Abwehr.
 - Client-seitige Validierung vor jedem Schritt-Wechsel und vor dem Absenden.
 - E-Mail-Validierung via Regex: `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`.
-- GCLID-Tracking für Google Ads Conversion-Zuordnung (Hidden-Field + localStorage).
+- GCLID-Tracking für Google Ads Conversion-Zuordnung (Hidden-Field + localStorage, 90 Tage Haltbarkeit).
 
 **Barrierefreiheit & UX:**
-- Fokus-Management: Beim Schritt-Wechsel wird der Fokus auf die Überschrift des neuen Schritts gesetzt.
+- Fokus-Management: Beim Schritt-Wechsel wird der Fokus auf die Überschrift (`legend` oder `h3`) des neuen Schritts gesetzt.
 - Auf Mobilgeräten wird automatisch zum Formularanfang gescrollt.
 - Fortschritts-Indikator mit 4 visuellen Punkten.
 - **No-JS-Fallback:** Wenn JavaScript deaktiviert ist, werden alle Schritte sichtbar und das Formular wird als normales HTML-Formular abgesendet.
 
-Bei erfolgreicher Übermittlung wird das Formular ausgeblendet und eine Erfolgsmeldung angezeigt.
+Bei erfolgreicher Übermittlung wird das Formular ausgeblendet und eine Erfolgsmeldung angezeigt. Bei Fehlern wird eine Fehlermeldung mit Telefonnummer eingeblendet und der Submit-Button reaktiviert.
 
 ---
 
@@ -186,14 +188,15 @@ Bei erfolgreicher Übermittlung wird das Formular ausgeblendet und eine Erfolgsm
 
 - Jede Seite nutzt das `Layout.astro` mit individuellem `title` und `description`.
 - Open Graph und Twitter Card Meta-Tags sind vorhanden.
-- Canonical URL ist fest auf `https://albinodesign.de/` gesetzt.
+- Canonical URL wird aus `Astro.url.pathname` und `https://albinodesign.de/` generiert.
 - **JSON-LD Structured Data:** `LocalBusiness`-Schema auf der Startseite (Name, Adresse, Telefon, E-Mail, Gründer).
-- Semantisches HTML (`<section>`, `<header>`, `<footer>`, `<main>`).
+- Semantisches HTML (`<section>`, `<header>`, `<footer>`, `<main>`, `<article>`).
 - ARIA-Attribute werden konsequent verwendet (`aria-label`, `aria-labelledby`, `role`, `aria-live`, `aria-invalid`, `aria-describedby`).
 - Touch-Optimierung: `min-h-[56px]` und `touch-manipulation` auf interaktiven Elementen.
 - Inter-Font wird mit `preload` für Regular, Medium, SemiBold und Bold im `<head>` vorgeladen.
 - `scroll-behavior: smooth` für Anker-Navigation.
 - `prefers-reduced-motion` wird für Fade-In-Animationen berücksichtigt.
+- Skip-Link („Zum Inhalt springen") ist im Layout vorhanden.
 
 ---
 
