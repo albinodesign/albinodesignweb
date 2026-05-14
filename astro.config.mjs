@@ -7,6 +7,9 @@ export default defineConfig({
   compressHTML: true,
   site: 'https://albinodesign.de',
   outDir: './dist',
+  build: {
+    inlineStylesheets: 'always',
+  },
   vite: {
     build: {
       minify: true,

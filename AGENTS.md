@@ -48,9 +48,7 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 │   │   ├── ubermich.webp
 │   │   ├── mockup1.webp
 │   │   ├── mockup2.webp
-│   │   ├── mockup3.webp
-│   │   ├── review1.webp
-│   │   └── review2.webp
+│   │   └── mockup3.webp
 │   └── fonts/                 # Inter Schriftarten (WOFF2, selbst-gehostet)
 │       ├── Inter-Regular.woff2
 │       ├── Inter-Medium.woff2
@@ -76,6 +74,9 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 │   └── launch.json            # Debug-Konfiguration für "astro dev"
 ├── .kimi/
 │   └── plans/                 # Implementierungspläne für zukünftige Features
+│       ├── gtm-dsgvo-integration.md   # Plan für GTM-Integration (umgesetzt)
+│       └── ga4-gtag-integration.md    # Plan für GA4-Integration (empfohlen: über GTM-Dashboard)
+├── scripts/                   # Leer – Projekt-root-Script-Verzeichnis (nicht in Verwendung)
 ├── astro.config.mjs
 ├── tailwind.config.mjs
 ├── postcss.config.js
@@ -83,6 +84,8 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 ├── tsconfig.json
 └── package.json
 ```
+
+> **Hinweis:** Alle Bilder liegen unter `public/images/`; es gibt kein `src/assets/`-Verzeichnis. Das Verzeichnis `scripts/` auf Projekt-Root-Ebene ist aktuell leer. Client-seitige JavaScript-Dateien befinden sich ausschließlich unter `public/scripts/`.
 
 ---
 
@@ -211,7 +214,7 @@ Die Datei `netlify.toml` definiert folgende HTTP-Security-Header für alle Route
 | `Referrer-Policy` | `strict-origin-when-cross-origin` |
 | `Permissions-Policy` | Deaktiviert Sensoren (Accelerometer, Kamera, Geolocation, Gyroscope, Magnetometer, Mikrofon, Payment, USB) |
 
-> **Wichtig:** Bei Änderungen an externen Diensten (z. B. neues Formular-Backend, Tracking-Scripts) sollten entsprechende Security-Header in `netlify.toml` ergänzt werden. Aktuell ist **kein Content-Security-Policy (CSP)** definiert – wenn eine CSP hinzugefügt wird, muss sie Verbindungen zu `https://api.web3forms.com`, Google-Domains für GTM und Inline-Scripts/Styles berücksichtigen.
+> **Wichtig:** Aktuell ist **kein Content-Security-Policy (CSP)** definiert. Bei der Hinzufügung einer CSP müssen Verbindungen zu `https://api.web3forms.com`, Google-Domains für GTM und Inline-Scripts/Styles berücksichtigt werden.
 
 ---
 

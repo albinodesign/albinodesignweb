@@ -62,6 +62,34 @@ window.hasCookieConsent = function () {
 
 window.showCookieBanner = showBanner;
 
+// ── GTM Lazy Loading ──
+
+let gtmScheduled = false;
+
+function scheduleGTM() {
+  if (gtmScheduled) return;
+  gtmScheduled = true;
+
+  // Remove interaction listeners
+  ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(function (evt) {
+    window.removeEventListener(evt, onUserInteraction, { passive: true });
+  });
+
+  activateGTM();
+}
+
+function onUserInteraction() {
+  scheduleGTM();
+}
+
+function lazyLoadGTM() {
+  // Activate GTM on first user interaction or after 3.5s (whichever comes first)
+  ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(function (evt) {
+    window.addEventListener(evt, onUserInteraction, { passive: true, once: true });
+  });
+  setTimeout(scheduleGTM, 3500);
+}
+
 // ── GTM Aktivierung ──
 
 function activateGTM() {
@@ -128,8 +156,8 @@ if (!consent) {
   // Noch keine Entscheidung → Banner zeigen
   setTimeout(showBanner, 1000);
 } else if (consent.analytics === true) {
-  // Bereits zugestimmt → GTM sofort aktivieren
-  activateGTM();
+  // Bereits zugestimmt → GTM verzögert laden (bei Interaktion oder nach 3.5s)
+  lazyLoadGTM();
 }
 
 // ── Event Listener ──
@@ -137,7 +165,7 @@ if (!consent) {
 if (acceptBtn) {
   acceptBtn.addEventListener('click', function () {
     window.setCookieConsent({ necessary: true, analytics: true });
-    activateGTM();
+    scheduleGTM();
     hideBanner();
   });
 }
