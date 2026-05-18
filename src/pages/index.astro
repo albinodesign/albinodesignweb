@@ -465,7 +465,7 @@ if (!web3formsKey) {
           
           <!-- Step 4: Kontaktdaten -->
           <div id="step-4" class="form-step hidden" data-step="4">
-            <h3 class="text-lg font-semibold mb-4">Wohin darf ich Ihren kostenlosen Website-Entwurf senden?</h3>
+            <h3 class="text-lg font-semibold mb-4">Fast geschafft! Wie kann ich Sie erreichen, um die Details für den Entwurf zu besprechen?</h3>
             <div class="space-y-4">
               <div>
                 <label for="name" class="block text-sm font-medium mb-1.5">Ihr Name</label>
@@ -485,13 +485,14 @@ if (!web3formsKey) {
               </div>
               
               <div>
-                <label for="email" class="block text-sm font-medium mb-1.5">E-Mail-Adresse <span class="text-muted font-normal">(optional)</span></label>
+                <label for="email" class="block text-sm font-medium mb-1.5">E-Mail-Adresse</label>
                 <input 
                   type="email" 
                   id="email" 
                   name="email" 
+                  required
                   autocomplete="email"
-                  aria-required="false"
+                  aria-required="true"
                   aria-describedby="error-email"
                   aria-invalid="false"
                   class="w-full px-4 py-3.5 border-2 border-slate-200 rounded-xl focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition-colors min-h-[56px]"
