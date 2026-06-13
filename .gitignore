@@ -26,3 +26,6 @@ pnpm-debug.log*
 # python virtual environment
 .venv/
 
+# Kimi agent plans
+.kimi/
+

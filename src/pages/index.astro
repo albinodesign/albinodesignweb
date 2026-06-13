@@ -2,7 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import Button from '../components/Button.astro';
 import Card from '../components/Card.astro';
+import Icon from '../components/Icon.astro';
 import Footer from '../components/Footer.astro';
+import site from '../data/site.json';
 
 const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 if (!web3formsKey) {
@@ -13,36 +15,80 @@ if (!web3formsKey) {
 <Layout>
   <Fragment slot="head">
     <!-- Build refresh: force Cloudflare Pages rebuild -->
-    <script type="application/ld+json">
-    {
+    <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "@id": "https://albinodesign.de/#business",
-      "name": "AlbinoDesign",
-      "description": "Premium Handwerker-Websites in 3 Tagen. Webdesign aus Krefeld.",
-      "url": "https://albinodesign.de/",
+      "name": site.name,
+      "description": "Moderne Handwerker-Websites in 3 Tagen. Webdesign aus Krefeld.",
+      "url": site.url,
       "image": "https://albinodesign.de/og-image.jpg",
-      "telephone": "+4915679755137",
-      "email": "info@albinodesign.de",
+      "telephone": site.phone,
+      "email": site.email,
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "De-Greiff-Straße 229",
-        "addressLocality": "Krefeld",
-        "postalCode": "47803",
+        "streetAddress": site.street,
+        "addressLocality": site.city,
+        "postalCode": site.zip,
         "addressCountry": "DE"
       },
       "priceRange": "€",
       "founder": {
         "@type": "Person",
-        "name": "Albin Salihu"
+        "name": site.founder
       }
-    }
-    </script>
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Warum sind Sie günstiger als eine klassische Webdesign-Agentur?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ich arbeite bewusst ohne großes Team und ohne teures Büro. Die dadurch gesparten Verwaltungskosten gebe ich direkt an Sie weiter – bei gleicher Qualität wie eine Agentur."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Gehört die Website nach der Fertigstellung zu 100% mir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, absolut. Alle Zugänge, Dateien und Inhalte liegen bei Ihnen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kann ich Texte und Bilder später selbst ändern?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Teils teils. Ich nutze ein CMS, also können Sie viele Inhalte wie Texte und Bilder problemlos selbst anpassen. Bei komplexeren Änderungen unterstütze ich Sie gerne."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Was brauche ich, bevor wir starten?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Keine fertigen Texte nötig. Zum Start schicke ich Ihnen einen kurzen Fragebogen. Daraus entwickle ich die Texte. Bei Bildern nutze ich Ihre, ansonsten greife ich auf hochwertige KI-Bilder zurück."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Was, wenn ich nicht zufrieden bin?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dann ändern wir so lange ab, bis Sie zu 100% zufrieden sind! Sie bekommen vorab einen Entwurf, bevor eine einzige Zeile Code geschrieben wird."
+          }
+        }
+      ]
+    })} />
   </Fragment>
 
 <main id="main">
   <!-- 1. HERO SECTION -->
-  <section class="relative min-h-[90vh] min-h-[90dvh] flex flex-col justify-center bg-gradient-to-br from-dark via-primary to-secondary text-white overflow-hidden" aria-label="Hero">
+  <section class="relative min-h-[90dvh] flex flex-col justify-center bg-gradient-to-br from-dark via-primary to-secondary text-white overflow-hidden" aria-label="Hero">
     <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--color-accent)_0%,_transparent_60%)]"></div>
     
     <div class="relative z-10 w-full max-w-5xl mx-auto px-5 py-12 sm:py-20">
@@ -53,7 +99,7 @@ if (!web3formsKey) {
       
       <!-- Headline -->
       <h1 class="fade-in fade-in-delay-1 text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-balance">
-        Ich baue Ihre Premium Handwerker-Website in 3 Tagen.
+        Ich baue Ihre moderne Handwerker-Website schlüsselfertig in 3 Tagen.
       </h1>
       
       <!-- Sub-Headline -->
@@ -66,8 +112,6 @@ if (!web3formsKey) {
         <div class="shrink-0">
           <img 
             src="/images/portrait.webp" 
-            srcset="/images/portrait.webp 160w"
-            sizes="(max-width: 640px) 64px, 80px"
             alt="Albin Salihu - Webdesigner aus Krefeld" 
             width="160" 
             height="160" 
@@ -80,8 +124,8 @@ if (!web3formsKey) {
         <div>
           <p class="text-sm font-semibold text-white">Albin Salihu</p>
           <p class="text-sm text-slate-400">Webdesign aus Krefeld</p>
-          <div class="flex items-center gap-1 mt-1">
-            <span class="text-accent text-xs">★★★★★</span>
+          <div class="flex items-center gap-1 mt-1" aria-label="5 von 5 Sternen">
+            <span class="text-accent text-xs" aria-hidden="true">★★★★★</span>
             <span class="text-xs text-slate-400">5.0 Bewertung</span>
           </div>
         </div>
@@ -128,7 +172,7 @@ if (!web3formsKey) {
         <div class="flex items-start gap-4 bg-secondary/50 rounded-xl p-5 border border-slate-700">
           <span class="text-2xl shrink-0" aria-hidden="true">❌</span>
           <p class="text-slate-200 leading-relaxed">
-            Premium-Kunden gehen zur Konkurrenz, weil dort der erste Eindruck professioneller wirkt.
+            Kaufkräftige Kunden gehen zur Konkurrenz, weil dort der erste Eindruck professioneller wirkt.
           </p>
         </div>
       </div>
@@ -137,103 +181,80 @@ if (!web3formsKey) {
 
   <!-- 3. PORTFOLIO & SOCIAL PROOF SECTION -->
   <section class="bg-light py-16 sm:py-24" aria-labelledby="portfolio-heading">
-    <div class="max-w-6xl mx-auto px-5">
+    <div class="max-w-7xl mx-auto px-5">
       <h2 id="portfolio-heading" class="text-2xl sm:text-3xl font-bold mb-4 text-center text-balance">
         So modern könnte Ihr Betrieb nächste Woche aussehen
       </h2>
       <p class="text-muted text-center mb-12 max-w-2xl mx-auto">Professionelle Websites, die auf jedem Gerät perfekt aussehen.</p>
       
       <!-- Portfolio Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-        <!-- Mockup 1 -->
-        <div class="flex flex-col items-center">
-          <div class="relative w-full max-w-[280px]">
-            <div class="bg-dark rounded-[2.5rem] p-2 shadow-2xl border-4 border-slate-700">
-              <div class="bg-dark rounded-[2rem] overflow-hidden">
-                <img 
-                  src="/images/mockup1.webp" 
-                  srcset="/images/mockup1.webp 600w"
-                  sizes="(max-width: 768px) 90vw, 280px"
-                  alt="Website Mockup für einen Handwerkerbetrieb" 
-                  width="600" 
-                  height="1662"
-                  class="w-full h-auto"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-            </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
+        <!-- Referenz 1: THZ Renovierung -->
+        <Card class="flex flex-col">
+          <div slot="header" class="overflow-hidden rounded-t-2xl -mt-6 -mx-6 mb-5">
+            <img 
+              src="/images/thzmockup.webp" 
+              srcset="/images/thzmockup-400.webp 400w, /images/thzmockup-800.webp 800w, /images/thzmockup-1200.webp 1200w, /images/thzmockup.webp 1535w"
+              sizes="(max-width: 640px) 90vw, (max-width: 1280px) 50vw, 33vw"
+              alt="Website-Referenz THZ Renovierung" 
+              width="1535" 
+              height="1024"
+              class="w-full h-auto"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
-        </div>
-        
-        <!-- Mockup 2 -->
-        <div class="flex flex-col items-center">
-          <div class="relative w-full max-w-[280px]">
-            <div class="bg-dark rounded-[2.5rem] p-2 shadow-2xl border-4 border-slate-700">
-              <div class="bg-dark rounded-[2rem] overflow-hidden">
-                <img 
-                  src="/images/mockup2.webp" 
-                  srcset="/images/mockup2.webp 600w"
-                  sizes="(max-width: 768px) 90vw, 280px"
-                  alt="Website Mockup für einen Bauunternehmen" 
-                  width="600" 
-                  height="1694"
-                  class="w-full h-auto"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Mockup 3 -->
-        <div class="flex flex-col items-center">
-          <div class="relative w-full max-w-[280px]">
-            <div class="bg-dark rounded-[2.5rem] p-2 shadow-2xl border-4 border-slate-700">
-              <div class="bg-dark rounded-[2rem] overflow-hidden">
-                <img 
-                  src="/images/mockup3.webp" 
-                  srcset="/images/mockup3.webp 600w"
-                  sizes="(max-width: 768px) 90vw, 280px"
-                  alt="Website Mockup für einen Elektrobetrieb" 
-                  width="600" 
-                  height="1694"
-                  class="w-full h-auto"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Testimonials -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        <Card class="flex flex-col items-center text-center">
-          <div class="flex gap-1 mb-3 text-accent text-lg" aria-label="5 von 5 Sternen">
-            ★★★★★
-          </div>
-          <p class="text-primary mb-6 leading-relaxed italic">
-            "Alles in allem sehr zufrieden. Website sieht klasse aus und war schnell online. Ein kleiner Text musste nochmal geändert werden aber Albin hat das direkt erledigt. Für den Preis bekommt man echt was Ordentliches. Werde ich weiterempfehlen."
-          </p>
-          <div class="mt-auto text-center">
-            <p class="font-semibold text-primary text-sm">Steffen L.</p>
-            <p class="text-muted text-xs">Dachdecker, Krefeld</p>
+          <div class="mt-auto pt-4 flex justify-center">
+            <Button href="https://thz-renovierung.de/" variant="outline" target="_blank" rel="noopener noreferrer" class="min-h-[56px] touch-manipulation">
+              Live-Website ansehen
+              <Icon name="external-link" class="w-4 h-4 ml-2" />
+            </Button>
           </div>
         </Card>
         
-        <Card class="flex flex-col items-center text-center">
-          <div class="flex gap-1 mb-3 text-accent text-lg" aria-label="5 von 5 Sternen">
-            ★★★★★
+        <!-- Referenz 2: Montagebau Fabian -->
+        <Card class="flex flex-col">
+          <div slot="header" class="overflow-hidden rounded-t-2xl -mt-6 -mx-6 mb-5">
+            <img 
+              src="/images/fabianmockup.webp" 
+              srcset="/images/fabianmockup-400.webp 400w, /images/fabianmockup-800.webp 800w, /images/fabianmockup-1200.webp 1200w, /images/fabianmockup.webp 1536w"
+              sizes="(max-width: 640px) 90vw, (max-width: 1280px) 50vw, 33vw"
+              alt="Website-Referenz Montagebau Fabian" 
+              width="1536" 
+              height="1024"
+              class="w-full h-auto"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
-          <p class="text-primary mb-6 leading-relaxed italic">
-            "Albin hat unsere alte Website komplett erneuert. Von der ersten Anfrage bis zur Fertigstellung alles top. Er nimmt sich Zeit und erklärt auch mal was wenn man fragt. Preis-Leistung passt. Gerne wieder!"
-          </p>
-          <div class="mt-auto text-center">
-            <p class="font-semibold text-primary text-sm">Gronowski M.</p>
-            <p class="text-muted text-xs">Elektromeister, Mönchengladbach</p>
+          <div class="mt-auto pt-4 flex justify-center">
+            <Button href="https://montagebau-fabian.de/" variant="outline" target="_blank" rel="noopener noreferrer" class="min-h-[56px] touch-manipulation">
+              Live-Website ansehen
+              <Icon name="external-link" class="w-4 h-4 ml-2" />
+            </Button>
+          </div>
+        </Card>
+        
+        <!-- Referenz 3: ESH Haustechnik -->
+        <Card class="flex flex-col">
+          <div slot="header" class="overflow-hidden rounded-t-2xl -mt-6 -mx-6 mb-5">
+            <img 
+              src="/images/ehsmockup.webp" 
+              srcset="/images/ehsmockup-400.webp 400w, /images/ehsmockup-800.webp 800w, /images/ehsmockup-1200.webp 1200w, /images/ehsmockup.webp 1535w"
+              sizes="(max-width: 640px) 90vw, (max-width: 1280px) 50vw, 33vw"
+              alt="Website-Referenz ESH Haustechnik" 
+              width="1535" 
+              height="1024"
+              class="w-full h-auto"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="mt-auto pt-4 flex justify-center">
+            <Button href="https://eshhaustechnik.de/" variant="outline" target="_blank" rel="noopener noreferrer" class="min-h-[56px] touch-manipulation">
+              Live-Website ansehen
+              <Icon name="external-link" class="w-4 h-4 ml-2" />
+            </Button>
           </div>
         </Card>
       </div>
@@ -328,21 +349,14 @@ if (!web3formsKey) {
       </div>
       
       <div class="bg-white rounded-3xl shadow-2xl p-6 sm:p-10">
-        <!-- Success Message -->
-        <div id="form-success" class="hidden text-center py-10" role="status" aria-live="polite">
-          <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg class="w-10 h-10 text-green-600" width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-          </div>
-          <h3 class="text-2xl font-bold text-primary mb-3">Vielen Dank!</h3>
-          <p class="text-muted mb-2">Ihre Anfrage wurde erfolgreich versendet.</p>
-          <p class="text-muted">Ich melde mich innerhalb von 24 Stunden bei Ihnen.</p>
-        </div>
-        
         <!-- Form Error Message -->
-        <div id="form-error" class="hidden text-center py-6 mb-4 bg-red-50 border border-red-200 rounded-2xl" role="alert">
+        <div id="form-error" class="hidden text-center py-6 mb-4 bg-red-50 border border-red-200 rounded-2xl" role="alert" aria-live="polite">
           <p class="text-red-600 font-medium">Es ist ein Fehler aufgetreten.</p>
           <p class="text-red-500 text-sm mt-1">Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt unter <a href="tel:+4915679755137" class="underline">+49 15679 755137</a>.</p>
         </div>
+        
+        <!-- Live region for validation errors -->
+        <div id="form-validation-live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
         
         <!-- No-JS Fallback -->
         <noscript>
@@ -413,8 +427,8 @@ if (!web3formsKey) {
               <legend class="text-lg font-semibold mb-4">Was ist Ihr Hauptziel?</legend>
               <div class="space-y-3">
                 <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-accent transition-colors has-[:checked]:border-accent has-[:checked]:bg-accent/5">
-                  <input type="radio" name="ziel" value="Neue Premium-Kunden" class="w-5 h-5 text-accent accent-accent" required />
-                  <span class="font-medium">Neue Premium-Kunden gewinnen</span>
+                  <input type="radio" name="ziel" value="Neue lukrative Aufträge" class="w-5 h-5 text-accent accent-accent" required />
+                  <span class="font-medium">Neue lukrative Aufträge gewinnen</span>
                 </label>
                 <label class="flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-accent transition-colors has-[:checked]:border-accent has-[:checked]:bg-accent/5">
                   <input type="radio" name="ziel" value="Fachkräfte & Azubis finden" class="w-5 h-5 text-accent accent-accent" />
@@ -549,11 +563,11 @@ if (!web3formsKey) {
           </div>
           
           <!-- Progress Indicator -->
-          <div class="flex justify-center gap-2 pt-4" id="form-progress" aria-hidden="true">
-            <span class="w-8 h-2 rounded-full bg-accent transition-colors" data-indicator="1"></span>
-            <span class="w-8 h-2 rounded-full bg-slate-200 transition-colors" data-indicator="2"></span>
-            <span class="w-8 h-2 rounded-full bg-slate-200 transition-colors" data-indicator="3"></span>
-            <span class="w-8 h-2 rounded-full bg-slate-200 transition-colors" data-indicator="4"></span>
+          <div class="flex justify-center gap-2 sm:gap-3 pt-4" id="form-progress" aria-hidden="true">
+            <span class="w-10 h-2.5 sm:w-12 sm:h-3 rounded-full bg-accent transition-colors" data-indicator="1"></span>
+            <span class="w-10 h-2.5 sm:w-12 sm:h-3 rounded-full bg-slate-200 transition-colors" data-indicator="2"></span>
+            <span class="w-10 h-2.5 sm:w-12 sm:h-3 rounded-full bg-slate-200 transition-colors" data-indicator="3"></span>
+            <span class="w-10 h-2.5 sm:w-12 sm:h-3 rounded-full bg-slate-200 transition-colors" data-indicator="4"></span>
           </div>
         </form>
       </div>

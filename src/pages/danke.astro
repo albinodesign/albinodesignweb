@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+---
+
+<Layout 
+  title="Vielen Dank für Ihre Anfrage | AlbinoDesign"
+  description="Ihre Anfrage ist bei AlbinoDesign angekommen. Albin Salihu meldet sich innerhalb von 24 Stunden bei Ihnen."
+  robots="noindex, follow"
+>
+  <Header />
+  <main id="main" class="min-h-screen bg-light flex items-center justify-center px-5 py-16 sm:py-24">
+    <div class="text-center max-w-2xl mx-auto">
+      <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-10 h-10 text-green-600" width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-balance text-primary">
+        Hervorragend, Ihre Anfrage ist bei mir gelandet!
+      </h1>
+      
+      <p class="text-xl sm:text-2xl font-semibold text-accent mb-8">
+        Wie geht es jetzt weiter?
+      </p>
+      
+      <div class="text-left bg-white rounded-3xl shadow-lg border border-slate-100 p-6 sm:p-10 mb-10">
+        <p class="text-primary leading-relaxed mb-4">
+          Hallo, ich bin's, Albin. Vielen Dank für Ihr Vertrauen!
+        </p>
+        <p class="text-primary leading-relaxed mb-4">
+          Ich werde mich innerhalb der nächsten 24 Stunden kurz unter der von Ihnen angegebenen Nummer melden.
+        </p>
+        <p class="text-primary leading-relaxed mb-4">
+          Keine Sorge: Das wird kein nerviges Verkaufsgespräch. Wir besprechen in 5 bis 10 Minuten nur kurz Ihre Wünsche (Farben, Logo, Leistungen), damit ich mich an den PC setzen und Ihren kostenlosen Erstentwurf bauen kann.
+        </p>
+        <p class="text-muted leading-relaxed text-sm">
+          Bis dahin können Sie sich zurücklehnen – ich übernehme ab hier.
+        </p>
+      </div>
+      
+      <Button href="/" size="large" class="w-full sm:w-auto min-h-[56px] touch-manipulation">
+        Zurück zur Startseite
+      </Button>
+    </div>
+  </main>
+  <Footer />
+</Layout>

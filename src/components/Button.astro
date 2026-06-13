@@ -6,6 +6,8 @@ export interface Props {
   size?: 'default' | 'large';
   class?: string;
   id?: string;
+  target?: string;
+  rel?: string;
 }
 
 const { 
@@ -14,7 +16,9 @@ const {
   variant = 'primary',
   size = 'default',
   class: className = '',
-  id
+  id,
+  target,
+  rel
 } = Astro.props;
 
 const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent active:scale-[0.98] w-full sm:w-auto';
@@ -34,7 +38,7 @@ const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} 
 ---
 
 {href ? (
-  <a href={href} class={classes} id={id}>
+  <a href={href} class={classes} id={id} target={target} rel={rel}>
     <slot />
   </a>
 ) : (

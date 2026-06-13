@@ -6,13 +6,15 @@ export interface Props {
   description?: string;
   ogImage?: string;
   robots?: string;
+  canonical?: boolean;
 }
 
 const { 
-  title = "AlbinoDesign | Premium Handwerker-Websites in 3 Tagen",
+  title = "AlbinoDesign | Moderne Handwerker-Websites in 3 Tagen",
   description = "Gewinnen Sie mehr lukrative Aufträge und qualifizierte Azubis mit einer professionellen Website. Schlüsselfertig für einmalig 999 €. Albin Salihu aus Krefeld.",
   ogImage = "https://albinodesign.de/og-image.jpg",
-  robots = "index, follow"
+  robots = "index, follow",
+  canonical = true
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
@@ -46,7 +48,8 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="AlbinoDesign – Premium Handwerker-Websites in 3 Tagen" />
+    <meta property="og:image:alt" content="AlbinoDesign – Moderne Handwerker-Websites in 3 Tagen" />
+    <meta property="og:site_name" content="AlbinoDesign" />
     <meta property="og:locale" content="de_DE" />
     
     <!-- Twitter -->
@@ -55,7 +58,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     
-    <link rel="canonical" href={canonicalURL} />
+    {canonical && <link rel="canonical" href={canonicalURL} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.json" />
@@ -63,8 +66,6 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
     <title>{title}</title>
     
     <link rel="preload" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/Inter-Medium.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin />
     
     <link rel="preconnect" href="https://api.web3forms.com" crossorigin />
@@ -141,7 +142,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
     <slot />
     
     <!-- Cookie Banner -->
-    <div id="cookie-banner" role="dialog" aria-modal="true" aria-live="polite" aria-label="Cookie Einwilligung" aria-describedby="cookie-banner-text" class="fixed bottom-0 left-0 right-0 z-50 bg-dark text-light p-4 shadow-2xl transform translate-y-full transition-transform duration-300" style="display: none;">
+    <div id="cookie-banner" role="dialog" aria-modal="true" aria-live="polite" aria-label="Cookie Einwilligung" aria-describedby="cookie-banner-text" class="fixed bottom-0 left-0 right-0 z-50 bg-dark text-light p-4 shadow-2xl transform translate-y-full transition-transform duration-300" style="display: none;" tabindex="-1">
       <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div id="cookie-banner-text" class="flex-1 text-sm">
           <p class="mb-1">

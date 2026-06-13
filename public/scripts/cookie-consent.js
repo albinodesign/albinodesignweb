@@ -1,4 +1,23 @@
+// AlbinoDesign – Cookie-Consent + Google Consent Mode v2 + GTM-Lazy-Load
+
 const CONSENT_KEY = 'albino_cookie_consent';
+
+// ── localStorage-Hilfsfunktionen ──
+function safeSetItem(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (e) {
+    // Private Mode / blockierte Cookies
+  }
+}
+
+function safeGetItem(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch (e) {
+    return null;
+  }
+}
 
 // ── Google Consent Mode v2 ──
 window.dataLayer = window.dataLayer || [];
@@ -37,12 +56,12 @@ function migrateOldConsent(raw) {
 }
 
 window.getCookieConsent = function () {
-  const raw = localStorage.getItem(CONSENT_KEY);
+  const raw = safeGetItem(CONSENT_KEY);
   return raw ? migrateOldConsent(raw) : null;
 };
 
 window.setCookieConsent = function (consent) {
-  localStorage.setItem(
+  safeSetItem(
     CONSENT_KEY,
     JSON.stringify({
       necessary: true,
@@ -60,18 +79,17 @@ window.hasCookieConsent = function () {
   return c && c.analytics === true;
 };
 
-window.showCookieBanner = showBanner;
-
 // ── GTM Lazy Loading ──
 
 let gtmScheduled = false;
+const interactionEvents = ['scroll', 'mousemove', 'touchstart', 'keydown'];
 
 function scheduleGTM() {
   if (gtmScheduled) return;
   gtmScheduled = true;
 
-  // Remove interaction listeners
-  ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(function (evt) {
+  // Interaction listeners entfernen
+  interactionEvents.forEach(function (evt) {
     window.removeEventListener(evt, onUserInteraction, { passive: true });
   });
 
@@ -83,8 +101,8 @@ function onUserInteraction() {
 }
 
 function lazyLoadGTM() {
-  // Activate GTM on first user interaction or after 3.5s (whichever comes first)
-  ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(function (evt) {
+  // GTM bei erster Nutzerinteraktion oder nach 3.5s aktivieren
+  interactionEvents.forEach(function (evt) {
     window.addEventListener(evt, onUserInteraction, { passive: true, once: true });
   });
   setTimeout(scheduleGTM, 3500);
@@ -111,6 +129,8 @@ function activateGTM() {
   );
   noscripts.forEach(function (ns) {
     const wrapper = document.createElement('div');
+    wrapper.style.display = 'none';
+    wrapper.style.visibility = 'hidden';
     wrapper.innerHTML = ns.innerHTML;
     ns.parentNode.insertBefore(wrapper, ns);
     ns.remove();
@@ -130,23 +150,68 @@ function activateGTM() {
 const banner = document.getElementById('cookie-banner');
 const acceptBtn = document.getElementById('cookie-accept');
 const declineBtn = document.getElementById('cookie-decline');
+let focusableElements = [];
+let firstFocusable = null;
+let lastFocusable = null;
+let lastFocusedElement = null;
+
+function updateFocusableElements() {
+  if (!banner) return;
+  focusableElements = Array.from(
+    banner.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+  ).filter(function (el) {
+    return el.offsetParent !== null;
+  });
+  firstFocusable = focusableElements[0] || null;
+  lastFocusable = focusableElements[focusableElements.length - 1] || null;
+}
+
+function trapFocus(e) {
+  if (e.key !== 'Tab' || !firstFocusable || !lastFocusable) return;
+
+  if (e.shiftKey) {
+    if (document.activeElement === firstFocusable) {
+      e.preventDefault();
+      lastFocusable.focus();
+    }
+  } else {
+    if (document.activeElement === lastFocusable) {
+      e.preventDefault();
+      firstFocusable.focus();
+    }
+  }
+}
 
 function showBanner() {
   if (banner) {
+    lastFocusedElement = document.activeElement;
     banner.style.display = 'block';
     void banner.offsetWidth;
     banner.classList.remove('translate-y-full');
+    updateFocusableElements();
+    if (acceptBtn) {
+      acceptBtn.focus();
+    } else if (firstFocusable) {
+      firstFocusable.focus();
+    }
+    banner.addEventListener('keydown', trapFocus);
   }
 }
 
 function hideBanner() {
   if (banner) {
+    banner.removeEventListener('keydown', trapFocus);
     banner.classList.add('translate-y-full');
     setTimeout(function () {
       banner.style.display = 'none';
     }, 300);
+    if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+      lastFocusedElement.focus();
+    }
   }
 }
+
+window.showCookieBanner = showBanner;
 
 // ── Init ──
 
@@ -156,7 +221,7 @@ if (!consent) {
   // Noch keine Entscheidung → Banner zeigen
   setTimeout(showBanner, 1000);
 } else if (consent.analytics === true) {
-  // Bereits zugestimmt → GTM verzögert laden (bei Interaktion oder nach 3.5s)
+  // Bereits zugestimmt → GTM verzögert laden
   lazyLoadGTM();
 }
 

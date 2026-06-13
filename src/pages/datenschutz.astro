@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import site from '../data/site.json';
 ---
 
 <Layout 
@@ -26,13 +27,13 @@ import Footer from '../components/Footer.astro';
         <section>
           <h2 class="text-xl font-semibold mb-3">2. Verantwortlicher</h2>
           <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-1">
-            <p class="font-semibold">Albin Salihu E-Commerce</p>
-            <p>Albin Salihu</p>
-            <p>De-Greiff-Straße 229</p>
-            <p>47803 Krefeld</p>
-            <p class="mt-2">Telefon: <a href="tel:+4915679755137" class="text-accent hover:underline">+49 15679 755137</a></p>
-            <p>E-Mail: <a href="mailto:info@albinodesign.de" class="text-accent hover:underline">info@albinodesign.de</a></p>
-            <p class="mt-2 font-mono text-sm">USt-ID: DE357374586</p>
+            <p class="font-semibold">{site.legalName}</p>
+            <p>{site.founder}</p>
+            <p>{site.street}</p>
+            <p>{site.zip} {site.city}</p>
+            <p class="mt-2">Telefon: <a href={`tel:${site.phone}`} class="text-accent hover:underline">{site.phoneFormatted}</a></p>
+            <p>E-Mail: <a href={`mailto:${site.email}`} class="text-accent hover:underline">{site.email}</a></p>
+            <p class="mt-2 font-mono text-sm">USt-ID: {site.vatId}</p>
           </div>
         </section>
         
@@ -118,7 +119,7 @@ import Footer from '../components/Footer.astro';
         <section>
           <h2 class="text-xl font-semibold mb-3">8. Drittlandtransfer</h2>
           <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-            <p>Eine Übermittlung Ihrer Daten an Dritte findet nur statt, wenn dies zur Erfüllung unserer Dienstleistungen notwendig ist (z.B. Webhosting über Netlify) oder wir gesetzlich dazu verpflichtet sind.</p>
+            <p>Eine Übermittlung Ihrer Daten an Dritte findet nur statt, wenn dies zur Erfüllung unserer Dienstleistungen notwendig ist (z.B. Webhosting über Vercel, Server-Region Frankfurt) oder wir gesetzlich dazu verpflichtet sind.</p>
           </div>
         </section>
         
