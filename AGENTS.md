@@ -6,7 +6,7 @@ Dieses Dokument enthält alle relevanten Informationen, die ein KI-Coding-Agent 
 
 ## Projekt-Übersicht
 
-Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDesign – einen Webdesign-Dienstleister aus Krefeld, der sich auf moderne Handwerker-Websites spezialisiert hat. Die Seite dient der Lead-Generierung über ein mehrstufiges Kontaktformular.
+Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDesign – einen Webdesign-Dienstleister aus Krefeld, der sich auf moderne Handwerker-Websites spezialisiert hat. Die Seite dient der Lead-Generierung über ein mehrstufiges Kontaktformular und wird über Vercel deployed.
 
 **Live-Domain:** `https://albinodesign.de/`
 
@@ -25,7 +25,7 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 | Styling | [Tailwind CSS](https://tailwindcss.com/) | v3.4.19 |
 | Post-Processing | PostCSS + Autoprefixer + cssnano | konfiguriert in `postcss.config.js` |
 | Sprache | TypeScript | strict, erweitert `astro/tsconfigs/strict` |
-| Laufzeit | Node.js | ≥ 22.12.0 (lokal aktuell v22.22.3) |
+| Laufzeit | Node.js | ≥ 22.12.0 (engines in `package.json`) |
 | Bildoptimierung | Sharp | via `astro:assets` konfiguriert, aktuell aber nicht aktiv für `public/images/` genutzt |
 | Formular-Backend | [Web3Forms](https://web3forms.com/) | AJAX-Submit an `https://api.web3forms.com/submit` |
 | Hosting / Deploy | Vercel | `vercel.json` + Vercel Git-Integration |
@@ -51,9 +51,18 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 │   ├── images/                # Optimierte WebP-Bilder (direkte Verwendung per <img>)
 │   │   ├── portrait.webp
 │   │   ├── ubermich.webp
-│   │   ├── mockup1.webp
-│   │   ├── mockup2.webp
-│   │   └── mockup3.webp
+│   │   ├── thzmockup.webp          # Referenz THZ Renovierung
+│   │   ├── thzmockup-400.webp
+│   │   ├── thzmockup-800.webp
+│   │   ├── thzmockup-1200.webp
+│   │   ├── fabianmockup.webp       # Referenz Montagebau Fabian
+│   │   ├── fabianmockup-400.webp
+│   │   ├── fabianmockup-800.webp
+│   │   ├── fabianmockup-1200.webp
+│   │   ├── ehsmockup.webp          # Referenz ESH Haustechnik
+│   │   ├── ehsmockup-400.webp
+│   │   ├── ehsmockup-800.webp
+│   │   └── ehsmockup-1200.webp
 │   └── fonts/                 # Selbst-gehostete Inter (WOFF2)
 │       ├── Inter-Regular.woff2
 │       ├── Inter-Medium.woff2
@@ -62,6 +71,7 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 ├── src/
 │   ├── pages/                 # Astro-Routen (Datei-basiert)
 │   │   ├── index.astro        # Landingpage (Hauptseite)
+│   │   ├── danke.astro        # Dankesseite nach Formular-Absendung
 │   │   ├── datenschutz.astro  # Datenschutzerklärung (DSGVO)
 │   │   ├── impressum.astro    # Impressum (TMG)
 │   │   └── 404.astro          # Fehlerseite (noindex)
@@ -71,15 +81,22 @@ Die AlbinoDesign-Website ist eine **deutschsprachige Landingpage** für AlbinoDe
 │   │   ├── Button.astro       # Wiederverwendbarer CTA-Button (href/type/variant/size)
 │   │   ├── Card.astro         # Container-Komponente mit optionalem Hover-Effekt
 │   │   ├── Footer.astro       # Seitenfuß mit rechtlichen Links und Cookie-Einstellungen
-│   │   └── Header.astro       # Kopfzeile mit Logo-Link (nur auf Unterseiten)
-│   └── styles/
-│       └── global.css         # Tailwind-Direktiven, CSS-Variablen, @font-face, text-balance
+│   │   ├── Header.astro       # Kopfzeile mit Logo-Link (nur auf Unterseiten)
+│   │   └── Icon.astro         # Inline-SVG-Icons (external-link, arrow-down)
+│   ├── content/               # CMS-kompatible Inhalte (Datenhaltung)
+│   │   ├── site.json          # Zentrale Kontakt- und Firmendaten
+│   │   ├── cms.manifest.json  # Manifest der editierbaren Felder (id, label, type, file, path, maxLength)
+│   │   └── pages/
+│   │       ├── home.json      # Marketing-Inhalte der Startseite (hero, problem, portfolio, about, process, formSection, faq)
+│   │       └── danke.json     # Texte der Dankesseite
+│   ├── styles/
+│   │   └── global.css         # Tailwind-Direktiven, CSS-Variablen, @font-face, text-balance
+│   └── content.config.ts      # Astro Content Layer: Collections + Zod-Schemas für die Content-JSONs
 ├── .vscode/
 │   ├── extensions.json        # Empfiehlt "astro-build.astro-vscode"
 │   └── launch.json            # Debug-Konfiguration für "astro dev"
 ├── .kimi/
 │   └── plans/                 # Implementierungspläne für abgeschlossene/zukünftige Features
-│       ├── form-step4-update.md       # Plan: Step-4-Titel + E-Mail-Pflichtfeld (umgesetzt)
 │       ├── gtm-dsgvo-integration.md   # Plan für GTM-Integration (umgesetzt)
 │       └── ga4-gtag-integration.md    # Plan für GA4-Integration (empfohlen: über GTM-Dashboard)
 ├── scripts/                   # Leer – Projekt-root-Script-Verzeichnis (nicht in Verwendung)
@@ -149,6 +166,7 @@ npm run astro -- [command]
 
 ### Bilder
 - Alle Bilder werden aktuell über **direkte `<img>`-Tags** mit Pfaden aus `public/images/` eingebunden (WebP-Formate).
+- Responsive Bilder werden über `srcset` und `sizes` umgesetzt (z. B. Portfolio-Referenzen).
 - `loading="eager"` und `fetchpriority="high"` werden nur für Above-the-Fold-Bilder (Portrait im Hero) verwendet.
 - Es gibt kein `src/assets/`-Verzeichnis; alle Bilder liegen unter `public/images/` und `public/`.
 
@@ -160,29 +178,46 @@ npm run astro -- [command]
 Zentrales Layout für alle Seiten. Verantwortlich für:
 - HTML-Grundgerüst (`lang="de"`)
 - SEO-Meta-Tags, Open Graph, Twitter Card, Canonical URL
-- Preloading der Inter-Font-Dateien
+- Preloading der Inter-Font-Dateien (Regular + Bold)
 - Google Tag Manager (blockiert via `type="text/plain"`)
 - Cookie-Banner (Bottom-Banner mit Akzeptieren/Ablehnen)
 - Skip-Link („Zum Inhalt springen")
 - JSON-LD-Slot (`<slot name="head" />`)
 
 Props:
-- `title`, `description`, `ogImage`, `robots`
+- `title`, `description`, `ogImage`, `robots`, `canonical`
 
 ### `Button.astro`
 Wiederverwendbarer Button/Link.
-- Props: `href`, `type`, `variant` (`primary` | `secondary` | `outline`), `size` (`default` | `large`), `class`, `id`
+- Props: `href`, `type`, `variant` (`primary` | `secondary` | `outline`), `size` (`default` | `large`), `class`, `id`, `target`, `rel`
 - Rendert `<a>` wenn `href` gesetzt, sonst `<button>`.
 
 ### `Card.astro`
 Container-Komponente mit weißem Hintergrund, Schatten und abgerundeten Ecken.
 - Props: `class`, `hover` (bool)
+- Unterstützt optionalen `header`-Slot.
 
 ### `Header.astro`
-Einfache Kopfzeile mit Logo-Link. Wird nur auf Unterseiten (`datenschutz`, `impressum`, `404`) verwendet.
+Einfache Kopfzeile mit Logo-Link. Wird nur auf Unterseiten (`datenschutz`, `impressum`, `404`, `danke`) verwendet.
 
 ### `Footer.astro`
 Seitenfuß mit Copyright, rechtlichen Links und Button zum erneuten Öffnen des Cookie-Banners.
+
+### `Icon.astro`
+Inline-SVG-Icon-Komponente.
+- Props: `name` (`external-link` | `arrow-down`), `class`
+
+### `site.json` (`src/content/site.json`)
+Zentrale JSON-Datei mit Firmen- und Kontaktdaten, die in Header, Footer, Impressum, Datenschutz und JSON-LD verwendet wird. Liegt unter `src/content/` (CMS-kompatible Datenhaltung); das frühere `src/data/site.json` existiert nicht mehr.
+
+### Content Layer (`src/content.config.ts`)
+Die Inhalte unter `src/content/` sind zusätzlich als Astro-Content-Layer-Collections (`site`, `home`, `danke`) mit Zod-Schemas hinterlegt. Da der eingebaute `file()`-Loader jede Top-Level-Eigenschaft eines Objekts als eigenen Eintrag behandeln würde, lädt ein eigener Loader (`singleJsonFileLoader`) jede Datei als genau einen Eintrag. Die `.astro`-Dateien importieren die JSONs weiterhin direkt (`import site from '../content/site.json'`); die Collections dienen der Schema-Validierung beim Build.
+
+### CMS-Manifest & Preview-Bridge
+- `src/content/cms.manifest.json` beschreibt alle editierbaren Felder (34 Felder) mit `id`, `label`, `type`, `file`, `path` (dot-notation) und `maxLength`.
+- Die wichtigsten Elemente in `index.astro`, `danke.astro`, `Header.astro` und `Footer.astro` tragen `data-cms-section`- bzw. `data-cms-field`-Attribute passend zu den JSON-Pfaden.
+- `Layout.astro` enthält eine unsichtbare Preview-Bridge (Inline-Script), die per `postMessage` eingehende `CMS_FIELD_UPDATE`-Events (`{ field, value }`) auf das Element mit passendem `data-cms-field` anwendet (Text via `textContent`, Bilder via `src`/`alt`) sowie `CMS_SCROLL_TO_FIELD` zum Anspringen eines Feldes.
+- Hinweis: `public/scripts/form.js` enthält die Telefonnummer zusätzlich hardcodiert (statisches Public-Asset, schreibt die Fehlermeldung in `#form-error`) und wird bewusst nicht aus der JSON gespeist.
 
 ---
 
@@ -198,10 +233,12 @@ Astro verwendet `<script src="...">` für externe JavaScript-Dateien, die direkt
 - GTM-Lazy-Load: Aktivierung bei erster Nutzerinteraktion (`scroll`, `mousemove`, `touchstart`, `keydown`) oder spätestens nach 3,5 Sekunden.
 - Stellt globale Hilfsfunktionen bereit: `window.getCookieConsent()`, `window.setCookieConsent()`, `window.hasCookieConsent()`, `window.showCookieBanner()`.
 - Migriert alte Consent-Formate (`{ value: boolean }` oder Raw-String `"true"`/`"false"`) in das aktuelle Format `{ necessary: true, analytics: boolean, date: string }`.
+- Fokus-Trap innerhalb des Cookie-Banners für Barrierefreiheit.
 
 ### `public/scripts/form.js`
 - **GCLID-Tracking:** Liest `?gclid=` aus der URL, speichert es in einem Hidden-Formularfeld sowie in `localStorage` unter `albino_gclid` mit Timestamp unter `albino_gclid_ts` (max. 90 Tage Haltbarkeit).
 - **Multi-Step-Formular:** 4 Schritte mit client-seitiger Validierung und AJAX-Submit an Web3Forms.
+- Nach erfolgreichem Submit Weiterleitung auf `/danke`.
 
 ---
 
@@ -210,7 +247,7 @@ Astro verwendet `<script src="...">` für externe JavaScript-Dateien, die direkt
 Das Kontaktformular auf der Startseite ist ein **4-stufiges Multi-Step-Formular**, das via AJAX an Web3Forms gesendet wird:
 
 1. **Schritt 1:** Gewerk auswählen (Radio-Buttons: Sanitär & Heizung, Elektro, Dachdecker, Maler, Sonstiges)
-2. **Schritt 2:** Hauptziel auswählen (Radio-Buttons: Neue lukrative Aufträge, Fachkräfte & Azubis, Professioneller Internet-Auftritt)
+2. **Schritt 2:** Hauptziel auswählen (Radio-Buttons: Neue lukrative Aufträge gewinnen, Fachkräfte & Azubis finden, Professioneller Internet-Auftritt)
 3. **Schritt 3:** Bestehende Website? (Ja/Nein)
 4. **Schritt 4:** Kontaktdaten (Name, E-Mail, Telefon) + Datenschutz-Checkbox
 
@@ -218,16 +255,17 @@ Das Kontaktformular auf der Startseite ist ein **4-stufiges Multi-Step-Formular*
 - Honeypot-Feld (`botcheck`, versteckte Checkbox) zur Spam-Abwehr.
 - Client-seitige Validierung vor jedem Schritt-Wechsel und vor dem Absenden.
 - E-Mail-Validierung via Regex: `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`.
-- GCLID-Tracking für Google Ads Conversion-Zuordnung (Hidden-Field + localStorage, 90 Tage Haltbarkeit).
+- GCLID-Tracking für Google Ads Conversion-Zuordnung (Hidden-Field + localStorage, 90 Tage Haltbarkeit, max. 200 Zeichen).
 - Submit-Timeout von 10 Sekunden via `AbortController`.
 
 **Barrierefreiheit & UX:**
 - Fokus-Management: Beim Schritt-Wechsel wird der Fokus auf die Überschrift (`legend` oder `h3`) des neuen Schritts gesetzt.
 - Auf Mobilgeräten wird automatisch zum Formularanfang gescrollt.
 - Fortschritts-Indikator mit 4 visuellen Punkten.
+- Screenreader-Ankündigungen von Validierungsfehlern über eine `aria-live`-Region.
 - **No-JS-Fallback:** Wenn JavaScript deaktiviert ist, werden alle Schritte sichtbar und das Formular wird als normales HTML-Formular abgesendet.
 
-Bei erfolgreicher Übermittlung wird das Formular ausgeblendet und eine Erfolgsmeldung angezeigt. Bei Fehlern wird eine Fehlermeldung mit Telefonnummer eingeblendet und der Submit-Button reaktiviert.
+Bei erfolgreicher Übermittlung wird auf `/danke` weitergeleitet. Bei Fehlern wird eine Fehlermeldung mit Telefonnummer eingeblendet und der Submit-Button reaktiviert.
 
 ---
 
@@ -236,14 +274,15 @@ Bei erfolgreicher Übermittlung wird das Formular ausgeblendet und eine Erfolgsm
 - Jede Seite nutzt das `Layout.astro` mit individuellem `title` und `description`.
 - Open Graph und Twitter Card Meta-Tags sind vorhanden.
 - Canonical URL wird aus `Astro.url.pathname` und `https://albinodesign.de/` generiert.
-- **JSON-LD Structured Data:** `LocalBusiness`-Schema auf der Startseite (Name, Adresse, Telefon, E-Mail, Gründer).
+- **JSON-LD Structured Data:** `LocalBusiness`-Schema und `FAQPage`-Schema auf der Startseite.
 - Semantisches HTML (`<section>`, `<header>`, `<footer>`, `<main>`, `<article>`).
 - ARIA-Attribute werden konsequent verwendet (`aria-label`, `aria-labelledby`, `role`, `aria-live`, `aria-invalid`, `aria-describedby`).
 - Touch-Optimierung: `min-h-[56px]` und `touch-manipulation` auf interaktiven Elementen.
-- Inter-Font wird mit `preload` für Regular, Medium, SemiBold und Bold im `<head>` vorgeladen.
-- `scroll-behavior: smooth` für Anker-Navigation.
+- Inter-Font wird mit `preload` für Regular und Bold im `<head>` vorgeladen.
+- `scroll-behavior: smooth` für Anker-Navigation, mit `prefers-reduced-motion`-Respektierung.
 - `prefers-reduced-motion` wird für Fade-In-Animationen berücksichtigt.
 - Skip-Link („Zum Inhalt springen") ist im Layout vorhanden.
+- Print-Styles im Global-CSS blenden Cookie-Banner und Animationen aus.
 
 ---
 
@@ -253,7 +292,7 @@ Die `.env`-Datei ist **nicht im Git-Repository** enthalten (`.gitignore`).
 
 | Variable | Zweck |
 |----------|-------|
-| `PUBLIC_WEB3FORMS_KEY` | API-Schlüssel für das Kontaktformular (Web3Forms). Muss mit `PUBLIC_`-Präfix definiert werden, damit Astro ihn an den Client durchreicht. |
+| `PUBLIC_WEB3FORMS_KEY` | API-Schlüssel für das Kontaktformular (Web3Forms). Muss mit `PUBLIC_`-Präfix definiert werden, damit Astro ihn an den Client durchreicht. Build schlägt fehl, wenn diese Variable fehlt. |
 
 > **Hinweis:** Beim Hinzufügen neuer env-Variablen das `PUBLIC_`-Präfix verwenden, wenn sie im Frontend benötigt werden. Ohne Präfix sind sie nur server-seitig verfügbar.
 
@@ -265,12 +304,12 @@ Die Datei `vercel.json` definiert folgende HTTP-Security-Header für alle Routen
 
 | Header | Wert |
 |--------|------|
-| `X-Frame-Options` | `DENY` |
+| `Content-Security-Policy` | `frame-ancestors 'self' http://localhost:* https://*.vercel.app` |
 | `X-Content-Type-Options` | `nosniff` |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` |
 | `Permissions-Policy` | `accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()` |
 
-> **Wichtig:** Aktuell ist **kein Content-Security-Policy (CSP)** definiert. Bei der Hinzufügung einer CSP müssen Verbindungen zu `https://api.web3forms.com`, Google-Domains für GTM und Inline-Scripts/Styles berücksichtigt werden.
+> **Wichtig:** Der frühere Header `X-Frame-Options: DENY` wurde durch eine CSP ersetzt, die **nur** `frame-ancestors` setzt (Einstieg erlaubt für CMS-Preview-iFrames auf localhost und Vercel-Deployments). Da keine weiteren CSP-Direktiven definiert sind, bleiben Inline-Scripts (GTM `text/plain`, Preview-Bridge), Verbindungen zu `https://api.web3forms.com` und Google-Domains unverändert erlaubt. Bei einer Erweiterung der CSP um weitere Direktiven müssen diese Quellen explizit berücksichtigt werden.
 >
 > Hinweis: Die Security-Header werden über `vercel.json` für Vercel konfiguriert. Beim Wechsel zu einem anderen Hosting-Provider müssen sie dort neu hinterlegt werden.
 
@@ -279,25 +318,27 @@ Die Datei `vercel.json` definiert folgende HTTP-Security-Header für alle Routen
 ## Rechtliche Seiten (DSGVO / TMG)
 
 - **`/datenschutz`** – Vollständige Datenschutzerklärung mit Angaben zu Web3Forms, Google Ads/GCLID, Server-Log-Dateien, Google Tag Manager, Cookie-Hinweis und Vercel als Hosting-Provider.
-- **`/impressum`** – Impressum mit Kontaktdaten (AlbinoDesign, Albin Salihu, De-Greiff-Straße 229, 47803 Krefeld), USt-ID (DE357374586) und Haftungsausschluss.
+- **`/impressum`** – Impressum mit Kontaktdaten (AlbinoDesign, Albin Salihu, De-Greiff-Straße 229, 47803 Krefeld), USt-ID (DE357374586), Rechtsform (Einzelunternehmen) und Haftungsausschluss.
 - **`/404`** – Fehlerseite mit "Zurück zur Startseite"-Link, `robots="noindex, follow"`.
+- **`/danke`** – Dankesseite nach erfolgreicher Formular-Übermittlung, `robots="noindex, follow"`.
 
-> **Wichtig:** Änderungen an Kontaktdaten oder rechtlichen Texten müssen auf **allen drei Seiten** (Startseite Footer, Datenschutz, Impressum) synchron gehalten werden.
+> **Wichtig:** Änderungen an Kontaktdaten oder rechtlichen Texten müssen auf **allen betroffenen Seiten** (Startseite Footer, Datenschutz, Impressum) synchron gehalten werden. Die zentrale Quelle für Firmendaten ist `src/content/site.json`.
 
 ---
 
 ## Teststrategie
 
-Das Projekt verfügt aktuell **über kein automatisiertes Test-Setup** (kein Jest, Vitest, Playwright o.ä.).
+Das Projekt verfügt aktuell **über kein automatisiertes Test-Setup** (kein Jest, Vitest, Playwright, Cypress o.ä.).
 
 **Manuelle Tests, die vor jedem Deploy durchgeführt werden sollten:**
-1. Formular komplett durchklicken (alle 4 Schritte) und absenden – Erfolgsmeldung prüfen.
+1. Formular komplett durchklicken (alle 4 Schritte) und absenden – Weiterleitung auf `/danke` prüfen.
 2. Mobile Ansicht prüfen (Touch-Targets, Scroll-Verhalten im Formular).
 3. Cookie-Banner: Annehmen / Ablehnen und Seiten-Reload testen.
 4. GCLID-Tracking: URL mit `?gclid=test123` aufrufen und Hidden-Field prüfen.
 5. Build lokal previewen (`npm run build && npm run preview`) vor jedem Deploy.
 6. No-JS-Fallback testen: JavaScript im Browser deaktivieren und prüfen, ob das Formular als Einzelseite funktioniert.
 7. Security-Header prüfen (z. B. via `curl -I` auf der deployeden URL).
+8. HTML-Validierung und Lighthouse-Score prüfen.
 
 ---
 
@@ -334,6 +375,5 @@ Das Projekt verfügt aktuell **über kein automatisiertes Test-Setup** (kein Jes
 
 Implementierungspläne für abgeschlossene und zukünftige Features liegen im Verzeichnis `.kimi/plans/`:
 
-- **`form-step4-update.md`** – Plan für die Änderung des Step-4-Titels und die Pflicht-E-Mail im Formular (bereits umgesetzt).
 - **`gtm-dsgvo-integration.md`** – Plan für die DSGVO-konforme GTM-Integration (bereits umgesetzt).
 - **`ga4-gtag-integration.md`** – Plan für GA4-Integration (empfohlen: Konfiguration über GTM-Dashboard statt direkter Code-Integration).

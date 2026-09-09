@@ -23,5 +23,6 @@ export default defineConfig({
     service: {
       entrypoint: 'astro/assets/services/sharp',
     },
+    remotePatterns: [{ protocol: 'https', hostname: '**.supabase.co' }],
   },
 });

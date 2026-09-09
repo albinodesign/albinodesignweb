@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "jsonLdDescription": "Moderne Handwerker-Websites in 3 Tagen. Webdesign aus Krefeld."
+  },
+  "hero": {
+    "logoSuffix": ".",
+    "headline": "Ich baue Ihre moderne Handwerker-Website schlüsselfertig in 3 Tagen.",
+    "sublineHtml": "Gewinnen Sie mehr lukrative Aufträge <span class=\"text-accent font-semibold\">UND</span> qualifizierte Azubis. Komplett stressfrei. Schlüsselfertig für einmalig <span class=\"text-accent font-bold\">999 €</span>.",
+    "portrait": {
+      "src": "/images/portrait.webp",
+      "alt": "Albin Salihu - Webdesigner aus Krefeld",
+      "width": 160,
+      "height": 160
+    },
+    "trustName": "Albin Salihu",
+    "trustRole": "Webdesign aus Krefeld",
+    "ratingAriaLabel": "5 von 5 Sternen",
+    "ratingText": "5.0 Bewertung",
+    "quote": "\"Ich erstelle Websites, die genauso hart arbeiten, wie Sie.\"",
+    "cta": "Jetzt kostenlosen Erstentwurf anfragen",
+    "trustBarLabel": "Vertrauensmerkmale",
+    "trustItems": [
+      "100% DSGVO-konform",
+      "Keine versteckten Kosten",
+      "Schlüsselfertig in 3 Tagen"
+    ],
+    "ctaNote": "Keine Verpflichtung. Antwort innerhalb von 24 Stunden."
+  },
+  "problem": {
+    "heading": "Warum Sie aktuell lukrative Aufträge & gute Azubis an die Konkurrenz verlieren",
+    "items": [
+      "Ihre aktuelle Website sieht veraltet aus und strahlt nicht Ihre handwerkliche Qualität aus.",
+      "Junge Fachkräfte und Azubis finden Ihren Betrieb nicht auf dem Handy.",
+      "Kaufkräftige Kunden gehen zur Konkurrenz, weil dort der erste Eindruck professioneller wirkt."
+    ]
+  },
+  "portfolio": {
+    "heading": "So modern könnte Ihr Betrieb nächste Woche aussehen",
+    "subline": "Professionelle Websites, die auf jedem Gerät perfekt aussehen.",
+    "buttonLabel": "Live-Website ansehen",
+    "references": [
+      {
+        "id": "thz",
+        "image": {
+          "src": "/images/thzmockup.webp",
+          "srcset": "/images/thzmockup-400.webp 400w, /images/thzmockup-800.webp 800w, /images/thzmockup-1200.webp 1200w, /images/thzmockup.webp 1535w",
+          "sizes": "(max-width: 640px) 90vw, (max-width: 1280px) 50vw, 33vw",
+          "alt": "Website-Referenz THZ Renovierung",
+          "width": 1535,
+          "height": 1024
+        },
+        "logo": {
+          "src": "/images/logo-thz.jpg",
+          "alt": "THZ Innenrenovierung Logo",
+          "width": 200,
+          "height": 200
+        },
+        "name": "THZ Innenrenovierung",
+        "person": "Halil Zeka",
+        "review": {
+          "src": "/images/review-thz.png",
+          "alt": "WhatsApp-Feedback von Halil Zeka, THZ Innenrenovierung",
+          "width": 1168,
+          "height": 160
+        },
+        "url": "https://thz-renovierung.de/"
+      },
+      {
+        "id": "fabian",
+        "image": {
+          "src": "/images/fabianmockup.webp",
+          "srcset": "/images/fabianmockup-400.webp 400w, /images/fabianmockup-800.webp 800w, /images/fabianmockup-1200.webp 1200w, /images/fabianmockup.webp 1536w",
+          "sizes": "(max-width: 640px) 90vw, (max-width: 1280px) 50vw, 33vw",
+          "alt": "Website-Referenz Montagebau Fabian",
+          "width": 1536,
+          "height": 1024
+        },
+        "logo": {
+          "src": "/images/logo-fabian.jpg",
+          "alt": "Montagebau Fabian Logo",
+          "width": 200,
+          "height": 200
+        },
+        "name": "Montagebau Fabian",
+        "person": "Manuela Fabian",
+        "review": {
+          "src": "/images/review-fabian.png",
+          "alt": "WhatsApp-Feedback von Manuela Fabian, Montagebau Fabian",
+          "width": 1176,
+          "height": 204
+        },
+        "url": "https://montagebau-fabian.de/"
+      },
+      {
+        "id": "esh",
+        "image": {
+          "src": "/images/ehsmockup.webp",
+          "srcset": "/images/ehsmockup-400.webp 400w, /images/ehsmockup-800.webp 800w, /images/ehsmockup-1200.webp 1200w, /images/ehsmockup.webp 1535w",
+          "sizes": "(max-width: 640px) 90vw, (max-width: 1280px) 50vw, 33vw",
+          "alt": "Website-Referenz ESH Haustechnik",
+          "width": 1535,
+          "height": 1024
+        },
+        "logo": {
+          "src": "/images/logo-esh.jpeg",
+          "alt": "ESH Haustechnik Logo",
+          "width": 200,
+          "height": 200
+        },
+        "name": "ESH Haustechnik",
+        "person": "Erol Saybak",
+        "review": {
+          "src": "/images/review-esh.png",
+          "alt": "WhatsApp-Feedback von Erol Saybak, ESH Haustechnik",
+          "width": 928,
+          "height": 152
+        },
+        "url": "https://eshhaustechnik.de/"
+      }
+    ]
+  },
+  "about": {
+    "heading": "Ihr direkter Partner aus Krefeld",
+    "paragraph1": "Hi, ich bin Albin von AlbinoDesign. Ich arbeite bewusst ohne großes Team und teures Büro. Dadurch bekommen Sie bei mir die Qualität einer teuren Agentur, aber ohne den irrsinnigen Preis.",
+    "paragraph2": "Ich nehme Ihnen den kompletten digitalen Stress ab – von der ersten Idee bis zur fertigen Website.",
+    "image": {
+      "src": "/images/ubermich.webp",
+      "srcset": "/images/ubermich.webp 600w",
+      "sizes": "(max-width: 640px) 256px, 320px",
+      "alt": "Albin Salihu - Gründer von AlbinoDesign",
+      "width": 600,
+      "height": 800
+    }
+  },
+  "process": {
+    "heading": "In 3 simplen Schritten zur neuen Website",
+    "steps": [
+      {
+        "icon": "📞",
+        "title": "1. Kurzes Telefonat",
+        "text": "Wir besprechen Ihre Ziele, Ihr Gewerk und was Ihre Website leisten soll."
+      },
+      {
+        "icon": "💻",
+        "title": "2. Ich designe & baue",
+        "text": "Inklusive Texte, Bilder und Technik – in nur 3 Tagen erhalten Sie Ihren Entwurf."
+      },
+      {
+        "icon": "🚀",
+        "title": "3. Sie gehen live",
+        "text": "Nach Ihrer Freigabe schalte ich Ihre Website frei – und Sie erhalten sofort mehr Anfragen."
+      }
+    ]
+  },
+  "formSection": {
+    "heading": "Starten Sie jetzt Ihren kostenlosen Website-Entwurf",
+    "subline": "In 30 Sekunden ausgefüllt. Keine Verpflichtung.",
+    "guaranteeTitle": "0€ Vorauskasse. 0% Risiko.",
+    "guaranteeText": "Sie zahlen die 999 € erst, wenn Ihnen der fertige Entwurf zu 100 % gefällt und Ihre neue Website live geht. Keine Anzahlung, keine Katze im Sack.",
+    "errorTitle": "Es ist ein Fehler aufgetreten.",
+    "errorContactPre": "Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt unter",
+    "noJsNote": "JavaScript ist deaktiviert. Sie können das Formular als einseitiges Formular ausfüllen und absenden."
+  },
+  "faq": {
+    "heading": "Häufig gestellte Fragen",
+    "items": [
+      {
+        "question": "Warum sind Sie günstiger als eine klassische Webdesign-Agentur?",
+        "answer": "Ich arbeite bewusst ohne großes Team und ohne teures Büro. Die dadurch gesparten Verwaltungskosten gebe ich direkt an Sie weiter – bei gleicher Qualität wie eine Agentur."
+      },
+      {
+        "question": "Gehört die Website nach der Fertigstellung zu 100% mir?",
+        "answer": "Ja, absolut. Alle Zugänge, Dateien und Inhalte liegen bei Ihnen."
+      },
+      {
+        "question": "Kann ich Texte und Bilder später selbst ändern?",
+        "answer": "Teils teils. Ich nutze ein CMS, also können Sie viele Inhalte wie Texte und Bilder problemlos selbst anpassen. Bei komplexeren Änderungen unterstütze ich Sie gerne."
+      },
+      {
+        "question": "Was brauche ich, bevor wir starten?",
+        "answer": "Keine fertigen Texte nötig. Zum Start schicke ich Ihnen einen kurzen Fragebogen. Daraus entwickle ich die Texte. Bei Bildern nutze ich Ihre, ansonsten greife ich auf hochwertige KI-Bilder zurück."
+      },
+      {
+        "question": "Was, wenn ich nicht zufrieden bin?",
+        "answer": "Dann ändern wir so lange ab, bis Sie zu 100% zufrieden sind! Sie bekommen vorab einen Entwurf, bevor eine einzige Zeile Code geschrieben wird."
+      }
+    ]
+  }
+}

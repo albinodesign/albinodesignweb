@@ -1,5 +1,5 @@
 ---
-import site from '../data/site.json';
+import site from '../content/site.json';
 ---
 
 <footer class="bg-dark text-slate-400 py-10" role="contentinfo">
@@ -15,10 +15,10 @@ import site from '../data/site.json';
       <button type="button" onclick="if(window.showCookieBanner)window.showCookieBanner()" class="hover:text-white transition-colors underline underline-offset-2 bg-transparent border-none cursor-pointer p-0 text-inherit font-inherit">Cookie-Einstellungen</button>
     </div>
     
-    <div class="mt-6 pt-6 border-t border-slate-800 text-xs text-slate-400 space-y-1">
-      <p>{site.name} · {site.founder}</p>
-      <p>{site.street}, {site.zip} {site.city}</p>
-      <p>Tel: <a href={`tel:${site.phone}`} class="hover:text-slate-400 transition-colors">{site.phoneFormatted}</a> · E-Mail: <a href={`mailto:${site.email}`} class="hover:text-slate-400 transition-colors">{site.email}</a></p>
+    <div class="mt-6 pt-6 border-t border-slate-800 text-xs text-slate-400 space-y-1" data-cms-section="kontakt">
+      <p data-cms-field="site.name">{site.name} · {site.founder}</p>
+      <p data-cms-field="site.street">{site.street}, {site.zip} {site.city}</p>
+      <p>Tel: <a href={`tel:${site.phone}`} class="hover:text-slate-400 transition-colors" data-cms-field="site.phoneFormatted">{site.phoneFormatted}</a> · E-Mail: <a href={`mailto:${site.email}`} class="hover:text-slate-400 transition-colors" data-cms-field="site.email">{site.email}</a></p>
     </div>
   </div>
 </footer>

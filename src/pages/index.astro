@@ -4,12 +4,16 @@ import Button from '../components/Button.astro';
 import Card from '../components/Card.astro';
 import Icon from '../components/Icon.astro';
 import Footer from '../components/Footer.astro';
-import site from '../data/site.json';
+import site from '../content/site.json';
+import home from '../content/pages/home.json';
 
 const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 if (!web3formsKey) {
   throw new Error('PUBLIC_WEB3FORMS_KEY ist nicht definiert. Bitte in .env setzen.');
 }
+
+const errorContactHtml = `${home.formSection.errorContactPre} <a href="tel:${site.phone}" class="underline">${site.phoneFormatted}</a>.`;
+const trustIcons = ['shield', 'lock', 'rocket'] as const;
 ---
 
 <Layout>
@@ -20,7 +24,7 @@ if (!web3formsKey) {
       "@type": "LocalBusiness",
       "@id": "https://albinodesign.de/#business",
       "name": site.name,
-      "description": "Moderne Handwerker-Websites in 3 Tagen. Webdesign aus Krefeld.",
+      "description": home.meta.jsonLdDescription,
       "url": site.url,
       "image": "https://albinodesign.de/og-image.jpg",
       "telephone": site.phone,
@@ -41,255 +45,207 @@ if (!web3formsKey) {
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Warum sind Sie günstiger als eine klassische Webdesign-Agentur?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ich arbeite bewusst ohne großes Team und ohne teures Büro. Die dadurch gesparten Verwaltungskosten gebe ich direkt an Sie weiter – bei gleicher Qualität wie eine Agentur."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Gehört die Website nach der Fertigstellung zu 100% mir?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja, absolut. Alle Zugänge, Dateien und Inhalte liegen bei Ihnen."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kann ich Texte und Bilder später selbst ändern?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Teils teils. Ich nutze ein CMS, also können Sie viele Inhalte wie Texte und Bilder problemlos selbst anpassen. Bei komplexeren Änderungen unterstütze ich Sie gerne."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Was brauche ich, bevor wir starten?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Keine fertigen Texte nötig. Zum Start schicke ich Ihnen einen kurzen Fragebogen. Daraus entwickle ich die Texte. Bei Bildern nutze ich Ihre, ansonsten greife ich auf hochwertige KI-Bilder zurück."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Was, wenn ich nicht zufrieden bin?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Dann ändern wir so lange ab, bis Sie zu 100% zufrieden sind! Sie bekommen vorab einen Entwurf, bevor eine einzige Zeile Code geschrieben wird."
-          }
+      "mainEntity": home.faq.items.map((item) => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
         }
-      ]
+      }))
     })} />
   </Fragment>
 
 <main id="main">
   <!-- 1. HERO SECTION -->
-  <section class="relative min-h-[90dvh] flex flex-col justify-center bg-gradient-to-br from-dark via-primary to-secondary text-white overflow-hidden" aria-label="Hero">
+  <section class="relative min-h-[90dvh] flex flex-col justify-center bg-gradient-to-br from-dark via-primary to-secondary text-white overflow-hidden" aria-label="Hero" data-cms-section="hero">
     <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--color-accent)_0%,_transparent_60%)]"></div>
     
     <div class="relative z-10 w-full max-w-5xl mx-auto px-5 py-12 sm:py-20">
       <!-- Logo -->
       <div class="fade-in mb-8">
-        <span class="text-2xl font-bold tracking-tight text-white">AlbinoDesign.</span>
+        <span class="text-2xl font-bold tracking-tight text-white">{site.name}{home.hero.logoSuffix}</span>
       </div>
       
       <!-- Headline -->
-      <h1 class="fade-in fade-in-delay-1 text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-balance">
-        Ich baue Ihre moderne Handwerker-Website schlüsselfertig in 3 Tagen.
+      <h1 class="fade-in fade-in-delay-1 text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-balance" data-cms-field="hero.headline">
+        {home.hero.headline}
       </h1>
       
       <!-- Sub-Headline -->
-      <p class="fade-in fade-in-delay-2 text-lg sm:text-xl text-slate-300 mb-8 max-w-2xl text-balance">
-        Gewinnen Sie mehr lukrative Aufträge <span class="text-accent font-semibold">UND</span> qualifizierte Azubis. Komplett stressfrei. Schlüsselfertig für einmalig <span class="text-accent font-bold">999 €</span>.
-      </p>
+      <p class="fade-in fade-in-delay-2 text-lg sm:text-xl text-slate-300 mb-8 max-w-2xl text-balance" data-cms-field="hero.sublineHtml" set:html={home.hero.sublineHtml} />
       
       <!-- Trust Element -->
       <div class="fade-in fade-in-delay-3 flex items-center gap-4 mb-8">
         <div class="shrink-0">
           <img 
-            src="/images/portrait.webp" 
-            alt="Albin Salihu - Webdesigner aus Krefeld" 
-            width="160" 
-            height="160" 
+            src={home.hero.portrait.src} 
+            alt={home.hero.portrait.alt} 
+            width={home.hero.portrait.width} 
+            height={home.hero.portrait.height} 
             class="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-accent"
             loading="eager"
             fetchpriority="high"
             decoding="async"
+            data-cms-field="hero.portrait.src"
           />
         </div>
         <div>
-          <p class="text-sm font-semibold text-white">Albin Salihu</p>
-          <p class="text-sm text-slate-400">Webdesign aus Krefeld</p>
-          <div class="flex items-center gap-1 mt-1" aria-label="5 von 5 Sternen">
+          <p class="text-sm font-semibold text-white">{home.hero.trustName}</p>
+          <p class="text-sm text-slate-400">{home.hero.trustRole}</p>
+          <div class="flex items-center gap-1 mt-1" aria-label={home.hero.ratingAriaLabel}>
             <span class="text-accent text-xs" aria-hidden="true">★★★★★</span>
-            <span class="text-xs text-slate-400">5.0 Bewertung</span>
+            <span class="text-xs text-slate-400">{home.hero.ratingText}</span>
           </div>
         </div>
       </div>
       
       <!-- Leitsatz -->
-      <p class="fade-in fade-in-delay-3 text-lg sm:text-xl italic text-slate-200 mb-10 max-w-xl border-l-4 border-accent pl-4">
-        "Ich erstelle Websites, die genauso hart arbeiten, wie Sie."
+      <p class="fade-in fade-in-delay-3 text-lg sm:text-xl italic text-slate-200 mb-10 max-w-xl border-l-4 border-accent pl-4" data-cms-field="hero.quote">
+        {home.hero.quote}
       </p>
       
       <!-- CTA -->
       <div class="fade-in fade-in-delay-4">
         <Button href="#formular" size="large" class="w-full sm:w-auto min-h-[56px] touch-manipulation">
-          Jetzt kostenlosen Erstentwurf anfragen
+          {home.hero.cta}
           <svg class="w-5 h-5 ml-2" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </Button>
-        <p class="mt-3 text-sm text-slate-400">Keine Verpflichtung. Antwort innerhalb von 24 Stunden.</p>
+        
+        <!-- Trust-Bar -->
+        <div class="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-x-6 gap-y-3" aria-label={home.hero.trustBarLabel}>
+          {home.hero.trustItems.map((item, index) => (
+            <div class="flex items-center gap-2 text-slate-400">
+              <Icon name={trustIcons[index]} class="w-5 h-5 text-slate-500" />
+              <span class="text-sm font-medium" data-cms-field={`hero.trustItems.${index}`}>{item}</span>
+            </div>
+          ))}
+        </div>
+        
+        <p class="mt-3 text-sm text-slate-400" data-cms-field="hero.ctaNote">{home.hero.ctaNote}</p>
       </div>
     </div>
   </section>
 
   <!-- 2. PROBLEM-AGITATION SECTION -->
-  <section class="bg-dark text-white py-16 sm:py-24" aria-labelledby="problem-heading">
+  <section class="bg-dark text-white py-16 sm:py-24" aria-labelledby="problem-heading" data-cms-section="problem">
     <div class="max-w-4xl mx-auto px-5">
-      <h2 id="problem-heading" class="text-2xl sm:text-3xl font-bold mb-10 text-center text-balance">
-        Warum Sie aktuell lukrative Aufträge & gute Azubis an die Konkurrenz verlieren
+      <h2 id="problem-heading" class="text-2xl sm:text-3xl font-bold mb-10 text-center text-balance" data-cms-field="problem.heading">
+        {home.problem.heading}
       </h2>
       
       <div class="space-y-6">
-        <div class="flex items-start gap-4 bg-secondary/50 rounded-xl p-5 border border-slate-700">
-          <span class="text-2xl shrink-0" aria-hidden="true">❌</span>
-          <p class="text-slate-200 leading-relaxed">
-            Ihre aktuelle Website sieht veraltet aus und strahlt nicht Ihre handwerkliche Qualität aus.
-          </p>
-        </div>
-        
-        <div class="flex items-start gap-4 bg-secondary/50 rounded-xl p-5 border border-slate-700">
-          <span class="text-2xl shrink-0" aria-hidden="true">❌</span>
-          <p class="text-slate-200 leading-relaxed">
-            Junge Fachkräfte und Azubis finden Ihren Betrieb nicht auf dem Handy.
-          </p>
-        </div>
-        
-        <div class="flex items-start gap-4 bg-secondary/50 rounded-xl p-5 border border-slate-700">
-          <span class="text-2xl shrink-0" aria-hidden="true">❌</span>
-          <p class="text-slate-200 leading-relaxed">
-            Kaufkräftige Kunden gehen zur Konkurrenz, weil dort der erste Eindruck professioneller wirkt.
-          </p>
-        </div>
+        {home.problem.items.map((item, index) => (
+          <div class="flex items-start gap-4 bg-secondary/50 rounded-xl p-5 border border-slate-700">
+            <span class="text-2xl shrink-0" aria-hidden="true">❌</span>
+            <p class="text-slate-200 leading-relaxed" data-cms-field={`problem.items.${index}`}>
+              {item}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
   <!-- 3. PORTFOLIO & SOCIAL PROOF SECTION -->
-  <section class="bg-light py-16 sm:py-24" aria-labelledby="portfolio-heading">
+  <section class="bg-light py-16 sm:py-24" aria-labelledby="portfolio-heading" data-cms-section="portfolio">
     <div class="max-w-7xl mx-auto px-5">
-      <h2 id="portfolio-heading" class="text-2xl sm:text-3xl font-bold mb-4 text-center text-balance">
-        So modern könnte Ihr Betrieb nächste Woche aussehen
+      <h2 id="portfolio-heading" class="text-2xl sm:text-3xl font-bold mb-4 text-center text-balance" data-cms-field="portfolio.heading">
+        {home.portfolio.heading}
       </h2>
-      <p class="text-muted text-center mb-12 max-w-2xl mx-auto">Professionelle Websites, die auf jedem Gerät perfekt aussehen.</p>
+      <p class="text-muted text-center mb-12 max-w-2xl mx-auto" data-cms-field="portfolio.subline">{home.portfolio.subline}</p>
       
       <!-- Portfolio Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
-        <!-- Referenz 1: THZ Renovierung -->
-        <Card class="flex flex-col">
-          <div slot="header" class="overflow-hidden rounded-t-2xl -mt-6 -mx-6 mb-5">
-            <img 
-              src="/images/thzmockup.webp" 
-              srcset="/images/thzmockup-400.webp 400w, /images/thzmockup-800.webp 800w, /images/thzmockup-1200.webp 1200w, /images/thzmockup.webp 1535w"
-              sizes="(max-width: 640px) 90vw, (max-width: 1280px) 50vw, 33vw"
-              alt="Website-Referenz THZ Renovierung" 
-              width="1535" 
-              height="1024"
-              class="w-full h-auto"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-          <div class="mt-auto pt-4 flex justify-center">
-            <Button href="https://thz-renovierung.de/" variant="outline" target="_blank" rel="noopener noreferrer" class="min-h-[56px] touch-manipulation">
-              Live-Website ansehen
-              <Icon name="external-link" class="w-4 h-4 ml-2" />
-            </Button>
-          </div>
-        </Card>
-        
-        <!-- Referenz 2: Montagebau Fabian -->
-        <Card class="flex flex-col">
-          <div slot="header" class="overflow-hidden rounded-t-2xl -mt-6 -mx-6 mb-5">
-            <img 
-              src="/images/fabianmockup.webp" 
-              srcset="/images/fabianmockup-400.webp 400w, /images/fabianmockup-800.webp 800w, /images/fabianmockup-1200.webp 1200w, /images/fabianmockup.webp 1536w"
-              sizes="(max-width: 640px) 90vw, (max-width: 1280px) 50vw, 33vw"
-              alt="Website-Referenz Montagebau Fabian" 
-              width="1536" 
-              height="1024"
-              class="w-full h-auto"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-          <div class="mt-auto pt-4 flex justify-center">
-            <Button href="https://montagebau-fabian.de/" variant="outline" target="_blank" rel="noopener noreferrer" class="min-h-[56px] touch-manipulation">
-              Live-Website ansehen
-              <Icon name="external-link" class="w-4 h-4 ml-2" />
-            </Button>
-          </div>
-        </Card>
-        
-        <!-- Referenz 3: ESH Haustechnik -->
-        <Card class="flex flex-col">
-          <div slot="header" class="overflow-hidden rounded-t-2xl -mt-6 -mx-6 mb-5">
-            <img 
-              src="/images/ehsmockup.webp" 
-              srcset="/images/ehsmockup-400.webp 400w, /images/ehsmockup-800.webp 800w, /images/ehsmockup-1200.webp 1200w, /images/ehsmockup.webp 1535w"
-              sizes="(max-width: 640px) 90vw, (max-width: 1280px) 50vw, 33vw"
-              alt="Website-Referenz ESH Haustechnik" 
-              width="1535" 
-              height="1024"
-              class="w-full h-auto"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-          <div class="mt-auto pt-4 flex justify-center">
-            <Button href="https://eshhaustechnik.de/" variant="outline" target="_blank" rel="noopener noreferrer" class="min-h-[56px] touch-manipulation">
-              Live-Website ansehen
-              <Icon name="external-link" class="w-4 h-4 ml-2" />
-            </Button>
-          </div>
-        </Card>
+        {home.portfolio.references.map((ref, index) => (
+          <Card class="flex flex-col">
+            <div slot="header" class="overflow-hidden rounded-t-2xl -mt-6 -mx-6 mb-5">
+              <img 
+                src={ref.image.src} 
+                srcset={ref.image.srcset}
+                sizes={ref.image.sizes}
+                alt={ref.image.alt} 
+                width={ref.image.width} 
+                height={ref.image.height}
+                class="w-full h-auto"
+                loading="lazy"
+                decoding="async"
+                data-cms-field={`portfolio.references.${index}.image.src`}
+              />
+            </div>
+            
+            <!-- Kunden-Info -->
+            <div class="flex items-center gap-3 mb-4">
+              <img 
+                src={ref.logo.src} 
+                alt={ref.logo.alt} 
+                width={ref.logo.width} 
+                height={ref.logo.height}
+                class="w-12 h-12 rounded-full object-cover border border-slate-200 bg-white"
+                loading="lazy"
+                decoding="async"
+              />
+              <div>
+                <p class="font-semibold text-primary">{ref.name}</p>
+                <p class="text-sm text-muted">{ref.person}</p>
+              </div>
+            </div>
+            
+            <!-- Review-Screenshot -->
+            <div class="mb-5">
+              <img 
+                src={ref.review.src} 
+                alt={ref.review.alt} 
+                width={ref.review.width} 
+                height={ref.review.height}
+                class="rounded-xl shadow-sm border border-slate-100 w-full h-auto"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            
+            <div class="mt-auto pt-2 flex justify-center">
+              <Button href={ref.url} variant="outline" target="_blank" rel="noopener noreferrer" class="min-h-[56px] touch-manipulation">
+                {home.portfolio.buttonLabel}
+                <Icon name="external-link" class="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </Card>
+        ))}
       </div>
     </div>
   </section>
 
   <!-- 4. ÜBER MICH SECTION -->
-  <section class="bg-white py-16 sm:py-24" aria-labelledby="about-heading">
+  <section class="bg-white py-16 sm:py-24" aria-labelledby="about-heading" data-cms-section="about">
     <div class="max-w-4xl mx-auto px-5">
       <div class="bg-gradient-to-br from-light to-white rounded-3xl p-6 sm:p-10 shadow-lg border border-slate-100">
         <div class="flex flex-col md:flex-row gap-8 items-center">
           <div class="shrink-0">
             <img 
-              src="/images/ubermich.webp" 
-              srcset="/images/ubermich.webp 600w"
-              sizes="(max-width: 640px) 256px, 320px"
-              alt="Albin Salihu - Gründer von AlbinoDesign" 
-              width="600" 
-              height="800"
+              src={home.about.image.src} 
+              srcset={home.about.image.srcset}
+              sizes={home.about.image.sizes}
+              alt={home.about.image.alt} 
+              width={home.about.image.width} 
+              height={home.about.image.height}
               class="w-64 sm:w-80 rounded-2xl shadow-xl h-auto"
               loading="lazy"
               decoding="async"
+              data-cms-field="about.image.src"
             />
           </div>
           
           <div class="flex-1 text-center md:text-left">
-            <h2 id="about-heading" class="text-2xl sm:text-3xl font-bold mb-4 text-balance">
-              Ihr direkter Partner aus Krefeld
+            <h2 id="about-heading" class="text-2xl sm:text-3xl font-bold mb-4 text-balance" data-cms-field="about.heading">
+              {home.about.heading}
             </h2>
             <div class="w-16 h-1 bg-accent rounded-full mb-6 mx-auto md:mx-0"></div>
-            <p class="text-primary leading-relaxed mb-4">
-              Hi, ich bin Albin von AlbinoDesign. Ich arbeite bewusst ohne großes Team und teures Büro. Dadurch bekommen Sie bei mir die Qualität einer teuren Agentur, aber ohne den irrsinnigen Preis.
+            <p class="text-primary leading-relaxed mb-4" data-cms-field="about.paragraph1">
+              {home.about.paragraph1}
             </p>
-            <p class="text-primary leading-relaxed">
-              Ich nehme Ihnen den kompletten digitalen Stress ab – von der ersten Idee bis zur fertigen Website.
+            <p class="text-primary leading-relaxed" data-cms-field="about.paragraph2">
+              {home.about.paragraph2}
             </p>
           </div>
         </div>
@@ -298,61 +254,58 @@ if (!web3formsKey) {
   </section>
 
   <!-- 5. 3-SCHRITTE-PROZESS SECTION -->
-  <section class="bg-light py-16 sm:py-24" aria-labelledby="process-heading">
+  <section class="bg-light py-16 sm:py-24" aria-labelledby="process-heading" data-cms-section="process">
     <div class="max-w-4xl mx-auto px-5">
-      <h2 id="process-heading" class="text-2xl sm:text-3xl font-bold mb-12 text-center text-balance">
-        In 3 simplen Schritten zur neuen Website
+      <h2 id="process-heading" class="text-2xl sm:text-3xl font-bold mb-12 text-center text-balance" data-cms-field="process.heading">
+        {home.process.heading}
       </h2>
       
       <div class="space-y-6">
-        <Card hover class="flex items-start gap-5">
-          <div class="shrink-0 w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center text-2xl" aria-hidden="true">
-            📞
-          </div>
-          <div>
-            <h3 class="text-xl font-bold mb-2">1. Kurzes Telefonat</h3>
-            <p class="text-muted leading-relaxed">Wir besprechen Ihre Ziele, Ihr Gewerk und was Ihre Website leisten soll.</p>
-          </div>
-        </Card>
-        
-        <Card hover class="flex items-start gap-5">
-          <div class="shrink-0 w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center text-2xl" aria-hidden="true">
-            💻
-          </div>
-          <div>
-            <h3 class="text-xl font-bold mb-2">2. Ich designe & baue</h3>
-            <p class="text-muted leading-relaxed">Inklusive Texte, Bilder und Technik – in nur 3 Tagen erhalten Sie Ihren Entwurf.</p>
-          </div>
-        </Card>
-        
-        <Card hover class="flex items-start gap-5">
-          <div class="shrink-0 w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center text-2xl" aria-hidden="true">
-            🚀
-          </div>
-          <div>
-            <h3 class="text-xl font-bold mb-2">3. Sie gehen live</h3>
-            <p class="text-muted leading-relaxed">Nach Ihrer Freigabe schalte ich Ihre Website frei – und Sie erhalten sofort mehr Anfragen.</p>
-          </div>
-        </Card>
+        {home.process.steps.map((step, index) => (
+          <Card hover class="flex items-start gap-5">
+            <div class="shrink-0 w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center text-2xl" aria-hidden="true">
+              {step.icon}
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-2" data-cms-field={`process.steps.${index}.title`}>{step.title}</h3>
+              <p class="text-muted leading-relaxed" data-cms-field={`process.steps.${index}.text`}>{step.text}</p>
+            </div>
+          </Card>
+        ))}
       </div>
     </div>
   </section>
 
   <!-- 6. MULTI-STEP FORMULAR (CRO HERZSTÜCK) -->
-  <section id="formular" class="bg-gradient-to-b from-secondary to-dark py-16 sm:py-24" aria-labelledby="form-heading">
+  <section id="formular" class="bg-gradient-to-b from-secondary to-dark py-16 sm:py-24" aria-labelledby="form-heading" data-cms-section="formular">
     <div class="max-w-2xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 id="form-heading" class="text-2xl sm:text-3xl font-bold text-white mb-3 text-balance">
-          Starten Sie jetzt Ihren kostenlosen Website-Entwurf
+        <h2 id="form-heading" class="text-2xl sm:text-3xl font-bold text-white mb-3 text-balance" data-cms-field="formSection.heading">
+          {home.formSection.heading}
         </h2>
-        <p class="text-slate-300">In 30 Sekunden ausgefüllt. Keine Verpflichtung.</p>
+        <p class="text-slate-300" data-cms-field="formSection.subline">{home.formSection.subline}</p>
+      </div>
+      
+      <!-- Garantie-Box -->
+      <div class="mb-6 bg-white/10 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-sm">
+        <div class="flex items-start gap-4">
+          <div class="shrink-0 w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center" aria-hidden="true">
+            <Icon name="check" class="w-6 h-6 text-accent" />
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-white mb-1" data-cms-field="formSection.guaranteeTitle">{home.formSection.guaranteeTitle}</h3>
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed" data-cms-field="formSection.guaranteeText">
+              {home.formSection.guaranteeText}
+            </p>
+          </div>
+        </div>
       </div>
       
       <div class="bg-white rounded-3xl shadow-2xl p-6 sm:p-10">
         <!-- Form Error Message -->
         <div id="form-error" class="hidden text-center py-6 mb-4 bg-red-50 border border-red-200 rounded-2xl" role="alert" aria-live="polite">
-          <p class="text-red-600 font-medium">Es ist ein Fehler aufgetreten.</p>
-          <p class="text-red-500 text-sm mt-1">Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt unter <a href="tel:+4915679755137" class="underline">+49 15679 755137</a>.</p>
+          <p class="text-red-600 font-medium">{home.formSection.errorTitle}</p>
+          <p class="text-red-500 text-sm mt-1" set:html={errorContactHtml} />
         </div>
         
         <!-- Live region for validation errors -->
@@ -367,7 +320,7 @@ if (!web3formsKey) {
             #form-progress { display: none !important; }
           </style>
           <p class="text-sm text-muted mb-4 bg-amber-50 border border-amber-200 rounded-xl p-3">
-            JavaScript ist deaktiviert. Sie können das Formular als einseitiges Formular ausfüllen und absenden.
+            {home.formSection.noJsNote}
           </p>
         </noscript>
         
@@ -575,72 +528,26 @@ if (!web3formsKey) {
   </section>
 
   <!-- 7. FAQ SECTION -->
-  <section class="bg-light py-16 sm:py-24" aria-labelledby="faq-heading">
+  <section class="bg-light py-16 sm:py-24" aria-labelledby="faq-heading" data-cms-section="faq">
     <div class="max-w-3xl mx-auto px-5">
-      <h2 id="faq-heading" class="text-2xl sm:text-3xl font-bold mb-10 text-center">
-        Häufig gestellte Fragen
+      <h2 id="faq-heading" class="text-2xl sm:text-3xl font-bold mb-10 text-center" data-cms-field="faq.heading">
+        {home.faq.heading}
       </h2>
       
       <div class="space-y-4">
-        <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-          <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-primary hover:bg-slate-50 transition-colors min-h-[56px] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:bg-slate-50 rounded-2xl">
-            <span>Warum sind Sie günstiger als eine klassische Webdesign-Agentur?</span>
-            <span class="ml-4 shrink-0 text-accent transition-transform group-open:rotate-180" aria-hidden="true">
-              <svg class="w-5 h-5" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-            </span>
-          </summary>
-          <div class="px-5 pt-4 pb-5 text-muted leading-relaxed">
-            Ich arbeite bewusst ohne großes Team und ohne teures Büro. Die dadurch gesparten Verwaltungskosten gebe ich direkt an Sie weiter – bei gleicher Qualität wie eine Agentur.
-          </div>
-        </details>
-        
-        <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-          <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-primary hover:bg-slate-50 transition-colors min-h-[56px] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:bg-slate-50 rounded-2xl">
-            <span>Gehört die Website nach der Fertigstellung zu 100% mir?</span>
-            <span class="ml-4 shrink-0 text-accent transition-transform group-open:rotate-180" aria-hidden="true">
-              <svg class="w-5 h-5" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-            </span>
-          </summary>
-          <div class="px-5 pt-4 pb-5 text-muted leading-relaxed">
-            Ja, absolut. Alle Zugänge, Dateien und Inhalte liegen bei Ihnen.
-          </div>
-        </details>
-        
-        <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-          <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-primary hover:bg-slate-50 transition-colors min-h-[56px] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:bg-slate-50 rounded-2xl">
-            <span>Kann ich Texte und Bilder später selbst ändern?</span>
-            <span class="ml-4 shrink-0 text-accent transition-transform group-open:rotate-180" aria-hidden="true">
-              <svg class="w-5 h-5" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-            </span>
-          </summary>
-          <div class="px-5 pt-4 pb-5 text-muted leading-relaxed">
-            Teils teils. Ich nutze ein CMS, also können Sie viele Inhalte wie Texte und Bilder problemlos selbst anpassen. Bei komplexeren Änderungen unterstütze ich Sie gerne.
-          </div>
-        </details>
-        
-        <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-          <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-primary hover:bg-slate-50 transition-colors min-h-[56px] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:bg-slate-50 rounded-2xl">
-            <span>Was brauche ich, bevor wir starten?</span>
-            <span class="ml-4 shrink-0 text-accent transition-transform group-open:rotate-180" aria-hidden="true">
-              <svg class="w-5 h-5" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-            </span>
-          </summary>
-          <div class="px-5 pt-4 pb-5 text-muted leading-relaxed">
-            Keine fertigen Texte nötig. Zum Start schicke ich Ihnen einen kurzen Fragebogen. Daraus entwickle ich die Texte. Bei Bildern nutze ich Ihre, ansonsten greife ich auf hochwertige KI-Bilder zurück.
-          </div>
-        </details>
-        
-        <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-          <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-primary hover:bg-slate-50 transition-colors min-h-[56px] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:bg-slate-50 rounded-2xl">
-            <span>Was, wenn ich nicht zufrieden bin?</span>
-            <span class="ml-4 shrink-0 text-accent transition-transform group-open:rotate-180" aria-hidden="true">
-              <svg class="w-5 h-5" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-            </span>
-          </summary>
-          <div class="px-5 pt-4 pb-5 text-muted leading-relaxed">
-            Dann ändern wir so lange ab, bis Sie zu 100% zufrieden sind! Sie bekommen vorab einen Entwurf, bevor eine einzige Zeile Code geschrieben wird.
-          </div>
-        </details>
+        {home.faq.items.map((item, index) => (
+          <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-primary hover:bg-slate-50 transition-colors min-h-[56px] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:bg-slate-50 rounded-2xl">
+              <span data-cms-field={`faq.items.${index}.question`}>{item.question}</span>
+              <span class="ml-4 shrink-0 text-accent transition-transform group-open:rotate-180" aria-hidden="true">
+                <svg class="w-5 h-5" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </summary>
+            <div class="px-5 pt-4 pb-5 text-muted leading-relaxed" data-cms-field={`faq.items.${index}.answer`}>
+              {item.answer}
+            </div>
+          </details>
+        ))}
       </div>
     </div>
   </section>

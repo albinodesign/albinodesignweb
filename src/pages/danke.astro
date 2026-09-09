@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
+import danke from '../content/pages/danke.json';
 ---
 
 <Layout 
@@ -11,7 +12,7 @@ import Button from '../components/Button.astro';
   robots="noindex, follow"
 >
   <Header />
-  <main id="main" class="min-h-screen bg-light flex items-center justify-center px-5 py-16 sm:py-24">
+  <main id="main" class="min-h-screen bg-light flex items-center justify-center px-5 py-16 sm:py-24" data-cms-section="danke">
     <div class="text-center max-w-2xl mx-auto">
       <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
         <svg class="w-10 h-10 text-green-600" width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -19,31 +20,31 @@ import Button from '../components/Button.astro';
         </svg>
       </div>
       
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-balance text-primary">
-        Hervorragend, Ihre Anfrage ist bei mir gelandet!
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-balance text-primary" data-cms-field="headline">
+        {danke.headline}
       </h1>
       
-      <p class="text-xl sm:text-2xl font-semibold text-accent mb-8">
-        Wie geht es jetzt weiter?
+      <p class="text-xl sm:text-2xl font-semibold text-accent mb-8" data-cms-field="subline">
+        {danke.subline}
       </p>
       
       <div class="text-left bg-white rounded-3xl shadow-lg border border-slate-100 p-6 sm:p-10 mb-10">
-        <p class="text-primary leading-relaxed mb-4">
-          Hallo, ich bin's, Albin. Vielen Dank für Ihr Vertrauen!
+        <p class="text-primary leading-relaxed mb-4" data-cms-field="greeting">
+          {danke.greeting}
         </p>
-        <p class="text-primary leading-relaxed mb-4">
-          Ich werde mich innerhalb der nächsten 24 Stunden kurz unter der von Ihnen angegebenen Nummer melden.
+        <p class="text-primary leading-relaxed mb-4" data-cms-field="paragraph1">
+          {danke.paragraph1}
         </p>
-        <p class="text-primary leading-relaxed mb-4">
-          Keine Sorge: Das wird kein nerviges Verkaufsgespräch. Wir besprechen in 5 bis 10 Minuten nur kurz Ihre Wünsche (Farben, Logo, Leistungen), damit ich mich an den PC setzen und Ihren kostenlosen Erstentwurf bauen kann.
+        <p class="text-primary leading-relaxed mb-4" data-cms-field="paragraph2">
+          {danke.paragraph2}
         </p>
-        <p class="text-muted leading-relaxed text-sm">
-          Bis dahin können Sie sich zurücklehnen – ich übernehme ab hier.
+        <p class="text-muted leading-relaxed text-sm" data-cms-field="note">
+          {danke.note}
         </p>
       </div>
       
       <Button href="/" size="large" class="w-full sm:w-auto min-h-[56px] touch-manipulation">
-        Zurück zur Startseite
+        {danke.cta}
       </Button>
     </div>
   </main>

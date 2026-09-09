@@ -172,5 +172,28 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
     </div>
     
     <script src="/scripts/cookie-consent.js" is:inline defer></script>
+    
+    <!-- CMS Preview-Bridge: reagiert auf postMessage vom CMS (keine visuelle Auswirkung) -->
+    <script is:inline>
+      window.addEventListener('message', function (event) {
+        var data = event.data;
+        if (!data || typeof data !== 'object') return;
+        if (data.type === 'CMS_FIELD_UPDATE' && typeof data.field === 'string') {
+          var selector = '[data-cms-field="' + data.field + '"]';
+          document.querySelectorAll(selector).forEach(function (el) {
+            if (el.tagName === 'IMG') {
+              el.setAttribute('src', data.value);
+              el.setAttribute('alt', data.value);
+            } else {
+              el.textContent = data.value;
+            }
+          });
+        }
+        if (data.type === 'CMS_SCROLL_TO_FIELD' && typeof data.field === 'string') {
+          var target = document.querySelector('[data-cms-field="' + data.field + '"]');
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    </script>
   </body>
 </html>

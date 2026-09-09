@@ -1,5 +1,9 @@
+---
+import site from '../content/site.json';
+---
+
 <header class="bg-dark text-white py-6">
   <div class="max-w-4xl mx-auto px-5">
-    <a href="/" class="text-xl font-bold tracking-tight hover:text-accent transition-colors">AlbinoDesign</a>
+    <a href="/" class="text-xl font-bold tracking-tight hover:text-accent transition-colors" data-cms-field="site.name">{site.name}</a>
   </div>
 </header>
