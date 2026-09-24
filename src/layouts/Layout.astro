@@ -124,6 +124,12 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
           transform: none;
         }
       }
+      /* CMS-Auswahl: dezente Markierung des angeklickten Feldes in der Vorschau */
+      [data-cms-highlight="true"] {
+        outline: 2px solid #fa7315 !important;
+        outline-offset: 3px;
+        border-radius: 6px;
+      }
     </style>
     
     <slot name="head" />
@@ -173,27 +179,107 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://albinodesign.de/');
     
     <script src="/scripts/cookie-consent.js" is:inline defer></script>
     
-    <!-- CMS Preview-Bridge: reagiert auf postMessage vom CMS (keine visuelle Auswirkung) -->
+    <!-- CMS Preview-Bridge: sichere Live-Vorschau fürs Agency-CMS (keine sichtbare Änderung) -->
     <script is:inline>
-      window.addEventListener('message', function (event) {
-        var data = event.data;
-        if (!data || typeof data !== 'object') return;
-        if (data.type === 'CMS_FIELD_UPDATE' && typeof data.field === 'string') {
-          var selector = '[data-cms-field="' + data.field + '"]';
-          document.querySelectorAll(selector).forEach(function (el) {
-            if (el.tagName === 'IMG') {
-              el.setAttribute('src', data.value);
-              el.setAttribute('alt', data.value);
-            } else {
-              el.textContent = data.value;
-            }
+      (function () {
+        var TRUSTED = [
+          /^https:\/\/albinodesign\.de$/,
+          /^https:\/\/([a-z0-9-]+\.)*vercel\.app$/,
+          /^http:\/\/localhost(:\d+)?$/
+        ];
+        function trusted(origin) {
+          if (origin === window.location.origin) return true;
+          for (var i = 0; i < TRUSTED.length; i++) {
+            if (TRUSTED[i].test(origin)) return true;
+          }
+          return false;
+        }
+        function validField(f) {
+          return typeof f === 'string' && /^[a-z0-9][a-z0-9-]*$/.test(f) && f.length <= 80;
+        }
+        function clearHi() {
+          document.querySelectorAll('[data-cms-highlight="true"]').forEach(function (el) {
+            el.removeAttribute('data-cms-highlight');
           });
         }
-        if (data.type === 'CMS_SCROLL_TO_FIELD' && typeof data.field === 'string') {
-          var target = document.querySelector('[data-cms-field="' + data.field + '"]');
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        function hi(field) {
+          clearHi();
+          var t = document.querySelector('[data-cms-field="' + field + '"]');
+          if (t) {
+            t.setAttribute('data-cms-highlight', 'true');
+            try { t.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+            catch (e) { t.scrollIntoView(); }
+            setTimeout(clearHi, 2500);
+          }
         }
-      });
+        function apply(field, value) {
+          if (!validField(field) || typeof value !== 'string') return;
+          if (value.length > 5000) return;
+          var nodes = document.querySelectorAll('[data-cms-field="' + field + '"]');
+          if (!nodes.length) return;
+          nodes.forEach(function (el) {
+            var tag = el.tagName;
+            if (tag === 'IMG' && /-src$|-image$/.test(field)) {
+              el.setAttribute('src', value);
+              el.removeAttribute('srcset');
+              return;
+            }
+            if (/-alt$/.test(field)) {
+              if (tag === 'IMG') el.setAttribute('alt', value);
+              else el.textContent = value;
+              return;
+            }
+            if (field === 'site-phone') {
+              if (tag === 'A' && (el.getAttribute('href') || '').indexOf('tel:') === 0) {
+                el.setAttribute('href', 'tel:' + value);
+              } else { el.textContent = value; }
+              document.querySelectorAll('a[href^="tel:"]:not([data-cms-field])').forEach(function (a) {
+                a.setAttribute('href', 'tel:' + value);
+              });
+              return;
+            }
+            if (field === 'site-phone-formatted') { el.textContent = value; return; }
+            if (field === 'site-email') {
+              if (tag === 'A') {
+                el.textContent = value;
+                if ((el.getAttribute('href') || '').indexOf('mailto:') === 0) el.setAttribute('href', 'mailto:' + value);
+              } else { el.textContent = value; }
+              document.querySelectorAll('a[href^="mailto:"]:not([data-cms-field])').forEach(function (a) {
+                a.setAttribute('href', 'mailto:' + value);
+              });
+              return;
+            }
+            if (field === 'home-hero-subline') { el.innerHTML = value; return; }
+            el.textContent = value;
+          });
+        }
+        var selectMode = false;
+        document.addEventListener('click', function (e) {
+          if (!selectMode) return;
+          var m = e.target && e.target.closest ? e.target.closest('[data-cms-field]') : null;
+          if (m) {
+            e.preventDefault();
+            e.stopPropagation();
+            var f = m.getAttribute('data-cms-field');
+            hi(f);
+            try { window.parent.postMessage({ type: 'CMS_FIELD_SELECT', field: f }, '*'); } catch (err) {}
+          }
+        }, true);
+        window.addEventListener('message', function (event) {
+          if (!trusted(event.origin)) return;
+          var d = event.data;
+          if (!d || typeof d !== 'object') return;
+          if (d.type === 'CMS_FIELD_UPDATE' && typeof d.field === 'string') apply(d.field, d.value);
+          if ((d.type === 'CMS_FIELD_SELECT' || d.type === 'CMS_SCROLL_TO_FIELD') && typeof d.field === 'string') {
+            if (validField(d.field)) hi(d.field);
+          }
+          if (d.type === 'CMS_SELECT_MODE') {
+            selectMode = (d.enabled === true || d.value === true || d.active === true);
+            document.body.style.cursor = selectMode ? 'pointer' : '';
+          }
+        });
+        try { window.parent.postMessage({ type: 'CMS_PREVIEW_READY', url: window.location.href }, '*'); } catch (e) {}
+      })();
     </script>
   </body>
 </html>
