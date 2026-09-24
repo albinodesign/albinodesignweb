@@ -16,9 +16,9 @@ import site from '../content/site.json';
     </div>
     
     <div class="mt-6 pt-6 border-t border-slate-800 text-xs text-slate-400 space-y-1" data-cms-section="kontakt">
-      <p data-cms-field="site.name">{site.name} · {site.founder}</p>
-      <p data-cms-field="site.street">{site.street}, {site.zip} {site.city}</p>
-      <p>Tel: <a href={`tel:${site.phone}`} class="hover:text-slate-400 transition-colors" data-cms-field="site.phoneFormatted">{site.phoneFormatted}</a> · E-Mail: <a href={`mailto:${site.email}`} class="hover:text-slate-400 transition-colors" data-cms-field="site.email">{site.email}</a></p>
+      <p><span data-cms-field="site-name">{site.name}</span> · {site.founder}</p>
+      <p><span data-cms-field="site-street">{site.street}</span>, <span data-cms-field="site-zip">{site.zip}</span> <span data-cms-field="site-city">{site.city}</span></p>
+      <p>Tel: <a href={`tel:${site.phone}`} class="hover:text-slate-400 transition-colors" data-cms-field="site-phone-formatted">{site.phoneFormatted}</a> · E-Mail: <a href={`mailto:${site.email}`} class="hover:text-slate-400 transition-colors" data-cms-field="site-email">{site.email}</a></p>
     </div>
   </div>
 </footer>
