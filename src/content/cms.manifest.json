@@ -1,46 +1,518 @@
 {
-  "version": 1,
   "description": "Editierbare Inhalte der AlbinoDesign-Website. 'file' ist der Pfad zur JSON-Datei, 'path' der dot-notated Pfad innerhalb der Datei.",
   "fields": [
-    { "id": "site-name", "label": "Firmenname", "type": "text", "file": "src/content/site.json", "path": "name", "maxLength": 60 },
-    { "id": "site-phone", "label": "Telefonnummer (technisch, tel:-Link)", "type": "phone", "file": "src/content/site.json", "path": "phone", "maxLength": 30 },
-    { "id": "site-phone-formatted", "label": "Telefonnummer (Anzeige)", "type": "phone", "file": "src/content/site.json", "path": "phoneFormatted", "maxLength": 30 },
-    { "id": "site-email", "label": "E-Mail-Adresse", "type": "email", "file": "src/content/site.json", "path": "email", "maxLength": 80 },
-    { "id": "site-street", "label": "Straße und Hausnummer", "type": "text", "file": "src/content/site.json", "path": "street", "maxLength": 80 },
-    { "id": "site-zip", "label": "PLZ", "type": "text", "file": "src/content/site.json", "path": "zip", "maxLength": 10 },
-    { "id": "site-city", "label": "Stadt", "type": "text", "file": "src/content/site.json", "path": "city", "maxLength": 60 },
-
-    { "id": "home-hero-headline", "label": "Hero: Hauptüberschrift", "type": "text", "file": "src/content/pages/home.json", "path": "hero.headline", "maxLength": 120 },
-    { "id": "home-hero-subline", "label": "Hero: Subline (HTML mit <span>-Hervorhebungen)", "type": "textarea", "file": "src/content/pages/home.json", "path": "hero.sublineHtml", "maxLength": 400 },
-    { "id": "home-hero-portrait-src", "label": "Hero: Portrait-Bild", "type": "image", "file": "src/content/pages/home.json", "path": "hero.portrait.src", "maxLength": 300 },
-    { "id": "home-hero-portrait-alt", "label": "Hero: Portrait Alt-Text", "type": "text", "file": "src/content/pages/home.json", "path": "hero.portrait.alt", "maxLength": 120 },
-    { "id": "home-hero-quote", "label": "Hero: Leitsatz / Zitat", "type": "text", "file": "src/content/pages/home.json", "path": "hero.quote", "maxLength": 160 },
-    { "id": "home-hero-cta", "label": "Hero: CTA-Button-Text", "type": "text", "file": "src/content/pages/home.json", "path": "hero.cta", "maxLength": 60 },
-    { "id": "home-hero-cta-note", "label": "Hero: Hinweis unter CTA", "type": "text", "file": "src/content/pages/home.json", "path": "hero.ctaNote", "maxLength": 120 },
-
-    { "id": "home-problem-heading", "label": "Problem-Sektion: Überschrift", "type": "text", "file": "src/content/pages/home.json", "path": "problem.heading", "maxLength": 140 },
-    { "id": "home-problem-item-1", "label": "Problem-Sektion: Punkt 1", "type": "textarea", "file": "src/content/pages/home.json", "path": "problem.items.0", "maxLength": 200 },
-    { "id": "home-problem-item-2", "label": "Problem-Sektion: Punkt 2", "type": "textarea", "file": "src/content/pages/home.json", "path": "problem.items.1", "maxLength": 200 },
-    { "id": "home-problem-item-3", "label": "Problem-Sektion: Punkt 3", "type": "textarea", "file": "src/content/pages/home.json", "path": "problem.items.2", "maxLength": 200 },
-
-    { "id": "home-portfolio-heading", "label": "Portfolio: Überschrift", "type": "text", "file": "src/content/pages/home.json", "path": "portfolio.heading", "maxLength": 120 },
-    { "id": "home-portfolio-subline", "label": "Portfolio: Subline", "type": "text", "file": "src/content/pages/home.json", "path": "portfolio.subline", "maxLength": 160 },
-    { "id": "home-portfolio-ref1-image", "label": "Portfolio: Referenz 1 Mockup-Bild", "type": "image", "file": "src/content/pages/home.json", "path": "portfolio.references.0.image.src", "maxLength": 300 },
-    { "id": "home-portfolio-ref2-image", "label": "Portfolio: Referenz 2 Mockup-Bild", "type": "image", "file": "src/content/pages/home.json", "path": "portfolio.references.1.image.src", "maxLength": 300 },
-    { "id": "home-portfolio-ref3-image", "label": "Portfolio: Referenz 3 Mockup-Bild", "type": "image", "file": "src/content/pages/home.json", "path": "portfolio.references.2.image.src", "maxLength": 300 },
-
-    { "id": "home-about-heading", "label": "Über mich: Überschrift", "type": "text", "file": "src/content/pages/home.json", "path": "about.heading", "maxLength": 120 },
-    { "id": "home-about-paragraph1", "label": "Über mich: Absatz 1", "type": "textarea", "file": "src/content/pages/home.json", "path": "about.paragraph1", "maxLength": 400 },
-    { "id": "home-about-paragraph2", "label": "Über mich: Absatz 2", "type": "textarea", "file": "src/content/pages/home.json", "path": "about.paragraph2", "maxLength": 300 },
-    { "id": "home-about-image", "label": "Über mich: Bild", "type": "image", "file": "src/content/pages/home.json", "path": "about.image.src", "maxLength": 300 },
-
-    { "id": "home-process-heading", "label": "Prozess: Überschrift", "type": "text", "file": "src/content/pages/home.json", "path": "process.heading", "maxLength": 120 },
-
-    { "id": "home-form-heading", "label": "Formular-Sektion: Überschrift", "type": "text", "file": "src/content/pages/home.json", "path": "formSection.heading", "maxLength": 120 },
-    { "id": "home-form-subline", "label": "Formular-Sektion: Subline", "type": "text", "file": "src/content/pages/home.json", "path": "formSection.subline", "maxLength": 120 },
-    { "id": "home-form-guarantee-title", "label": "Garantie-Box: Titel", "type": "text", "file": "src/content/pages/home.json", "path": "formSection.guaranteeTitle", "maxLength": 80 },
-    { "id": "home-form-guarantee-text", "label": "Garantie-Box: Text", "type": "textarea", "file": "src/content/pages/home.json", "path": "formSection.guaranteeText", "maxLength": 300 },
-
-    { "id": "home-faq-heading", "label": "FAQ: Überschrift", "type": "text", "file": "src/content/pages/home.json", "path": "faq.heading", "maxLength": 120 }
-  ]
+    {
+      "file": "src/content/site.json",
+      "id": "site-name",
+      "label": "Firmenname",
+      "maxLength": 60,
+      "path": "name",
+      "type": "text"
+    },
+    {
+      "file": "src/content/site.json",
+      "id": "site-phone",
+      "label": "Telefonnummer (technisch, tel:-Link)",
+      "maxLength": 30,
+      "path": "phone",
+      "type": "phone"
+    },
+    {
+      "file": "src/content/site.json",
+      "id": "site-phone-formatted",
+      "label": "Telefonnummer (Anzeige)",
+      "maxLength": 30,
+      "path": "phoneFormatted",
+      "type": "phone"
+    },
+    {
+      "file": "src/content/site.json",
+      "id": "site-email",
+      "label": "E-Mail-Adresse",
+      "maxLength": 80,
+      "path": "email",
+      "type": "email"
+    },
+    {
+      "file": "src/content/site.json",
+      "id": "site-street",
+      "label": "Straße und Hausnummer",
+      "maxLength": 80,
+      "path": "street",
+      "type": "text"
+    },
+    {
+      "file": "src/content/site.json",
+      "id": "site-zip",
+      "label": "PLZ",
+      "maxLength": 10,
+      "path": "zip",
+      "type": "text"
+    },
+    {
+      "file": "src/content/site.json",
+      "id": "site-city",
+      "label": "Stadt",
+      "maxLength": 60,
+      "path": "city",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-hero-headline",
+      "label": "Hero: Hauptüberschrift",
+      "maxLength": 120,
+      "path": "hero.headline",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-hero-subline",
+      "label": "Hero: Subline (HTML mit <span>-Hervorhebungen)",
+      "maxLength": 400,
+      "path": "hero.sublineHtml",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-hero-portrait-src",
+      "label": "Hero: Portrait-Bild",
+      "maxLength": 300,
+      "path": "hero.portrait.src",
+      "type": "image"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-hero-portrait-alt",
+      "label": "Hero: Portrait Alt-Text",
+      "maxLength": 120,
+      "path": "hero.portrait.alt",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-hero-quote",
+      "label": "Hero: Leitsatz / Zitat",
+      "maxLength": 160,
+      "path": "hero.quote",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-hero-cta",
+      "label": "Hero: CTA-Button-Text",
+      "maxLength": 60,
+      "path": "hero.cta",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-hero-cta-note",
+      "label": "Hero: Hinweis unter CTA",
+      "maxLength": 120,
+      "path": "hero.ctaNote",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-hero-trust-1",
+      "label": "Hero: Vertrauen Punkt 1",
+      "maxLength": 60,
+      "path": "hero.trustItems.0",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-hero-trust-2",
+      "label": "Hero: Vertrauen Punkt 2",
+      "maxLength": 60,
+      "path": "hero.trustItems.1",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-hero-trust-3",
+      "label": "Hero: Vertrauen Punkt 3",
+      "maxLength": 60,
+      "path": "hero.trustItems.2",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-problem-heading",
+      "label": "Problem-Sektion: Überschrift",
+      "maxLength": 140,
+      "path": "problem.heading",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-problem-item-1",
+      "label": "Problem-Sektion: Punkt 1",
+      "maxLength": 200,
+      "path": "problem.items.0",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-problem-item-2",
+      "label": "Problem-Sektion: Punkt 2",
+      "maxLength": 200,
+      "path": "problem.items.1",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-problem-item-3",
+      "label": "Problem-Sektion: Punkt 3",
+      "maxLength": 200,
+      "path": "problem.items.2",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-portfolio-heading",
+      "label": "Portfolio: Überschrift",
+      "maxLength": 120,
+      "path": "portfolio.heading",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-portfolio-subline",
+      "label": "Portfolio: Subline",
+      "maxLength": 160,
+      "path": "portfolio.subline",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-portfolio-button",
+      "label": "Portfolio: Button-Text",
+      "maxLength": 40,
+      "path": "portfolio.buttonLabel",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-portfolio-ref1-image",
+      "label": "Portfolio: Referenz 1 Mockup-Bild",
+      "maxLength": 300,
+      "path": "portfolio.references.0.image.src",
+      "type": "image"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-portfolio-ref1-alt",
+      "label": "Portfolio: Referenz 1 Bild Alt-Text",
+      "maxLength": 120,
+      "path": "portfolio.references.0.image.alt",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-portfolio-ref2-image",
+      "label": "Portfolio: Referenz 2 Mockup-Bild",
+      "maxLength": 300,
+      "path": "portfolio.references.1.image.src",
+      "type": "image"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-portfolio-ref2-alt",
+      "label": "Portfolio: Referenz 2 Bild Alt-Text",
+      "maxLength": 120,
+      "path": "portfolio.references.1.image.alt",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-portfolio-ref3-image",
+      "label": "Portfolio: Referenz 3 Mockup-Bild",
+      "maxLength": 300,
+      "path": "portfolio.references.2.image.src",
+      "type": "image"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-portfolio-ref3-alt",
+      "label": "Portfolio: Referenz 3 Bild Alt-Text",
+      "maxLength": 120,
+      "path": "portfolio.references.2.image.alt",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-about-heading",
+      "label": "Über mich: Überschrift",
+      "maxLength": 120,
+      "path": "about.heading",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-about-paragraph1",
+      "label": "Über mich: Absatz 1",
+      "maxLength": 400,
+      "path": "about.paragraph1",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-about-paragraph2",
+      "label": "Über mich: Absatz 2",
+      "maxLength": 300,
+      "path": "about.paragraph2",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-about-image",
+      "label": "Über mich: Bild",
+      "maxLength": 300,
+      "path": "about.image.src",
+      "type": "image"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-about-image-alt",
+      "label": "Über mich: Bild Alt-Text",
+      "maxLength": 120,
+      "path": "about.image.alt",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-process-heading",
+      "label": "Prozess: Überschrift",
+      "maxLength": 120,
+      "path": "process.heading",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-process-step-1-title",
+      "label": "Prozess: Schritt 1 Titel",
+      "maxLength": 60,
+      "path": "process.steps.0.title",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-process-step-1-text",
+      "label": "Prozess: Schritt 1 Text",
+      "maxLength": 200,
+      "path": "process.steps.0.text",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-process-step-2-title",
+      "label": "Prozess: Schritt 2 Titel",
+      "maxLength": 60,
+      "path": "process.steps.1.title",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-process-step-2-text",
+      "label": "Prozess: Schritt 2 Text",
+      "maxLength": 200,
+      "path": "process.steps.1.text",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-process-step-3-title",
+      "label": "Prozess: Schritt 3 Titel",
+      "maxLength": 60,
+      "path": "process.steps.2.title",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-process-step-3-text",
+      "label": "Prozess: Schritt 3 Text",
+      "maxLength": 200,
+      "path": "process.steps.2.text",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-form-heading",
+      "label": "Formular-Sektion: Überschrift",
+      "maxLength": 120,
+      "path": "formSection.heading",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-form-subline",
+      "label": "Formular-Sektion: Subline",
+      "maxLength": 120,
+      "path": "formSection.subline",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-form-guarantee-title",
+      "label": "Garantie-Box: Titel",
+      "maxLength": 80,
+      "path": "formSection.guaranteeTitle",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-form-guarantee-text",
+      "label": "Garantie-Box: Text",
+      "maxLength": 300,
+      "path": "formSection.guaranteeText",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-faq-heading",
+      "label": "FAQ: Überschrift",
+      "maxLength": 120,
+      "path": "faq.heading",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-faq-1-question",
+      "label": "FAQ 1: Frage",
+      "maxLength": 140,
+      "path": "faq.items.0.question",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-faq-1-answer",
+      "label": "FAQ 1: Antwort",
+      "maxLength": 400,
+      "path": "faq.items.0.answer",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-faq-2-question",
+      "label": "FAQ 2: Frage",
+      "maxLength": 140,
+      "path": "faq.items.1.question",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-faq-2-answer",
+      "label": "FAQ 2: Antwort",
+      "maxLength": 400,
+      "path": "faq.items.1.answer",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-faq-3-question",
+      "label": "FAQ 3: Frage",
+      "maxLength": 140,
+      "path": "faq.items.2.question",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-faq-3-answer",
+      "label": "FAQ 3: Antwort",
+      "maxLength": 400,
+      "path": "faq.items.2.answer",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-faq-4-question",
+      "label": "FAQ 4: Frage",
+      "maxLength": 140,
+      "path": "faq.items.3.question",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-faq-4-answer",
+      "label": "FAQ 4: Antwort",
+      "maxLength": 400,
+      "path": "faq.items.3.answer",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-faq-5-question",
+      "label": "FAQ 5: Frage",
+      "maxLength": 140,
+      "path": "faq.items.4.question",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/home.json",
+      "id": "home-faq-5-answer",
+      "label": "FAQ 5: Antwort",
+      "maxLength": 400,
+      "path": "faq.items.4.answer",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/danke.json",
+      "id": "danke-headline",
+      "label": "Danke: Überschrift",
+      "maxLength": 120,
+      "path": "headline",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/danke.json",
+      "id": "danke-subline",
+      "label": "Danke: Untertitel",
+      "maxLength": 120,
+      "path": "subline",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/danke.json",
+      "id": "danke-greeting",
+      "label": "Danke: Begrüßung",
+      "maxLength": 200,
+      "path": "greeting",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/danke.json",
+      "id": "danke-paragraph1",
+      "label": "Danke: Absatz 1",
+      "maxLength": 300,
+      "path": "paragraph1",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/danke.json",
+      "id": "danke-paragraph2",
+      "label": "Danke: Absatz 2",
+      "maxLength": 400,
+      "path": "paragraph2",
+      "type": "textarea"
+    },
+    {
+      "file": "src/content/pages/danke.json",
+      "id": "danke-note",
+      "label": "Danke: Hinweis",
+      "maxLength": 200,
+      "path": "note",
+      "type": "text"
+    },
+    {
+      "file": "src/content/pages/danke.json",
+      "id": "danke-cta",
+      "label": "Danke: Button-Text",
+      "maxLength": 60,
+      "path": "cta",
+      "type": "text"
+    }
+  ],
+  "version": 1
 }
